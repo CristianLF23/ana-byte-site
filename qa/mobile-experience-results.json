@@ -1,0 +1,107 @@
+{
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "base": "http://127.0.0.1:4178/",
+  "checks": [
+    {
+      "name": "intro Tab trap from body",
+      "pass": true,
+      "evidence": "active={\"tag\":\"BUTTON\",\"text\":\"Entrar agora\"}"
+    },
+    {
+      "name": "intro Escape restores background",
+      "pass": true,
+      "evidence": "{\"intro\":false,\"bodyOpen\":false,\"headerInert\":false,\"skipTabindex\":null}"
+    },
+    {
+      "name": "mobile menu opens and closes",
+      "pass": true,
+      "evidence": "open=true closed=false"
+    },
+    {
+      "name": "tour dot navigation",
+      "pass": true,
+      "evidence": "aria-current data-tour-go=1"
+    },
+    {
+      "name": "tour next control",
+      "pass": true,
+      "evidence": "aria-current data-tour-go=2"
+    },
+    {
+      "name": "mobile stage remains top64 and image transforms",
+      "pass": true,
+      "evidence": "before={\"top\":64,\"transform\":\"matrix(0.9663, 0, 0, 0.9663, 0, 6.226)\"} after={\"top\":64,\"transform\":\"matrix(1.0365, 0, 0, 1.0365, 0, -1.4414)\"}"
+    },
+    {
+      "name": "horizontal touch swipe advances tour",
+      "pass": true,
+      "evidence": "from=253 to=115 current=1"
+    },
+    {
+      "name": "hotspot opens and closes",
+      "pass": true,
+      "evidence": "open=true focus=Voltar à obra closed=true restoredFocus=inspect-trigger"
+    },
+    {
+      "name": "image modal closes and restores focus",
+      "pass": true,
+      "evidence": "open=true closed=true restoredFocus=stop-zoom"
+    },
+    {
+      "name": "slider keyboard and pointer input",
+      "pass": true,
+      "evidence": "key=1 pointer=46"
+    },
+    {
+      "name": "pause lights persists through reload",
+      "pass": true,
+      "evidence": "beforeReload={\"className\":true,\"label\":\"Ativar luzes\"} afterReload={\"className\":true,\"label\":\"Ativar luzes\",\"intro\":false}"
+    },
+    {
+      "name": "session reload skips blocking intro",
+      "pass": true,
+      "evidence": "intro=false"
+    },
+    {
+      "name": "responsive scene classes survive 390 to 1440 to 390",
+      "pass": true,
+      "evidence": "desktop={\"horizontal\":true,\"mobile\":false} mobile={\"horizontal\":false,\"mobile\":true} errors=[]"
+    },
+    {
+      "name": "no page errors in primary flow",
+      "pass": true,
+      "evidence": "none"
+    },
+    {
+      "name": "failed hero images release intro",
+      "pass": true,
+      "evidence": "state={\"intro\":false,\"inert\":false} errors=[]"
+    },
+    {
+      "name": "slow requests release intro at timeout",
+      "pass": true,
+      "evidence": "state={\"intro\":false,\"inert\":false} errors=[]"
+    },
+    {
+      "name": "reduced motion intro exits quickly",
+      "pass": true,
+      "evidence": "{\"intro\":false,\"overflow\":\"hidden auto\"}"
+    },
+    {
+      "name": "reduced motion page errors",
+      "pass": true,
+      "evidence": "none"
+    },
+    {
+      "name": "no JS keeps content available without overlay",
+      "pass": true,
+      "evidence": "{\"intro\":false,\"bodyText\":2612,\"hero\":true}"
+    }
+  ],
+  "pageErrors": [],
+  "notes": [],
+  "pass": true
+}
