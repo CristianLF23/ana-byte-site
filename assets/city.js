@@ -14,6 +14,9 @@
   const autoplayButton = $('#gallery-autoplay');
   const artDialog = $('#art-dialog');
   const collectionDialog = $('#collection-dialog');
+  const portfolioVideo = $('#portfolio-video');
+  let introFinished = false;
+  let videoRequested = false;
   let index = 0, dialogIndex = 0, sceneIndex = 0;
   let started = false, userPaused = reduced.matches, effectsPaused = false;
   let galleryTimer = 0, transitionTimer = 0, swipeStart = null, suppressClick = false;
@@ -25,14 +28,29 @@
 
   function syncAutoplay() {
     clearInterval(galleryTimer);
-    autoplayButton.setAttribute('aria-pressed', String(userPaused || reduced.matches || effectsPaused));
-    autoplayButton.lastElementChild.textContent = userPaused || reduced.matches || effectsPaused ? 'Reproduzir' : 'Pausar';
-    if (started && galleryVisible && !userPaused && !reduced.matches && !effectsPaused && !document.hidden && !artDialog.open && !collectionDialog.open) {
+    const canPlay = started && galleryVisible && !userPaused && !effectsPaused && !document.hidden && !artDialog.open && !collectionDialog.open;
+    if (!introFinished) {
+      galleryLink.classList.add('is-video');
+      galleryLink.setAttribute('aria-label', 'Reproduzir ou pausar o vídeo de Ana Byte');
+      $('#work-title').textContent = 'O universo de Ana Byte';
+      $('#work-category').textContent = 'Em movimento · 25 segundos';
+      $('#work-counter').textContent = 'Vídeo / 19 obras';
+      if (canPlay && (!reduced.matches || videoRequested)) {
+        portfolioVideo.play().catch(() => { userPaused = true; syncAutoplay(); });
+      } else portfolioVideo.pause();
+    }
+    const paused = userPaused || effectsPaused || (introFinished && reduced.matches);
+    autoplayButton.setAttribute('aria-pressed', String(paused));
+    autoplayButton.lastElementChild.textContent = paused ? 'Reproduzir' : 'Pausar';
+    if (introFinished && canPlay && !reduced.matches) {
       galleryTimer = setInterval(() => selectWork(index + 1, false), 5500);
     }
   }
   function pauseGallery() { userPaused = true; syncAutoplay(); }
   function selectWork(next, manual = true) {
+    introFinished = true;
+    portfolioVideo.pause();
+    galleryLink.classList.remove('is-video');
     if (manual) pauseGallery();
     index = (next + works.length) % works.length;
     const work = works[index];
@@ -54,11 +72,13 @@
   }
   $('#previous-work').addEventListener('click', () => selectWork(index - 1));
   $('#next-work').addEventListener('click', () => selectWork(index + 1));
-  autoplayButton.addEventListener('click', () => { userPaused = !userPaused; syncAutoplay(); });
-  $('#obras').addEventListener('focusin', e => { if (e.target !== autoplayButton && e.target.matches('a, button')) pauseGallery(); });
+  autoplayButton.addEventListener('click', () => { userPaused = !userPaused; videoRequested = true; syncAutoplay(); });
+  portfolioVideo.addEventListener('ended', () => { introFinished = true; selectWork(0, false); syncAutoplay(); });
+  portfolioVideo.addEventListener('error', () => { introFinished = true; selectWork(0, false); syncAutoplay(); });
+  $('#obras').addEventListener('focusin', e => { if (introFinished && e.target !== autoplayButton && e.target.matches('a, button')) pauseGallery(); });
   galleryLink.addEventListener('pointerdown', e => {
     if (!e.isPrimary) return;
-    pauseGallery();
+    if (introFinished) pauseGallery();
     swipeStart = { x: e.clientX, y: e.clientY, id: e.pointerId };
     suppressClick = false;
     galleryLink.setPointerCapture?.(e.pointerId);
@@ -78,6 +98,7 @@
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     if (!artDialog.showModal) return;
     e.preventDefault();
+    if (!suppressClick && !introFinished) { videoRequested = true; userPaused = !portfolioVideo.paused; syncAutoplay(); return; }
     if (!suppressClick) openArt(index, galleryLink);
   });
 

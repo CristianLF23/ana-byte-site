@@ -1,0 +1,59 @@
+/* V1 refinement: larger physical signs, a readable invitation and a compact project brief. */
+.byte-entry__progress{height:9px;overflow:visible;box-shadow:0 0 18px #55f6f155}
+.byte-entry__progress-value{transition:none;background:linear-gradient(90deg,#ff2b98,#50e9ff);box-shadow:0 0 15px #50e9ff99}
+.byte-entry__telemetry{font-size:11px}.byte-entry__status{font-size:10px;line-height:1.6;min-height:32px}
+.byte-entry__start{font-size:18px;min-height:56px;background:#361127;letter-spacing:.1em}
+.byte-entry__start:disabled{opacity:.3;background:#100c19;box-shadow:none}
+.city-cinema .city-hero .hero-copy{padding-top:20svh}
+.city-hero .byte-word::after{content:"";position:absolute;left:0;right:0;bottom:-14px;height:4px;background:#5de6ff;box-shadow:0 0 9px #40d9ff,0 0 24px #40d9ff90}
+.city-hero .hero-copy .eyebrow{font-size:12px;letter-spacing:.12em}
+.city-cinema .city-hero .hero-subtitle{font-size:20px;line-height:1.4;margin-top:34px}
+.city-cinema .city-hero .discover-world{bottom:15svh;min-width:260px;min-height:76px;padding:14px 46px 14px 22px;gap:6px;background:#321027e8;border:1px solid #ff499f;box-shadow:inset 0 0 0 1px #54eafa26,0 0 22px #ff28882e;font-size:20px;font-family:var(--display);font-weight:700;letter-spacing:.09em;text-transform:uppercase}
+.city-hero .discover-world small{border:0;padding:0;font:400 12px/1.3 var(--body);letter-spacing:.02em;text-transform:none;color:#90efff}
+.city-cinema .city-hero .discover-world svg{position:absolute;right:20px;top:25px;height:26px;width:20px;stroke:#79eaff}
+.city-hero .discover-world:hover{background:#53203e}.city-hero .discover-world:focus-visible{outline:2px solid #82f3ff;outline-offset:5px}
+.city-cinema .gallery-facade{width:min(150vw,74svh);height:min(300vw,148svh);top:52%;transform:translate(-50%,-44%);transform-origin:50% 44%}
+.gallery-facade .facade-destination{top:71.5%;left:20%;right:20%}
+.mounted-gallery .mounted-heading{font-size:21px;padding:10px 12px}
+.mounted-gallery .work-caption h3{font-size:23px}.mounted-gallery .work-caption>span{font-size:10px}
+.mounted-gallery .gallery-status{font-size:10px}.mounted-gallery .gallery-status button{font-size:12px}
+.mounted-gallery .gallery-navigation button{font-size:12px}
+.mounted-gallery .billboard-controls{padding:0 10px 5px}
+.mounted-gallery .facade-destination,.mounted-artist .facade-destination{position:static;flex:0 0 auto;margin:0;padding:5px 10px 9px;display:flex}
+.mounted-gallery .facade-destination>button,.mounted-artist .facade-destination>button{width:100%;justify-content:center;background:#122d35;border-color:#61b6ba}
+.mounted-artist .facade-destination{padding:8px 0 0}
+.city-chapter h2[tabindex="-1"]:focus{outline:none}
+.mounted-gallery .gallery-open>img{object-fit:cover;object-position:center}
+.gallery-open>video{display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;background:#020509}
+.gallery-open.is-video>video{display:block}.gallery-open.is-video>img,.gallery-open.is-video .expand-image{visibility:hidden}
+.city-cinema .artist-facade{width:min(168vw,82svh);height:min(336vw,164svh);top:51%;transform:translate(-50%,-36.5%);transform-origin:50% 36.5%}
+.mounted-artist{padding:14px}.mounted-artist>.eyebrow{font-size:10px}.mounted-artist h2{font-size:30px}
+.mounted-artist .artist-copy{font-size:13px}.mounted-artist .artist-image img{object-position:50% 37%}
+.artist-actions a{font-size:14px;min-height:57px;padding:9px 12px}.artist-actions small{font-size:10px;line-height:1.35}
+.artist-facade .facade-destination{top:60%;left:23%;right:23%}
+.facade-destination>button{font-size:13px;min-height:46px}
+.contact-city-matte{filter:brightness(.94)}
+.city-cinema .contact-portal{width:calc(100% - 40px);max-width:430px;padding:0;backdrop-filter:none;background:none;border:0;box-shadow:none;position:relative}
+.contact-portal::before,.contact-portal::after{display:none}
+.contact-portal>.eyebrow{color:#fff;font-size:11px;margin-bottom:14px;text-shadow:0 2px 8px #000}
+.city-cinema .contact-portal .contact-kicker{font:400 17px/1.4 var(--body);max-width:250px;margin:0 auto 24px;text-shadow:0 2px 8px #000}
+.project-invitation{position:relative;display:block;width:100%;padding:24px 45px 24px 22px;text-align:left;border:1px solid #91f9f5;background:#071622e8;box-shadow:0 0 24px #42e8ff40,inset 0 0 28px #0b626d44;clip-path:polygon(0 0,calc(100% - 15px) 0,100% 15px,100% 100%,15px 100%,0 calc(100% - 15px))}
+.project-invitation>span{font:700 clamp(30px,9vw,44px)/1 var(--display);text-transform:uppercase;color:#c7ffff;letter-spacing:.015em}
+.project-invitation>small{display:block;font-size:13px;color:#d7e4ed;margin-top:13px}
+.project-invitation svg{position:absolute;right:17px;top:calc(50% - 14px);width:27px;height:27px;stroke:#f967b4;stroke-width:1.4;fill:none}
+.project-invitation:hover{background:#123442}.project-invitation:focus-visible{outline:3px solid white;outline-offset:-5px}
+.contact-location{display:block;margin-top:24px;text-shadow:0 2px 5px #000}.contact-location small{color:#cee3e8}
+.project-dialog{width:min(540px,calc(100vw - 24px));max-height:calc(100dvh - 32px);padding:0;margin:auto;color:#f6f5fa;background:#08101bf5;border:1px solid #59e1e8;box-shadow:0 0 55px #4febff22;overflow:auto;overscroll-behavior:contain}
+.project-dialog::backdrop{background:#020610b8;backdrop-filter:blur(8px)}
+.project-dialog-top{position:sticky;top:0;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 18px;background:#0a1421;border-bottom:1px solid #22434e;font:11px/1.4 ui-monospace,monospace;letter-spacing:.08em;color:#8eeef2}
+.project-close{min-height:44px;padding:8px 12px;background:#251525;border:1px solid #92446d;font-size:12px;color:white}
+.project-form{padding:22px}.project-form .eyebrow{font-size:10px;margin-bottom:12px}.project-form h2{font:700 34px/.98 var(--display);letter-spacing:.01em}.project-form h2 em{font-style:normal;color:#f776b9}
+.project-intro{font-size:13px;line-height:1.55;color:#adbfce;margin:14px 0 22px}
+.project-fields{display:grid;grid-template-columns:1fr 95px;gap:16px 12px}.project-fields label{display:flex;flex-direction:column;gap:8px;font-size:12px;color:#dce9f0}.project-wide{grid-column:1/-1}
+.project-fields input,.project-fields textarea{width:100%;min-width:0;min-height:48px;border:1px solid #36505e;border-radius:0;background:#020812;padding:11px 12px;color:#fff;font:400 16px/1.4 var(--body);resize:vertical}.project-fields input:focus,.project-fields textarea:focus{outline:2px solid #67e7ef;outline-offset:2px}.project-fields ::placeholder{font-size:13px;color:#8797a8}
+.project-submit{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-height:55px;padding:14px;margin-top:22px;background:#75e9ed;color:#08151b;font-size:14px;font-weight:600;border:1px solid #ceffff}
+.project-submit svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.5}.project-submit:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.project-privacy{font-size:11px;line-height:1.5;text-align:center;color:#a4b8c7;margin:12px 0 0}
+@media(min-width:760px){.city-cinema .gallery-facade{width:73svh;height:146svh}.city-cinema .artist-facade{width:80svh;height:160svh}.city-cinema .city-hero .hero-copy{padding-top:16svh}.city-cinema .city-hero .discover-world{bottom:13svh}}
+@media(max-height:720px){.city-cinema .city-hero .hero-copy{padding-top:18svh}.city-cinema .city-hero h1{font-size:27vw}.city-cinema .city-hero .hero-subtitle{font-size:17px;margin-top:25px}.city-cinema .city-hero .discover-world{bottom:14svh;min-height:68px;font-size:18px}.city-hero .hero-copy .eyebrow{font-size:10px}.city-cinema .gallery-facade{width:73svh;height:146svh;top:52%}.city-cinema .artist-facade{width:82svh;height:164svh;top:50%}.mounted-artist{padding:10px}.mounted-artist h2{font-size:24px}.mounted-artist>.eyebrow{font-size:8px}.mounted-artist .artist-copy{font-size:11px}.artist-actions a{min-height:48px;padding:7px 9px;font-size:12px}.artist-actions small{font-size:9px}.mounted-gallery .mounted-heading{font-size:18px;padding:7px 10px}.mounted-gallery .work-caption h3{font-size:18px}.mounted-gallery .work-caption>span{font-size:9px}.gallery-facade .facade-destination{top:70%}.facade-destination>button{font-size:12px;min-height:44px}.project-form{padding:18px}}
+@media(prefers-reduced-motion:reduce){.byte-entry__progress-value{transition:none}}

@@ -151,13 +151,16 @@
     var total = critical.length + 1;
     var completed = 0;
     var hasUnavailableResource = false;
+    var beganAt = performance.now();
+    var displayProgress = 0;
+    var resourcesSettled = false;
+    var MINIMUM_LOAD_TIME = 2600;
     setProgress(0, "Estabelecendo conexão visual");
 
     function settleResource(label) {
       if (readiness !== "loading" || !root || !root.isConnected) return;
       completed += 1;
-      setProgress((completed / total) * 100, label);
-      if (completed >= total) finishReadiness(hasUnavailableResource);
+      if (completed >= total) resourcesSettled = true;
     }
 
     function finishReadiness(fallback) {
@@ -170,8 +173,23 @@
       startButton.focus({ preventScroll: true });
     }
 
+    // Resource completion and a visible preparation sequence must both finish.
+    function paintProgress(now) {
+      if (readiness !== "loading") return;
+      var elapsed = Math.min(1, (now - beganAt) / MINIMUM_LOAD_TIME);
+      var available = resourcesSettled ? 100 : Math.min(92, 10 + completed / total * 82);
+      displayProgress = Math.max(displayProgress, Math.min(available, elapsed * 100));
+      var status = displayProgress < 35 ? "Acendendo a cidade" : displayProgress < 72 ? "Preparando o arquivo de arte" : "Abrindo seu caminho";
+      setProgress(displayProgress, status);
+      if (displayProgress >= 100 && resourcesSettled) {
+        window.setTimeout(function () { finishReadiness(hasUnavailableResource); }, 180);
+      } else requestAnimationFrame(paintProgress);
+    }
+    requestAnimationFrame(paintProgress);
+
     readinessTimer = window.setTimeout(function () {
-      finishReadiness(true);
+      hasUnavailableResource = true;
+      resourcesSettled = true;
     }, 8000);
 
     var fontReady = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();

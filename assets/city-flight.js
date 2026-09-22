@@ -80,7 +80,8 @@
     nav.setAttribute('aria-busy', 'true');
     savedInert = [header, nav, document.querySelector(scenes[scene])].map(element => [element, element.inert]);
     savedInert.forEach(([element]) => { element.inert = true; });
-    if (reduced.matches) { arrive(true); return; }
+    // The video is reserved for the first descent. Other destinations use a short dissolve.
+    if (reduced.matches || scene !== 'city' || name !== 'works') { arrive(reduced.matches); return; }
     status.textContent = labels[name];
     skip.hidden = false;
     skip.focus({ preventScroll: true });
@@ -91,7 +92,7 @@
     tween(current, { autoAlpha: 0, duration: .42, ease: 'power2.out' });
     tween(status, { autoAlpha: 1, duration: .4, delay: .3 });
     // A finite clip bridges two stable destinations; it is deliberately never looped.
-    watchdog = setTimeout(() => arrive(), 8000);
+    watchdog = setTimeout(() => arrive(), 4500);
     try {
       const play = video.play();
       play?.catch(() => arrive());
@@ -103,6 +104,7 @@
     cameraTween = tween(video, { scale: 1.19, duration, ease: 'power1.inOut' });
   });
   video.addEventListener('ended', () => { cameraTween = null; arrive(); });
+  video.addEventListener('timeupdate', () => { if (video.currentTime >= 2) arrive(); });
   video.addEventListener('error', () => arrive());
   skip.addEventListener('click', () => arrive());
   document.addEventListener('visibilitychange', () => {
