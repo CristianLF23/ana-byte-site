@@ -28,3 +28,14 @@ Ready to Start Gate: aprovado para construcao local. Publicacao continua fora do
 - Interação: gestos horizontais nas fotos, navegação por capítulos, pontos de leitura, ampliação e comparação arrastável.
 - Conteúdo: fotos da Ana e tatuagens fornecidas pelo usuário; referências visuais novas orientam a linguagem, sem incorporação de artes externas.
 - CTA WhatsApp e local demonstrativo mantidos. Nenhuma lacuna crítica para essa revisão local.
+
+## Ajuste posterior confirmado pelo usuário
+
+- CONFIRMED: sequência background fixo, vídeo, transição, nova dobra. Botão inicia a viagem.
+- CONFIRMED: arquivo de vídeo fornecido no disco D, já inspecionado e incorporado à prévia.
+- CONFIRMED: loading deve aguardar Começar experiência.
+- CONFIRMED: obras reunidas em um painel e Ana em outro painel arquitetônico; conteúdo interno translúcido, entrada lateral e retorno à cidade.
+- CONFIRMED: ilustração em perspectiva é preferível; 3D é autorizado somente se melhorar o resultado. A sequência escolhida não exige WebGL.
+- CONFIRMED: produzir conceito de letreiro アナ com preenchimento de tatuagens.
+- IMPORTANT: continuidade geométrica exata entre vídeo e destino não existe no material atual. A passagem utiliza aproximação e dissolução, documentadas como tal.
+- Gate aprovado para revisão local. Nenhuma pergunta crítica pendente. Detalhes de publicação não fazem parte desta alteração.

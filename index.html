@@ -1,81 +1,62 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Um tour pelo universo cybergoth de Ana Byte. Explore tatuagens, detalhes e o caminho do desenho à pele.">
-<meta name="theme-color" content="#090c0e"><title>Ana Byte • Um tour pela pele</title>
-<link rel="stylesheet" href="assets/styles.css"><link rel="stylesheet" href="assets/tour.css"><link rel="stylesheet" href="assets/atmosphere.css"><link rel="stylesheet" href="assets/intro.css">
-<script src="assets/intro.js" defer></script>
-<script src="assets/vendor/gsap.min.js" defer></script><script src="assets/vendor/ScrollTrigger.min.js" defer></script>
-<script src="assets/app.js" defer></script><script src="assets/tour.js" defer></script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080c17"><meta name="description" content="Entre no universo de Ana Byte. Uma viagem pela cidade, pela arte e pelas tatuagens autorais da artista.">
+<meta property="og:title" content="Ana Byte | Arte de outro mundo. Na sua pele."><meta property="og:description" content="Descubra o universo de tatuagens e ilustrações de Ana Byte.">
+<title>Ana Byte | Entre no meu mundo</title>
+<link rel="preload" as="image" href="assets/world/city-flight-poster.jpg" fetchpriority="high"><link rel="preload" as="font" href="assets/fonts/BarlowCondensed-Bold.ttf" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="assets/city.css"><link rel="stylesheet" href="assets/city-entry.css"><link rel="stylesheet" href="assets/city-cinema.css"><link rel="stylesheet" href="assets/city-interior.css">
+<script src="assets/city-entry.js" defer></script><script src="assets/vendor/gsap.min.js" defer></script><script src="assets/vendor/ScrollTrigger.min.js" defer></script><script src="assets/city-flight.js" defer></script><script src="assets/city.js" defer></script><script src="assets/city-interior.js" defer></script>
 </head>
-<body class="page-tour">
-<a class="skip-link" href="#tour" data-tour-go="0">Ir para as tatuagens</a>
-<header class="site-header" data-header>
-<a class="brand" href="index.html" aria-label="Ana Byte, início"><span class="brand-mark" aria-hidden="true">AB</span><span class="brand-name">ANA BYTE</span></a>
-<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu-principal" data-menu-toggle><span>Menu</span><span class="menu-icon" aria-hidden="true"></span></button>
-<nav class="site-nav" id="menu-principal" aria-label="Navegação principal" data-menu><a href="#tour" data-tour-go="0">O tour</a><a href="trabalhos/index.html">Todos os trabalhos</a><a href="sobre/index.html">A artista</a><a class="nav-cta" href="https://wa.me/5511919007582?text=Oi%20Ana!%20Quero%20conversar%20sobre%20uma%20tatuagem." target="_blank" rel="noopener">Pedir orçamento</a></nav>
-</header>
-<main id="conteudo">
-<section class="entry" aria-labelledby="entry-title">
-<div class="entry-grid" aria-hidden="true"></div>
-<svg class="bio-circuit" viewBox="0 0 600 900" fill="none" aria-hidden="true"><g class="bio-cables"><path d="M-80 10C420 60-120 270 380 320S90 630 670 840"/><path d="M-70 26C400 90-100 250 366 339S118 615 680 862"/><path d="M620 30C240 90 600 270 220 480S340 720-50 900"/><path d="M640 42C260 104 620 286 240 495S362 738-30 920"/></g><g class="bio-signal"><path d="M-80 10C420 60-120 270 380 320S90 630 670 840"/><path d="M620 30C240 90 600 270 220 480S340 720-50 900"/></g><g class="bio-orbit"><ellipse cx="300" cy="455" rx="245" ry="140"/><ellipse cx="300" cy="455" rx="224" ry="120" stroke-dasharray="3 15"/><path d="M30 455h45m450 0h45M300 290v35m0 260v35"/></g></svg>
-<p class="entry-kicker">São Paulo / Tatuagem autoral / Cybergoth</p>
-<h1 id="entry-title">ANA<span>BYTE</span><i aria-hidden="true">+</i></h1>
-<span class="neon-sign" aria-hidden="true">NEON FLESH<br>DIGITAL SOUL</span>
-<div class="entry-collage" aria-hidden="true">
-<div class="entry-slice slice-left"><img src="assets/images/15-ana-working.jpg" alt="" width="863" height="1145"></div>
-<div class="entry-slice slice-center"><img src="assets/images/18-cyber-horse.jpg" alt="" width="791" height="1150" fetchpriority="high"></div>
-<div class="entry-slice slice-right"><img src="assets/images/17-ladybug.jpg" alt="" width="920" height="930"></div>
-<span class="target-corner corner-one"></span><span class="target-corner corner-two"></span>
+<body>
+<a class="skip-link" href="#obras" data-destination="works">Ir para as obras</a>
+<header class="city-header"><a href="#inicio" data-destination="city" class="small-brand" aria-label="Ana Byte, início">ANA<span>BYTE</span><i aria-hidden="true">✳</i></a><div class="header-actions"><button type="button" id="motion-toggle" aria-pressed="false" hidden><span class="motion-light" aria-hidden="true"></span><span>Efeitos ativos</span></button><a class="header-contact" href="https://wa.me/5511919007582?text=Oi%20Ana!%20Quero%20conversar%20sobre%20uma%20tatuagem." target="_blank" rel="noopener">Vamos criar?</a></div></header>
+<main class="city-world" id="city-world"><div class="city-viewport">
+<div class="city-environment" aria-hidden="true">
+<div class="city-painting"><img data-city-critical src="assets/world/city-flight-poster.jpg" width="720" height="1280" alt="" fetchpriority="high"></div>
+<div class="city-vignette"></div>
 </div>
-<div class="entry-bottom"><div><p>O futuro tem pele.</p><span>Um tour guiado por cinco tatuagens de Ana Byte.</span></div><a class="tour-enter" href="#tour" data-tour-go="0"><span>Explorar as tatuagens</span><b aria-hidden="true">+</b></a></div>
-<div class="entry-coordinate" aria-hidden="true">CORPO / COR / CIRCUITO</div>
-<button class="effects-toggle" type="button" aria-pressed="false" hidden>Pausar efeitos</button>
+<div class="flight-layer" aria-hidden="true"><video id="city-flight" muted playsinline preload="metadata" poster="assets/world/city-flight-poster.jpg"><source src="assets/world/city-flight.mp4" type="video/mp4"></video><div class="flight-shade"></div></div>
+<p class="flight-status" role="status" aria-live="polite"></p>
+<button class="skip-flight" type="button" hidden>Ir direto ao destino</button>
+<section class="city-chapter city-hero" id="inicio" aria-labelledby="city-title">
+<div class="hero-copy"><p class="eyebrow">Tatuagem autoral · São Paulo</p><h1 id="city-title" tabindex="-1"><span>ANA</span><span class="byte-word">BYTE<span class="title-spark" aria-hidden="true">✳</span></span></h1><p class="hero-subtitle">Arte de outro mundo.<br>Na sua pele.</p></div>
+<a class="discover-world" href="#obras" data-destination="works"><span>Descubra meu mundo</span><small>Começar a viagem</small><svg viewBox="0 0 32 52" fill="none" aria-hidden="true"><path d="M16 2v43M5 34l11 11 11-11"/></svg></a><p class="hero-footnote">Entre a pele e o impossível.</p>
 </section>
-<section id="tour" class="tour" aria-label="Tour guiado por cinco tatuagens">
-<div class="tour-bar"><p><span class="status-light" aria-hidden="true"></span> Tour pela pele</p><span class="tour-help">Role para explorar cada obra</span><a href="#depois-tour" class="tour-skip">Pular o tour</a></div>
-<div class="tour-track">
-<article class="tour-stop stop-cyan" id="obra-1" aria-labelledby="obra-1-title">
-<div class="stop-outline" aria-hidden="true">ORGÂNICO</div>
-<div class="stop-copy"><p class="stop-index">01 / 05 <span>Bio cyber</span></p><h2 id="obra-1-title" tabindex="-1">Anatomia<br>do futuro.</h2><p class="stop-description">Comece pela silhueta. As placas acompanham a curva do corpo, enquanto o magenta atravessa a estrutura como um fio de energia.</p><div class="look-note"><span>Olhe de perto</span><p>O espaço entre as linhas mantém a forma legível mesmo entre tantos detalhes.</p></div><a class="stop-zoom" href="assets/images/18-cyber-horse.jpg" data-lightbox data-title="Anatomia do futuro." data-meta="Parada 01 • Bio cyber">Ampliar a tatuagem <span aria-hidden="true">+</span></a></div>
-<figure class="stop-image"><img src="assets/images/18-cyber-horse.jpg" alt="Cabeça mecânica tatuada com placas turquesa e linhas magenta" width="791" height="1150"><figcaption>01 <span>Bio cyber / tatuagem de Ana Byte</span></figcaption></figure>
-<div class="stop-detail" aria-hidden="true"><img src="assets/images/18-cyber-horse.jpg" alt="" width="791" height="1150"><span>Detalhe da aplicação</span></div>
-</article>
-<article class="tour-stop stop-pink" id="obra-2" aria-labelledby="obra-2-title">
-<div class="stop-outline" aria-hidden="true">PRESENÇA</div>
-<div class="stop-copy"><p class="stop-index">02 / 05 <span>Personagem</span></p><h2 id="obra-2-title" tabindex="-1">Um rosto.<br>Outro mundo.</h2><p class="stop-description">Agora, procure o olhar. O rosto interrompe a armadura e vira o centro da composição. A cor conecta as duas matérias.</p><div class="look-note"><span>Olhe de perto</span><p>As massas pretas ao redor fazem o turquesa e a expressão aparecerem primeiro.</p></div><a class="stop-zoom" href="assets/images/04-cyber-warrior.jpg" data-lightbox data-title="Um rosto. Outro mundo." data-meta="Parada 02 • Personagem">Ampliar a tatuagem <span aria-hidden="true">+</span></a></div>
-<figure class="stop-image"><img src="assets/images/04-cyber-warrior.jpg" alt="Guerreira cibernética tatuada, com rosto sob armadura turquesa e magenta" width="331" height="495"><figcaption>02 <span>Personagem / tatuagem de Ana Byte</span></figcaption></figure>
-<div class="stop-glyph" aria-hidden="true"><svg viewBox="0 0 300 300"><path d="M15 80h65l40 40v90l55 55h110M20 110h50l25 25v90l40 40M220 10v100l-60 50v130"/><circle cx="220" cy="10" r="6"/><circle cx="285" cy="265" r="6"/></svg></div>
-</article>
-<article class="tour-stop stop-acid" id="obra-3" aria-labelledby="obra-3-title">
-<div class="stop-outline" aria-hidden="true">INSTINTO</div>
-<div class="stop-copy"><p class="stop-index">03 / 05 <span>Dark fantasy</span></p><h2 id="obra-3-title" tabindex="-1">A noite<br>tem olhos.</h2><p class="stop-description">O verde ácido muda a temperatura do tour. A silhueta escura organiza o desenho e deixa os olhos conduzirem a leitura.</p><div class="look-note"><span>Olhe de perto</span><p>O registro lado a lado mostra como a composição se adapta à curva do braço.</p></div><a class="stop-zoom" href="assets/images/12-cat-process.jpg" data-lightbox data-title="A noite tem olhos." data-meta="Parada 03 • Dark fantasy">Ampliar a tatuagem <span aria-hidden="true">+</span></a></div>
-<figure class="stop-image"><img src="assets/images/12-cat-process.jpg" alt="Desenho digital e tatuagem de gato noturno com detalhes verde ácido" width="662" height="829"><figcaption>03 <span>Dark fantasy / tatuagem de Ana Byte</span></figcaption></figure>
-<div class="stop-glyph" aria-hidden="true"><svg viewBox="0 0 300 300"><path d="M15 80h65l40 40v90l55 55h110M20 110h50l25 25v90l40 40M220 10v100l-60 50v130"/><circle cx="220" cy="10" r="6"/><circle cx="285" cy="265" r="6"/></svg></div>
-</article>
-<article class="tour-stop stop-cyan" id="obra-4" aria-labelledby="obra-4-title">
-<div class="stop-outline" aria-hidden="true">MUTAÇÃO</div>
-<div class="stop-copy"><p class="stop-index">04 / 05 <span>Bio cyber</span></p><h2 id="obra-4-title" tabindex="-1">Natureza<br>reprogramada.</h2><p class="stop-description">Da armadura para as asas. Um inseto ganha estrutura mecânica sem perder o gesto leve de uma forma viva.</p><div class="look-note"><span>Olhe de perto</span><p>As áreas de pele entre as asas funcionam como luz. O contraste não depende apenas da tinta.</p></div><a class="stop-zoom" href="assets/images/17-ladybug.jpg" data-lightbox data-title="Natureza reprogramada." data-meta="Parada 04 • Bio cyber">Ampliar a tatuagem <span aria-hidden="true">+</span></a></div>
-<figure class="stop-image"><img src="assets/images/17-ladybug.jpg" alt="Tatuagem de inseto biomecânico com asas abertas turquesa e corpo magenta" width="920" height="930"><figcaption>04 <span>Bio cyber / tatuagem de Ana Byte</span></figcaption></figure>
-<div class="stop-glyph" aria-hidden="true"><svg viewBox="0 0 300 300"><path d="M15 80h65l40 40v90l55 55h110M20 110h50l25 25v90l40 40M220 10v100l-60 50v130"/><circle cx="220" cy="10" r="6"/><circle cx="285" cy="265" r="6"/></svg></div>
-</article>
-<article class="tour-stop stop-pink" id="obra-5" aria-labelledby="obra-5-title">
-<div class="stop-outline" aria-hidden="true">NÚCLEO</div>
-<div class="stop-copy"><p class="stop-index">05 / 05 <span>Pequeno formato</span></p><h2 id="obra-5-title" tabindex="-1">Intensidade<br>concentrada.</h2><p class="stop-description">A última parada aproxima a escala. Um coração mecânico cabe em uma estrutura compacta, com a mesma assinatura de cor das peças maiores.</p><div class="look-note"><span>Olhe de perto</span><p>A moldura turquesa separa o núcleo rosa da pele e dá profundidade ao conjunto.</p></div><a class="stop-zoom" href="assets/images/02-heart-box.jpg" data-lightbox data-title="Intensidade concentrada." data-meta="Parada 05 • Pequeno formato">Ampliar a tatuagem <span aria-hidden="true">+</span></a></div>
-<figure class="stop-image"><img src="assets/images/02-heart-box.jpg" alt="Coração biomecânico tatuado em moldura turquesa com indicação de dez centímetros" width="336" height="474"><figcaption>05 <span>Pequeno formato / tatuagem de Ana Byte</span></figcaption></figure>
-<div class="stop-glyph" aria-hidden="true"><svg viewBox="0 0 300 300"><path d="M15 80h65l40 40v90l55 55h110M20 110h50l25 25v90l40 40M220 10v100l-60 50v130"/><circle cx="220" cy="10" r="6"/><circle cx="285" cy="265" r="6"/></svg></div>
-</article>
+<section class="city-chapter works-chapter" id="obras" aria-labelledby="works-title">
+<div class="facade-stage gallery-facade"><img class="scene-matte" data-city-critical src="assets/world/gallery-facade.jpg" alt="" width="887" height="1774" aria-hidden="true">
+<div class="mounted-gallery"><div class="billboard-screen"><h2 id="works-title" class="mounted-heading">ARQUIVO VIVO</h2><a href="assets/images/18-cyber-horse.jpg" class="gallery-open" id="gallery-open" aria-label="Ampliar a obra Anatomia do futuro"><img data-city-critical id="gallery-image" src="assets/images/18-cyber-horse.jpg" width="791" height="1150" alt="Tatuagem de cavalo cibernético com placas turquesa e linhas magenta"><span class="expand-image" aria-hidden="true">+</span></a><div class="work-caption"><span id="work-category">Na pele · Bio cyber</span><h3 id="work-title">Anatomia do futuro</h3></div></div>
+<div class="billboard-controls"><div class="gallery-navigation"><button id="previous-work" type="button" aria-label="Obra anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7"/></svg></button><button id="gallery-autoplay" type="button" aria-pressed="false"><span class="pause-icon" aria-hidden="true"></span><span>Pausar</span></button><button id="next-work" type="button" aria-label="Próxima obra"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 5 7 7-7 7"/></svg></button></div><div class="gallery-status"><span id="work-counter">01 / 15</span><button id="open-collection" type="button">Ver acervo <span aria-hidden="true">+</span></button></div></div></div>
+<div class="facade-destination"><span>01 · O arquivo vivo</span><button type="button" data-destination="artist">Visitar o ateliê <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></button></div>
 </div>
-<nav class="tour-dock" aria-label="Escolher parada do tour"><span class="dock-label">Obras</span><a href="#obra-1" data-tour-go="0" aria-label="Parada 1: Anatomia do futuro." aria-current="step">01</a><a href="#obra-2" data-tour-go="1" aria-label="Parada 2: Um rosto. Outro mundo.">02</a><a href="#obra-3" data-tour-go="2" aria-label="Parada 3: A noite tem olhos.">03</a><a href="#obra-4" data-tour-go="3" aria-label="Parada 4: Natureza reprogramada.">04</a><a href="#obra-5" data-tour-go="4" aria-label="Parada 5: Intensidade concentrada.">05</a><span class="dock-progress" aria-hidden="true"><i></i></span></nav>
+<div class="static-collection" id="work-collection" aria-label="Acervo de Ana Byte"><a data-work data-title="Anatomia do futuro" data-category="Na pele · Bio cyber" href="assets/images/18-cyber-horse.jpg"><img src="assets/images/18-cyber-horse.jpg" loading="lazy" alt="Cavalo cibernético tatuado em turquesa e magenta"></a>
+<a data-work data-title="Um rosto. Outro mundo." data-category="Na pele · Personagem" href="assets/images/04-cyber-warrior.jpg"><img src="assets/images/04-cyber-warrior.jpg" loading="lazy" alt="Guerreira com armadura turquesa e magenta"></a>
+<a data-work data-title="Caos em neon" data-category="Na pele · Jinx" href="assets/images/03-jinx.jpg"><img src="assets/images/03-jinx.jpg" loading="lazy" alt="Objeto mecânico inspirado em Jinx"></a>
+<a data-work data-title="Natureza reprogramada" data-category="Na pele · Bio cyber" href="assets/images/17-ladybug.jpg"><img src="assets/images/17-ladybug.jpg" loading="lazy" alt="Joaninha biomecânica com asas turquesa"></a>
+<a data-work data-title="A noite tem olhos" data-category="Desenho e pele · Dark fantasy" href="assets/images/12-cat-process.jpg"><img src="assets/images/12-cat-process.jpg" loading="lazy" alt="Desenho e tatuagem de gato com detalhes verde ácido"></a>
+<a data-work data-title="Corte de luz" data-category="Desenho e pele · Cyber" href="assets/images/11-dagger-process.jpg"><img src="assets/images/11-dagger-process.jpg" loading="lazy" alt="Desenho e tatuagem de adaga com circuitos"></a>
+<a data-work data-title="Núcleo sensível" data-category="Na pele · Coração mecânico" href="assets/images/02-heart-box.jpg"><img src="assets/images/02-heart-box.jpg" loading="lazy" alt="Coração mecânico rosa em moldura turquesa"></a>
+<a data-work data-title="Instinto sintético" data-category="Desenho e pele · Bio cyber" href="assets/images/08-hunter-process.jpg"><img src="assets/images/08-hunter-process.jpg" loading="lazy" alt="Desenho e tatuagem de criatura biomecânica"></a>
+<a data-work data-title="Outra forma de existir" data-category="Desenho e pele · Simbionte" href="assets/images/10-symbiote-process.jpg"><img src="assets/images/10-symbiote-process.jpg" loading="lazy" alt="Criatura simbionte com armadura rosa e verde"></a>
+<a data-work data-title="Depois da meia-noite" data-category="Desenho e pele · Vampiro" href="assets/images/13-vampire-process.jpg"><img src="assets/images/13-vampire-process.jpg" loading="lazy" alt="Retrato de vampiro, desenho e tatuagem"></a>
+<a data-work data-title="Coração exposto" data-category="Desenho e pele · Processo" href="assets/images/09-heart-process.jpg"><img src="assets/images/09-heart-process.jpg" loading="lazy" alt="Processo do coração mecânico e resultado tatuado"></a>
+<a data-work data-title="Embrace the void" data-category="Arte digital · Ilustração" href="assets/images/05-embrace-void.jpg"><img src="assets/images/05-embrace-void.jpg" loading="lazy" alt="Ilustração de figura cibernética com núcleo vazio"></a>
+<a data-work data-title="Fill the void" data-category="Arte digital · Ilustração" href="assets/images/06-fill-void.jpg"><img src="assets/images/06-fill-void.jpg" loading="lazy" alt="Duas personagens em luz magenta e ciano"></a>
+<a data-work data-title="Sinais de outro mundo" data-category="Arte digital · Ilustração" href="assets/images/07-neon-panel.jpg"><img src="assets/images/07-neon-panel.jpg" loading="lazy" alt="Arte impressa de personagem cibernética"></a>
+<a data-work data-title="Entre nós" data-category="Arte digital · Ilustração" href="assets/images/14-couple-illustration.jpg"><img src="assets/images/14-couple-illustration.jpg" loading="lazy" alt="Duas personagens com cabelo azul e rosa"></a></div>
 </section>
-<section class="transfer" id="depois-tour" aria-labelledby="transfer-title">
-<div class="transfer-heading"><p class="eyebrow">Além da imagem pronta</p><h2 id="transfer-title">DA TELA.<br><span>À PELE.</span></h2><p>A mesma ideia, outra matéria. Explore os dois momentos deste trabalho.</p></div>
-<div class="transfer-console"><div class="transfer-frame"><div class="transfer-base"><img src="assets/images/09-heart-process.jpg" alt="Registro do desenho digital e sua aplicação" width="632" height="874" loading="lazy"></div><div class="transfer-skin"><img src="assets/images/02-heart-box.jpg" alt="Coração mecânico tatuado na pele" width="336" height="474" loading="lazy"></div><div class="transfer-scan" aria-hidden="true"><span>+</span></div><span class="transfer-label">Desenho e aplicação</span></div><div class="transfer-controls" hidden><label for="skin-range">Arraste para revelar a tatuagem</label><input id="skin-range" type="range" min="0" max="100" value="50" aria-label="Revelar tatuagem sobre o registro do desenho"><div><span>Desenho</span><span>Pele</span></div></div></div>
-</section>
-<section class="tour-artist" id="artista"><figure><img src="assets/images/15-ana-working.jpg" alt="Ana Byte durante uma sessão de tatuagem" width="863" height="1145" loading="lazy"></figure><div><p class="eyebrow">A pessoa por trás do traço</p><h2>ANA<br><span>BITENCOURT.</span></h2><p>Personagens, anatomia e ficção científica encontram a pele. Esse é o universo visual de Ana Byte.</p><a class="text-link" href="sobre/index.html">Conhecer a artista</a></div></section>
-<section class="tour-contact" id="contato"><p class="eyebrow">O tour termina. Seu projeto começa.</p><h2>SUA PELE.<br><span>OUTRO FUTURO.</span></h2><div class="contact-bottom"><p>Conte o tema, a região do corpo e o tamanho aproximado. A conversa continua no WhatsApp.</p><a class="tour-enter" href="https://wa.me/5511919007582?text=Oi%20Ana!%20Fiz%20o%20tour%20pelo%20seu%20site%20e%20quero%20conversar%20sobre%20uma%20tatuagem." target="_blank" rel="noopener"><span>Pedir orçamento</span><b aria-hidden="true">+</b></a></div><p class="studio-footnote">São Paulo • Studio Byte Lab <span>Local demonstrativo</span></p></section>
-</main>
-<footer class="site-footer"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">AB</span><span class="brand-name">ANA BYTE</span></a><p>Cybergoth tattoos • São Paulo</p><div><a href="https://www.instagram.com/ana.byte/" target="_blank" rel="noopener">Instagram</a><a href="trabalhos/index.html">Portfólio completo</a></div></footer>
-<dialog class="lightbox" data-lightbox-dialog aria-labelledby="lightbox-title"><button class="lightbox-close" type="button" aria-label="Fechar imagem" data-lightbox-close>Fechar</button><button class="lightbox-nav lightbox-prev" type="button" aria-label="Imagem anterior" data-lightbox-prev>Anterior</button><figure><img alt="" data-lightbox-image><figcaption><strong id="lightbox-title" data-lightbox-title></strong><span data-lightbox-meta></span></figcaption></figure><button class="lightbox-nav lightbox-next" type="button" aria-label="Próxima imagem" data-lightbox-next>Próxima</button></dialog>
+<section class="city-chapter atelier-chapter" id="atelie" aria-labelledby="atelier-title">
+<div class="facade-stage artist-facade"><img class="scene-matte" src="assets/world/atelier-facade.jpg" width="887" height="1774" alt="" aria-hidden="true">
+<div class="mounted-artist"><p class="eyebrow">Dentro do ateliê</p><h2 id="atelier-title">A MÃO POR TRÁS<br><em>DO TRAÇO.</em></h2>
+<div class="artist-image"><img src="assets/images/15-ana-working.jpg" alt="Ana Byte concentrada enquanto tatua" width="863" height="1145"><span class="artist-name">ANA BYTE</span></div>
+<p class="artist-copy">Corpo, cor e outros universos.<br>Tatuagem e ilustração autoral.</p>
+<div class="artist-actions"><a href="sobre/index.html"><span>Conheça a Ana<small>A artista e seu universo</small></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></a><a href="trabalhos/circuito-organico/index.html"><span>Da arte à pele<small>Entre nos projetos</small></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></a></div></div>
+<div class="facade-destination"><span>02 · Ana Byte</span><button type="button" data-destination="contact">Vamos criar? <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></button></div>
+</div></section>
+<section class="city-chapter contact-chapter" id="contato" aria-labelledby="contact-title"><img class="contact-city-matte" src="assets/world/ana-neon-preview.jpg" alt="" aria-hidden="true"><div class="contact-portal"><p class="eyebrow">03 · O próximo capítulo</p><span class="portal-star" aria-hidden="true">✳</span><h2 id="contact-title">SUA IDEIA.<br><em>OUTRA VIDA.</em></h2><p>Tem um universo aí dentro?<br>Vamos dar forma a ele.</p><a class="whatsapp-link" href="https://wa.me/5511919007582?text=Oi%20Ana!%20Conheci%20seu%20universo%20e%20quero%20conversar%20sobre%20uma%20tatuagem." target="_blank" rel="noopener"><span>Conversar com a Ana<small>No WhatsApp</small></span><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M8 24 24 8M8 8h16v16"/></svg></a><span class="contact-location">São Paulo · Studio Byte Lab<small>Local demonstrativo</small></span><button class="return-city" type="button" data-destination="city">Voltar à cidade</button></div></section>
+<nav class="journey-nav" aria-label="Destinos da experiência"><a href="#inicio" data-destination="city" aria-current="step"><span>01</span>Cidade</a><a href="#obras" data-destination="works"><span>02</span>Obras</a><a href="#atelie" data-destination="artist"><span>03</span>Ana</a><a href="#contato" data-destination="contact"><span>04</span>Contato</a><i class="journey-line" aria-hidden="true"></i></nav>
+</div></main>
+<dialog class="art-dialog" id="art-dialog" aria-labelledby="dialog-title"><div class="dialog-top"><span id="dialog-category"></span><button id="close-art" type="button" aria-label="Fechar imagem">Fechar <span aria-hidden="true">×</span></button></div><div class="dialog-art"><img id="dialog-image" src="assets/images/18-cyber-horse.jpg" alt=""></div><div class="dialog-bottom"><h2 id="dialog-title">Anatomia do futuro</h2><a id="dialog-contact" href="https://wa.me/5511919007582" target="_blank" rel="noopener">Quero conversar sobre uma ideia</a><div class="dialog-arrows"><button type="button" id="dialog-prev" aria-label="Obra anterior">Anterior</button><span id="dialog-counter"></span><button type="button" id="dialog-next" aria-label="Próxima obra">Próxima</button></div></div></dialog>
+<dialog class="collection-dialog" id="collection-dialog" aria-labelledby="collection-title"><div class="dialog-top"><h2 id="collection-title">O arquivo vivo</h2><button type="button" id="close-collection">Fechar <span aria-hidden="true">×</span></button></div><p>Escolha uma obra para descobrir.</p><div class="collection-grid" id="collection-grid"></div></dialog>
 </body></html>

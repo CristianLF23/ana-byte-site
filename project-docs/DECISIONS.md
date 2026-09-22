@@ -14,3 +14,7 @@
 12. Mobile: cenas com posição sticky, rolagem vertical nativa e gesto horizontal deliberado para mudar de obra. Desktop: trilho horizontal conduzido pela rolagem. Movimento reduzido apresenta as obras no fluxo normal.
 13. Fonte Barlow Condensed Bold local sob SIL OFL 1.1 para consistência entre aparelhos. Licença distribuída em assets/fonts.
 14. Neon irregular localizado, circuitos originais, luzes pausáveis e animações suspensas fora da área visível. A fotografia permanece sem alterações na arte tatuada.
+
+## Revisão posterior: cinema por destinos
+
+As decisões 6, 11 e 12 acima foram substituídas por instruções posteriores do usuário. O loading agora espera um clique explícito em Começar experiência. A navegação usa botões: background fixo, vídeo fornecido, transição e destino. Não exige rolagem. O vídeo não é reproduzido em loop. As fachadas ilustradas enquadram os painéis interativos no mesmo plano visual. As páginas internas entram lateralmente sobre a cidade e têm retorno fixo. Especificação e limites em [CITY_CINEMA.md](CITY_CINEMA.md).

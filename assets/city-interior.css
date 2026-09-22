@@ -1,0 +1,144 @@
+/* Interior pages: a translucent layer inside Ana Byte's illustrated city. */
+:root { --interior-pink: #ff2b98; --interior-cyan: #55f6f1; --interior-ink: #050817; }
+
+body.interior-page {
+  min-height: 100%;
+  background: #050817 url("world/city-illustrated.jpg") center / cover fixed no-repeat;
+  color: #f5f0ff;
+}
+
+body.interior-page::before {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(4, 6, 19, .66), rgba(4, 6, 19, .88)),
+    radial-gradient(circle at 76% 16%, rgba(255, 43, 152, .16), transparent 32%),
+    linear-gradient(110deg, rgba(85, 246, 241, .1), transparent 46%);
+}
+
+body.interior-page::after {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  pointer-events: none;
+  opacity: .32;
+  background-image: linear-gradient(rgba(85, 246, 241, .07) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 43, 152, .055) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: linear-gradient(180deg, transparent, #000 20%, #000 80%, transparent);
+}
+
+body.interior-page .site-header,
+body.interior-page .site-footer { background: rgba(3, 5, 16, .74); backdrop-filter: blur(16px); }
+body.interior-page main > section,
+body.interior-page main > .collection,
+body.interior-page main > .project-process { background-color: rgba(5, 8, 23, .67); backdrop-filter: blur(5px); }
+body.interior-page .project-statement,
+body.interior-page .bio-grid,
+body.interior-page .brief-section { background-color: rgba(231, 239, 235, .92); backdrop-filter: blur(8px); }
+
+.interior-return-bar {
+  position: fixed;
+  top: .8rem;
+  left: 50%;
+  z-index: 1200;
+  display: flex;
+  width: min(calc(100% - 2rem), 34rem);
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  padding: .5rem .58rem .5rem .78rem;
+  border: 1px solid rgba(85, 246, 241, .58);
+  background: rgba(5, 8, 23, .83);
+  box-shadow: 0 0 22px rgba(85, 246, 241, .12), inset 0 0 0 1px rgba(255, 43, 152, .16);
+  color: #f5f0ff;
+  transform: translateX(-50%);
+  backdrop-filter: blur(18px);
+}
+
+.interior-return-bar::before {
+  position: absolute;
+  top: -1px;
+  left: 12%;
+  width: 22%;
+  height: 1px;
+  content: "";
+  background: var(--interior-pink);
+  box-shadow: 0 0 9px var(--interior-pink);
+}
+
+.interior-return-bar__label {
+  color: rgba(245, 240, 255, .62);
+  font: 700 .63rem/1 "Barlow Condensed", sans-serif;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.interior-return-bar__button {
+  display: inline-flex;
+  min-height: 2.2rem;
+  align-items: center;
+  gap: .52rem;
+  padding: .52rem .78rem;
+  border: 1px solid var(--interior-pink);
+  color: #fff;
+  background: rgba(255, 43, 152, .11);
+  cursor: pointer;
+  font: 700 .7rem/1 "Barlow Condensed", sans-serif;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  transition: color .2s ease, background .2s ease, box-shadow .2s ease;
+}
+
+.interior-return-bar__button::before { content: "‹"; color: var(--interior-cyan); font-size: 1.2rem; line-height: .5; }
+.interior-return-bar__button svg { width: 1rem; height: .7rem; fill: none; stroke: currentColor; stroke-width: 1.5; }
+.interior-return-bar__button:hover,
+.interior-return-bar__button:focus-visible { color: var(--interior-ink); background: var(--interior-cyan); box-shadow: 0 0 18px rgba(85, 246, 241, .44); outline: none; }
+.interior-return-bar__button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+body.interior-embedded { background: transparent; }
+body.interior-embedded::before,
+body.interior-embedded::after { display: none; }
+body.interior-embedded .site-header { display: none; }
+body.interior-embedded .interior-return-bar { display: none; }
+body.interior-embedded .site-footer { margin-top: 0; }
+body.interior-embedded main { padding-top: 0; }
+
+.ana-interior-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  overflow: hidden;
+  background: rgba(3, 5, 17, .82);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .35s ease;
+  backdrop-filter: blur(7px);
+}
+
+.ana-interior-layer.is-open { opacity: 1; pointer-events: auto; }
+.ana-interior-layer[hidden] { display: none !important; }
+.ana-interior-layer__frame { position: relative; width: 100%; height: 100%; overflow: hidden; transform: translateX(100%); transition: transform .65s cubic-bezier(.76, 0, .18, 1); }
+.ana-interior-layer.is-open .ana-interior-layer__frame { transform: translateX(0); }
+.ana-interior-layer__iframe { display: block; width: 100%; height: 100%; border: 0; background: transparent; }
+.ana-interior-layer__glow { position: absolute; inset: 0 0 auto; height: 1px; pointer-events: none; background: var(--interior-cyan); box-shadow: 0 0 16px var(--interior-cyan), 0 0 34px rgba(255, 43, 152, .7); }
+.ana-interior-layer__close { position: absolute; top: .75rem; right: .75rem; z-index: 2; min-height: 2.25rem; padding: .5rem .72rem; border: 1px solid var(--interior-cyan); color: #fff; background: rgba(5, 8, 23, .9); cursor: pointer; font: 700 .68rem/1 "Barlow Condensed", sans-serif; letter-spacing: .12em; text-transform: uppercase; }
+.ana-interior-layer__close:hover, .ana-interior-layer__close:focus-visible { color: var(--interior-ink); background: var(--interior-cyan); outline: none; }
+
+@media (max-width: 54rem) {
+  .interior-return-bar { top: .5rem; width: calc(100% - 1rem); padding-left: .58rem; }
+  .interior-return-bar__label { font-size: .55rem; }
+  .interior-return-bar__button { min-height: 2.45rem; padding-inline: .65rem; font-size: .64rem; }
+  body.interior-page main { padding-top: 1px; }
+  body.interior-page main > section:first-child { padding-top: calc(var(--header) + 3rem); }
+  body.interior-embedded main { padding-top: 0; }
+  .ana-interior-layer__close { top: .55rem; right: .55rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ana-interior-layer, .ana-interior-layer__frame, .interior-return-bar__button { transition-duration: .01ms; }
+}
