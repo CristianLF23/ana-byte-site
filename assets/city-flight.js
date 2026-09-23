@@ -78,7 +78,7 @@
     settling = false;
     root.classList.add('city-travelling');
     nav.setAttribute('aria-busy', 'true');
-    savedInert = [header, nav, document.querySelector(scenes[scene])].map(element => [element, element.inert]);
+    savedInert = [header, nav, document.querySelector('.scene-arrows'), document.querySelector(scenes[scene])].map(element => [element, element.inert]);
     savedInert.forEach(([element]) => { element.inert = true; });
     // The video is reserved for the first descent. Other destinations use a short dissolve.
     if (reduced.matches || scene !== 'city' || name !== 'works') { arrive(reduced.matches); return; }

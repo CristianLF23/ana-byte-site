@@ -142,3 +142,23 @@ body.interior-embedded main { padding-top: 0; }
 @media (prefers-reduced-motion: reduce) {
   .ana-interior-layer, .ana-interior-layer__frame, .interior-return-bar__button { transition-duration: .01ms; }
 }
+
+/* One complementary reading layer. Its transparent document reveals the city. */
+html.interior-embedded-root{background:transparent}
+.ana-interior-layer{background:#03081526;backdrop-filter:blur(2px);transition:opacity .45s ease}
+.ana-interior-layer[data-page="project"]{background:linear-gradient(#03081526,#03081526),url('world/ana-neon-tuxedo.jpg') center/cover no-repeat}
+.ana-interior-layer__frame{display:grid;grid-template-rows:auto minmax(0,1fr);height:100dvh;transform:translate3d(100%,0,0);transition:transform .7s cubic-bezier(.22,.7,.16,1)}
+.ana-interior-layer.is-open .ana-interior-layer__frame{transform:translate3d(0,0,0)}
+.complement-toolbar{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;background:#07101bcc;backdrop-filter:blur(12px);border-bottom:1px solid #61949850}
+.complement-toolbar>span{font:700 18px/1 'Barlow Condensed',sans-serif;letter-spacing:.04em;color:#f866b0}
+.complement-toolbar .ana-interior-layer__close{position:static;display:flex;align-items:center;gap:10px;min-height:44px;font:500 12px/1.3 'Segoe UI',sans-serif;padding:10px 12px;text-transform:none;letter-spacing:0;border:1px solid #76e3e680;background:#0b1b26}
+.ana-interior-layer__close svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.5}
+.ana-interior-layer__close:focus-visible{outline:2px solid white;outline-offset:3px}
+.complement-toolbar .ana-interior-layer__close:hover,.complement-toolbar .ana-interior-layer__close:focus-visible{background:#96ece8;color:#072027}
+.complement-content{min-height:0;position:relative}
+.ana-interior-layer__iframe{height:100%;opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .55s cubic-bezier(.22,.7,.16,1)}
+.content-ready .ana-interior-layer__iframe{opacity:1;transform:translateY(0)}
+.complement-loading{position:absolute;left:24px;top:35%;color:#b2f4f0;font-size:14px;padding:15px;background:#06101cc9;border-left:2px solid #ef5aa5}
+.complement-loading[hidden]{display:none}
+.interior-return-bar__button::before{display:none}
+@media(prefers-reduced-motion:reduce){.ana-interior-layer,.ana-interior-layer__frame,.ana-interior-layer__iframe{transition:none;transform:none}}

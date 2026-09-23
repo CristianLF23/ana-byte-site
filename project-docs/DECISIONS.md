@@ -18,3 +18,9 @@
 ## Revisão posterior: cinema por destinos
 
 As decisões 6, 11 e 12 acima foram substituídas por instruções posteriores do usuário. O loading agora espera um clique explícito em Começar experiência. A navegação usa botões: background fixo, vídeo fornecido, transição e destino. Não exige rolagem. O vídeo não é reproduzido em loop. As fachadas ilustradas enquadram os painéis interativos no mesmo plano visual. As páginas internas entram lateralmente sobre a cidade e têm retorno fixo. Especificação e limites em [CITY_CINEMA.md](CITY_CINEMA.md).
+
+## Revisão da V1: percurso e conteúdo complementar
+
+O pedido posterior substitui a restrição de formulário da decisão 3. O convite final abre Comece pela ideia, uma página translúcida que orienta o visitante e termina com cinco campos. O formulário apenas prepara uma mensagem para o WhatsApp existente, sem guardar dados ou enviar automaticamente. A publicação da V1 está autorizada; V2 permanece separada.
+
+As cenas Obras e Ana têm controles laterais Voltar e Avançar; a faixa inferior é um indicador de progresso. Foram retirados os botões Pausar e Visitar o ateliê do acervo, o Vamos criar da artista e o CTA do cabeçalho nessas duas cenas. Vídeo responde ao toque; fotos respondem a deslize e toque para ampliar. As páginas A Ana, Projetos e Sua ideia funcionam como conteúdo complementar conectado, com retorno fixo à cidade e sem cabeçalhos ou rodapés repetidos.

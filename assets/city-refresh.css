@@ -57,3 +57,49 @@
 @media(min-width:760px){.city-cinema .gallery-facade{width:73svh;height:146svh}.city-cinema .artist-facade{width:80svh;height:160svh}.city-cinema .city-hero .hero-copy{padding-top:16svh}.city-cinema .city-hero .discover-world{bottom:13svh}}
 @media(max-height:720px){.city-cinema .city-hero .hero-copy{padding-top:18svh}.city-cinema .city-hero h1{font-size:27vw}.city-cinema .city-hero .hero-subtitle{font-size:17px;margin-top:25px}.city-cinema .city-hero .discover-world{bottom:14svh;min-height:68px;font-size:18px}.city-hero .hero-copy .eyebrow{font-size:10px}.city-cinema .gallery-facade{width:73svh;height:146svh;top:52%}.city-cinema .artist-facade{width:82svh;height:164svh;top:50%}.mounted-artist{padding:10px}.mounted-artist h2{font-size:24px}.mounted-artist>.eyebrow{font-size:8px}.mounted-artist .artist-copy{font-size:11px}.artist-actions a{min-height:48px;padding:7px 9px;font-size:12px}.artist-actions small{font-size:9px}.mounted-gallery .mounted-heading{font-size:18px;padding:7px 10px}.mounted-gallery .work-caption h3{font-size:18px}.mounted-gallery .work-caption>span{font-size:9px}.gallery-facade .facade-destination{top:70%}.facade-destination>button{font-size:12px;min-height:44px}.project-form{padding:18px}}
 @media(prefers-reduced-motion:reduce){.byte-entry__progress-value{transition:none}}
+
+/* The cat remains below the header; the media now reaches behind its caption. */
+.city-cinema .gallery-facade{width:min(158vw,80svh);height:min(316vw,160svh);top:calc(74px + env(safe-area-inset-top));transform:translate(-50%,-7.3%);transform-origin:50% 7.3%}
+.mounted-gallery{bottom:auto;height:min(47.5%,calc(100svh - 300px))}
+.mounted-gallery .mounted-heading{position:absolute;top:0;left:0;right:0;z-index:2;padding:10px 12px;border:0;font-size:18px;background:linear-gradient(#02070cdb,transparent);pointer-events:none}
+.mounted-gallery .work-caption{position:absolute;bottom:0;left:0;right:0;z-index:2;padding:25px 12px 10px;background:linear-gradient(transparent,#02070cf5);border:0;pointer-events:none}
+.mounted-gallery .work-caption h3{font-size:21px;text-shadow:0 1px 5px #000}
+.mounted-gallery .work-caption>span{color:#bbefe8;text-shadow:0 1px 5px #000}
+.mounted-gallery .gallery-open .expand-image{bottom:74px}
+.city-cinema .artist-facade{width:min(184vw,94svh);height:min(368vw,188svh);top:50%;transform:translate(-50%,-34%);transform-origin:50% 34%}
+.mounted-artist{bottom:auto;height:min(39.9%,calc(100svh - 232px))}
+.mounted-artist>.eyebrow{font-size:9px;margin-bottom:7px}.mounted-artist h2{font-size:25px}
+.mounted-artist .artist-copy{font-size:12px}.mounted-artist .artist-image{margin:10px 0;flex:1;min-height:0}
+.mounted-artist .artist-image img{object-position:50% 35%}
+.mounted-artist .artist-actions{gap:6px;margin-top:9px}.mounted-artist .artist-actions a{min-height:50px;padding:7px 10px;font-size:13px}
+.mounted-artist .artist-actions small{font-size:10px}
+@media(min-width:760px){.city-cinema .gallery-facade{width:76svh;height:152svh}.city-cinema .artist-facade{width:91svh;height:182svh}}
+@media(max-height:720px){.mounted-gallery .work-caption h3{font-size:18px}.mounted-gallery .work-caption{padding-bottom:8px}.mounted-artist h2{font-size:23px}.mounted-artist .artist-actions a{min-height:46px;font-size:12px}.mounted-artist .artist-actions small{font-size:9px}.mounted-artist .facade-destination{padding-top:6px}}
+.interior-layer-open .city-header,.interior-layer-open .journey-nav{visibility:hidden}
+.mounted-gallery,.mounted-artist,.contact-portal{transition:opacity .35s ease}
+.interior-layer-open .mounted-gallery,.interior-layer-open .mounted-artist,.interior-layer-open .contact-portal{opacity:0}
+@media(max-height:720px){.mounted-gallery .facade-destination,.mounted-artist .facade-destination{display:none}.mounted-gallery{height:min(47.5%,calc(100svh - 280px))}.mounted-artist{height:min(39.9%,calc(100svh - 194px))}.mounted-artist .artist-copy{display:none}}
+
+/* A single route through the city; swiping is reserved for the artworks. */
+.city-cinema .city-viewport{overflow:clip}
+.city-cinema .journey-nav{bottom:calc(17px + env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:center;gap:7px;width:auto;min-width:175px;max-width:80vw;padding:10px 18px 12px;background:#06111ccc;border:1px solid #629ba438;box-shadow:none;pointer-events:none}
+.journey-current{font:700 15px/1 var(--display);color:#ff6caf}.journey-total{font:11px/1.2 var(--body);color:#a8b7c6}.journey-name{font-size:12px;margin-left:7px;color:#ecf6fa}
+.journey-track{position:absolute;left:0;right:0;bottom:0;height:2px;background:#718f9820}
+.journey-track .journey-line{position:absolute;left:0!important;bottom:0;height:2px;width:25%;background:#ee4d9f;box-shadow:0 0 8px #ee4d9f66;transition:width .45s ease}
+.scene-arrows{position:absolute;inset:0;z-index:25;pointer-events:none}
+.scene-arrows[hidden]{display:none}
+.scene-arrows button{pointer-events:auto;position:absolute;top:50%;transform:translateY(-50%);width:44px;min-height:64px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:7px;background:#06131eeb;border:1px solid #80dfdf88;box-shadow:0 0 15px #04141ee0;color:#c3ffff}
+.scene-arrows .scene-back{left:4px;border-radius:0 5px 5px 0}.scene-arrows .scene-next{right:4px;border-color:#ef61aa;border-radius:5px 0 0 5px;color:#ffcce6}
+.scene-arrows svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.5}.scene-arrows span{font-size:9px;line-height:1.2}
+.scene-arrows button:hover{background:#14303b}.scene-arrows button:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.city-travelling .scene-arrows{opacity:.35;pointer-events:none}.city-travelling .scene-arrows button{pointer-events:none}
+.interior-layer-open .scene-arrows{visibility:hidden}
+[data-scene="works"] .header-contact,[data-scene="artist"] .header-contact{visibility:hidden;pointer-events:none}
+.mounted-gallery .billboard-controls{padding:0 10px 4px}.gallery-instruction{padding:9px 0 2px;color:#b5d1d8;font-size:10px;line-height:1.45;text-align:center}
+.mounted-gallery .gallery-status{gap:9px}.mounted-gallery .gallery-status button{font-size:12px;min-height:44px}
+.mounted-gallery{height:min(47.5%,calc(100svh - 273px))}
+.mounted-artist{height:min(39.9%,calc(100svh - 200px))}
+.mounted-artist .artist-image{margin-bottom:12px}
+@media(min-width:760px){.scene-arrows .scene-back{left:max(20px,calc(50% - 330px))}.scene-arrows .scene-next{right:max(20px,calc(50% - 330px))}.scene-arrows button{width:55px;min-height:76px}.scene-arrows span{font-size:11px}.mounted-gallery .gallery-instruction{font-size:11px}.mounted-gallery{height:min(47.5%,calc(100svh - 285px))}}
+@media(max-height:720px){.mounted-gallery{height:min(47.5%,calc(100svh - 252px))}.mounted-artist{height:min(39.9%,calc(100svh - 173px))}.mounted-gallery .gallery-instruction{font-size:9px;white-space:nowrap;letter-spacing:-.015em}.city-cinema .journey-nav{bottom:calc(12px + env(safe-area-inset-bottom))}}
+@media(prefers-reduced-motion:reduce){.journey-track .journey-line,.mounted-gallery,.mounted-artist,.contact-portal{transition:none}}

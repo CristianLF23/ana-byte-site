@@ -1,9 +1,9 @@
 (() => {
   'use strict';
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  const rootPath = () => `${location.origin}${location.pathname.replace(/(?:sobre|trabalhos(?:\/circuito-organico)?|orcamento)\/index\.html$/, 'index.html')}`;
+  const rootPath = () => `${location.origin}${location.pathname.replace(/(?:sobre|trabalhos(?:\/circuito-organico)?|orcamento)\/(?:index\.html)?$/, 'index.html')}`;
   const isExternal = href => /^https?:\/\//i.test(href) && !href.startsWith(location.origin);
-  const isInterior = path => /\/(?:sobre|trabalhos(?:\/circuito-organico)?|orcamento)\/index\.html$/i.test(path.replace(/\\/g, '/'));
+  const isInterior = path => /\/(?:sobre|trabalhos(?:\/circuito-organico)?|orcamento)\/(?:index\.html)?$/i.test(path.replace(/\\/g, '/'));
 
   const makeReturnBar = embedded => {
     const existing = document.querySelector('[data-interior-return]');
@@ -11,7 +11,7 @@
     const bar = document.createElement('div');
     bar.className = 'interior-return-bar';
     bar.dataset.interiorReturn = 'true';
-    bar.innerHTML = `<span class="interior-return-bar__label">ANA BYTE // acesso interno</span><a class="interior-return-bar__button" data-interior-return-button href="${embedded ? '#' : `${rootPath()}?scene=city`}"><svg aria-hidden="true" viewBox="0 0 18 12"><path d="M17 6H2M7 1 2 6l5 5"/></svg><span>Voltar à cidade</span></a>`;
+    bar.innerHTML = `<span class="interior-return-bar__label">ANA BYTE</span><a class="interior-return-bar__button" data-interior-return-button href="${embedded ? '#' : `${rootPath()}?scene=city`}"><svg aria-hidden="true" viewBox="0 0 18 12"><path d="M17 6H2M7 1 2 6l5 5"/></svg><span>Voltar à cidade</span></a>`;
     document.body.append(bar);
     const button = bar.querySelector('[data-interior-return-button]');
     if (embedded) button.addEventListener('click', event => { event.preventDefault(); window.parent.postMessage({ type: 'ana-interior-close' }, location.origin); });
@@ -20,17 +20,18 @@
 
   const setupEmbedded = () => {
     document.body.classList.add('interior-page', 'interior-embedded');
-    makeReturnBar(true);
+    document.documentElement.classList.add("interior-embedded-root");
     document.addEventListener('click', event => {
       const link = event.target.closest('a[href]');
-      if (!link || link.target === '_blank' || event.defaultPrevented) return;
+      if (!link || link.target === '_blank' || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
       const url = new URL(link.href, location.href);
+      if (url.pathname === location.pathname && url.search === location.search && url.hash) return;
       if (isExternal(url.href) || url.origin !== location.origin || !isInterior(url.pathname)) return;
       event.preventDefault();
       window.parent.postMessage({ type: 'ana-interior-navigate', href: url.href }, location.origin);
     });
     document.addEventListener('keydown', event => {
-      if (event.key === 'Escape') {
+      if (event.key === 'Escape' && !document.querySelector('dialog[open]')) {
         event.preventDefault();
         window.parent.postMessage({ type: 'ana-interior-close' }, location.origin);
         return;
@@ -58,7 +59,7 @@
     layer.setAttribute('aria-label', 'Experiência interna Ana Byte');
     layer.hidden = true;
     layer.inert = true;
-    layer.innerHTML = '<div class="ana-interior-layer__frame"><span class="ana-interior-layer__glow" aria-hidden="true"></span><button class="ana-interior-layer__close" type="button">Voltar à cidade</button><iframe class="ana-interior-layer__iframe" title="Conteúdo interno Ana Byte" loading="eager"></iframe></div>';
+    layer.innerHTML = '<div class="ana-interior-layer__frame"><header class="complement-toolbar"><button class="ana-interior-layer__close" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H4m6-6-6 6 6 6"/></svg>Voltar à cidade</button><span>ANA BYTE</span></header><div class="complement-content"><p class="complement-loading" role="status">Abrindo um novo capítulo</p><iframe class="ana-interior-layer__iframe" title="Universo de Ana Byte" loading="eager"></iframe></div></div>';
     document.body.append(layer);
     const iframe = layer.querySelector('iframe');
     const close = layer.querySelector('button');
@@ -70,6 +71,18 @@
     let clearTimer = 0;
     let openFrame = 0;
     let closing = false;
+    const loading = layer.querySelector('.complement-loading');
+    const preparePage = url => {
+      layer.dataset.page = url.pathname.includes('/orcamento/') ? 'project' : 'story';
+      layer.classList.remove('content-ready');
+      layer.setAttribute('aria-busy', 'true');
+      loading.hidden = false;
+    };
+    const embedUrl = url => {
+      const next = new URL(url);
+      next.searchParams.set('experience', '1');
+      return next.href;
+    };
     let inertSiblings = [];
     const setUnderlyingInert = enabled => {
       if (enabled) {
@@ -86,7 +99,7 @@
         const doc = iframe.contentDocument;
         if (!doc || doc.body.dataset.anaKeyboardBound === 'true') return;
         doc.body.dataset.anaKeyboardBound = 'true';
-        doc.addEventListener('keydown', event => { if (event.key === 'Escape') { event.preventDefault(); window.parent.postMessage({ type: 'ana-interior-close' }, location.origin); } }, true);
+        doc.addEventListener('keydown', event => { if (event.key === 'Escape' && !doc.querySelector('dialog[open]')) { event.preventDefault(); window.parent.postMessage({ type: 'ana-interior-close' }, location.origin); } }, true);
       } catch (_) { /* cross-origin navigation remains a safe browser fallback */ }
     };
     const open = (href, source) => {
@@ -98,8 +111,11 @@
       window.clearTimeout(clearTimer); window.cancelAnimationFrame(openFrame); closing = false;
       trigger = source || document.activeElement;
       activeUrl = `${url.pathname}${url.search}${url.hash}`;
-      iframe.src = `${url.pathname}${url.search ? `${url.search}&` : '?'}experience=1`;
+      document.querySelectorAll('dialog[open]').forEach(dialog => dialog.close());
+      preparePage(url);
+      iframe.src = embedUrl(url);
       layer.hidden = false; layer.inert = false; setUnderlyingInert(true);
+      window.dispatchEvent(new CustomEvent('ana:interiorchange', { detail: { open: true } }));
       document.body.classList.add('interior-layer-open'); document.body.style.overflow = 'hidden'; html.style.overflow = 'hidden';
       layer.classList.remove('is-open');
       openFrame = requestAnimationFrame(() => { openFrame = requestAnimationFrame(() => layer.classList.add('is-open')); });
@@ -109,6 +125,7 @@
       if (layer.hidden || closing) return;
       closing = true; window.cancelAnimationFrame(openFrame); layer.classList.remove('is-open'); layer.inert = true; setUnderlyingInert(false);
       document.body.classList.remove('interior-layer-open'); document.body.style.overflow = savedBodyOverflow; html.style.overflow = savedHtmlOverflow;
+      window.dispatchEvent(new CustomEvent('ana:interiorchange', { detail: { open: false } }));
       const previousTrigger = trigger; trigger = null;
       clearTimer = window.setTimeout(() => { iframe.src = 'about:blank'; layer.hidden = true; closing = false; }, reduced.matches ? 0 : 650);
       previousTrigger?.focus?.({ preventScroll: true });
@@ -116,13 +133,21 @@
     const navigate = href => {
       const url = new URL(href, location.href);
       if (url.origin !== location.origin || !isInterior(url.pathname)) return;
-      activeUrl = `${url.pathname}${url.search}${url.hash}`; iframe.src = `${url.pathname}${url.search ? `${url.search}&` : '?'}experience=1`;
+      activeUrl = `${url.pathname}${url.search}${url.hash}`;
+      preparePage(url);
+      iframe.src = embedUrl(url);
       window.setTimeout(() => { if (!closing) focusParentClose(); }, reduced.matches ? 0 : 80);
     };
-    iframe.addEventListener('load', bindIframeKeyboard);
+    iframe.addEventListener('load', () => {
+      if (layer.hidden || closing || iframe.getAttribute('src') === 'about:blank') return;
+      bindIframeKeyboard();
+      layer.classList.add('content-ready');
+      layer.removeAttribute('aria-busy');
+      loading.hidden = true;
+    });
     document.addEventListener('click', event => {
       const link = event.target.closest('a[href]');
-      if (!link || link.target === '_blank' || event.defaultPrevented) return;
+      if (!link || link.target === '_blank' || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
       const url = new URL(link.href, location.href);
       if (url.origin !== location.origin || !isInterior(url.pathname)) return;
       event.preventDefault(); open(url.href, link);
@@ -138,7 +163,14 @@
       if (layer.hidden || closing) return;
       if (event.key === 'Escape') { event.preventDefault(); shut(); return; }
       if (event.key !== 'Tab') return;
-      if (document.activeElement === close && !event.shiftKey) { event.preventDefault(); iframe.focus({ preventScroll: true }); }
+      if (document.activeElement === close) {
+        event.preventDefault();
+        try {
+          const elements = [...iframe.contentDocument.querySelectorAll('a[href],button,input,textarea,[tabindex="0"]')].filter(el => !el.disabled && el.getClientRects().length && getComputedStyle(el).visibility !== 'hidden');
+          const target = event.shiftKey ? elements.at(-1) : elements[0];
+          target?.focus({ preventScroll: true });
+        } catch (_) { iframe.focus({ preventScroll: true }); }
+      }
       else if (document.activeElement !== iframe && document.activeElement !== close) { event.preventDefault(); focusParentClose(); }
     });
     window.AnaInterior = { open, close: shut, navigate, get activeUrl() { return activeUrl; } };

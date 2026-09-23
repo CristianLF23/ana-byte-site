@@ -11,12 +11,12 @@
   }));
   const galleryImage = $('#gallery-image');
   const galleryLink = $('#gallery-open');
-  const autoplayButton = $('#gallery-autoplay');
   const artDialog = $('#art-dialog');
   const collectionDialog = $('#collection-dialog');
   const portfolioVideo = $('#portfolio-video');
   let introFinished = false;
   let videoRequested = false;
+  let interiorOpen = false;
   let index = 0, dialogIndex = 0, sceneIndex = 0;
   let started = false, userPaused = reduced.matches, effectsPaused = false;
   let galleryTimer = 0, transitionTimer = 0, swipeStart = null, suppressClick = false;
@@ -28,7 +28,7 @@
 
   function syncAutoplay() {
     clearInterval(galleryTimer);
-    const canPlay = started && galleryVisible && !userPaused && !effectsPaused && !document.hidden && !artDialog.open && !collectionDialog.open;
+    const canPlay = started && galleryVisible && !userPaused && !effectsPaused && !interiorOpen && !document.hidden && !artDialog.open && !collectionDialog.open;
     if (!introFinished) {
       galleryLink.classList.add('is-video');
       galleryLink.setAttribute('aria-label', 'Reproduzir ou pausar o vídeo de Ana Byte');
@@ -38,10 +38,10 @@
       if (canPlay && (!reduced.matches || videoRequested)) {
         portfolioVideo.play().catch(() => { userPaused = true; syncAutoplay(); });
       } else portfolioVideo.pause();
+      $('#gallery-instruction').textContent = userPaused ? 'Toque para assistir · Deslize para ver obras' : 'Toque para pausar · Deslize para ver obras';
+      galleryLink.setAttribute('aria-label', userPaused ? 'Reproduzir o vídeo de Ana Byte' : 'Pausar o vídeo de Ana Byte');
     }
-    const paused = userPaused || effectsPaused || (introFinished && reduced.matches);
-    autoplayButton.setAttribute('aria-pressed', String(paused));
-    autoplayButton.lastElementChild.textContent = paused ? 'Reproduzir' : 'Pausar';
+    if (introFinished) $('#gallery-instruction').textContent = 'Deslize para explorar · Toque para ampliar';
     if (introFinished && canPlay && !reduced.matches) {
       galleryTimer = setInterval(() => selectWork(index + 1, false), 5500);
     }
@@ -51,6 +51,7 @@
     introFinished = true;
     portfolioVideo.pause();
     galleryLink.classList.remove('is-video');
+    $('#gallery-instruction').textContent = 'Deslize para explorar · Toque para ampliar';
     if (manual) pauseGallery();
     index = (next + works.length) % works.length;
     const work = works[index];
@@ -70,12 +71,13 @@
     };
     transitionTimer = setTimeout(apply, reduced.matches ? 0 : 120);
   }
-  $('#previous-work').addEventListener('click', () => selectWork(index - 1));
-  $('#next-work').addEventListener('click', () => selectWork(index + 1));
-  autoplayButton.addEventListener('click', () => { userPaused = !userPaused; videoRequested = true; syncAutoplay(); });
+  galleryLink.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); selectWork(index + (e.key === 'ArrowRight' ? 1 : -1)); }
+    if (e.key === ' ') { e.preventDefault(); galleryLink.click(); }
+  });
   portfolioVideo.addEventListener('ended', () => { introFinished = true; selectWork(0, false); syncAutoplay(); });
   portfolioVideo.addEventListener('error', () => { introFinished = true; selectWork(0, false); syncAutoplay(); });
-  $('#obras').addEventListener('focusin', e => { if (introFinished && e.target !== autoplayButton && e.target.matches('a, button')) pauseGallery(); });
+  $('#obras').addEventListener('focusin', e => { if (introFinished && e.target.matches('a, button')) pauseGallery(); });
   galleryLink.addEventListener('pointerdown', e => {
     if (!e.isPrimary) return;
     if (introFinished) pauseGallery();
@@ -94,6 +96,7 @@
     swipeStart = null;
   });
   galleryLink.addEventListener('pointercancel', () => { swipeStart = null; });
+  galleryLink.addEventListener('dragstart', e => e.preventDefault());
   galleryLink.addEventListener('click', e => {
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     if (!artDialog.showModal) return;
@@ -193,11 +196,15 @@
         chapter.setAttribute('aria-hidden', String(i !== n));
       }
     });
-    document.querySelectorAll('.journey-nav [data-destination]').forEach(a => {
-      if (a.dataset.destination === sceneNames[n]) a.setAttribute('aria-current', 'step');
-      else a.removeAttribute('aria-current');
-    });
-    $('.journey-line').style.left = (n * 25) + '%';
+    $('.journey-current').textContent = pad(n + 1);
+    $('.journey-name').textContent = ['A cidade', 'As obras', 'A Ana', 'Sua ideia'][n];
+    $('.journey-line').style.width = ((n + 1) * 25) + '%';
+    const arrows = $('.scene-arrows');
+    arrows.hidden = n !== 1 && n !== 2;
+    arrows.querySelector('.scene-back').dataset.destination = sceneNames[Math.max(0, n - 1)];
+    arrows.querySelector('.scene-next').dataset.destination = sceneNames[Math.min(3, n + 1)];
+    arrows.querySelector('.scene-back').setAttribute('aria-label', n === 1 ? 'Voltar para a cidade' : 'Voltar para as obras');
+    arrows.querySelector('.scene-next').setAttribute('aria-label', n === 1 ? 'Avançar para conhecer a Ana' : 'Avançar para iniciar seu projeto');
     syncAutoplay();
   }
   function configureCamera() {
@@ -211,6 +218,7 @@
     const n = sceneNames.indexOf(e.detail.scene);
     if (n >= 0) activateScene(n);
   });
+  addEventListener('ana:interiorchange', e => { interiorOpen = e.detail.open; syncAutoplay(); });
   document.querySelectorAll('[data-destination]').forEach(a => a.addEventListener('click', e => {
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     e.preventDefault(); goTo(a.dataset.destination);

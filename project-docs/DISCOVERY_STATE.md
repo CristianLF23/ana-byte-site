@@ -1,5 +1,13 @@
 # Estado de descoberta
 
+## Revisão atual: conteúdo complementar da V1
+
+CONFIRMED: refinamento de navegação solicitado nas últimas capturas: remover Pausar, Visitar o ateliê e Vamos criar dos painéis de obras e Ana. Controles laterais Voltar e Avançar conduzem as cenas 2 e 3; indicador inferior apenas informa o progresso. Vídeo pausa ao toque e obras trocam ao deslizar. O espaço liberado amplia a mídia, preservando o gato visível sob o cabeçalho.
+
+CONFIRMED: o usuário pediu baixar o outdoor de obras para mostrar o gato sob o cabeçalho, ampliar a mídia e o retrato da Ana. O CTA final deve abrir a página Comece pela ideia, translúcida sobre o letreiro final, terminando no formulário de cinco campos já autorizado. Páginas internas devem ser descobertas por links claros e funcionar como continuação da experiência. Menos repetição de botões e texto; fotos nos blocos Estrutura, Energia e Matéria; foto da artista em destaque antes da nota discreta do studio fictício.
+
+CONFIRMED: publicação da V1 no GitHub Pages já autorizada e vigente. A V2 permanece em repositório separado. Formulário prepara WhatsApp, sem armazenamento ou envio automático. Nenhuma lacuna CRITICAL. Ready-to-Start Gate aprovado. Recursos: HTML/CSS/JS e GSAP já existentes; sem nova dependência. Referências reconferidas: The Spark, UI como parte da narrativa; ERA, progressão por capítulos. Sem copiar assets ou código.
+
 Data: 21 de setembro de 2026.
 
 | Item | Estado | Evidencia ou decisao |
