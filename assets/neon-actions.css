@@ -1,4 +1,4 @@
-/* A restrained light trace ties the site's actions to the illustrated signs. */
+/* Two neon tubes echo the illustrated signs without changing the controls. */
 @property --neon-turn {
   syntax: "<angle>";
   inherits: false;
@@ -29,8 +29,9 @@
   .lightbox-close,
   .lightbox-nav
 ) {
-  --neon-edge: #7af7f0;
-  --neon-glow: #4df4e881;
+  --neon-edge: #65fff1;
+  --neon-inner: #d6fffc;
+  --neon-glow: #38fff2a8;
   position: relative;
   border-color: var(--neon-edge);
 }
@@ -44,13 +45,51 @@
   .lightbox-close,
   .lightbox-next
 ) {
-  --neon-edge: #ff75bf;
-  --neon-glow: #ff48a875;
+  --neon-edge: #ff5bb3;
+  --neon-inner: #ffe1f1;
+  --neon-glow: #ff2da4a8;
+}
+
+/* The inner tube leaves a dark gap between the two illuminated strokes. */
+:where(
+  .byte-entry__start,
+  .locale-switcher__current,
+  .city-hero .discover-world,
+  .city-header .header-contact,
+  .mounted-gallery .gallery-status button,
+  .mounted-artist .artist-actions a,
+  .project-invitation,
+  .scene-arrows button,
+  .skip-flight,
+  .dialog-top button,
+  .dialog-arrows button,
+  .collection-grid button,
+  .comp-button,
+  .project-submit,
+  .interior-return-bar__button,
+  .persistent-whatsapp,
+  .lightbox-close,
+  .lightbox-nav
+)::before {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: 1;
+  inset: 4px;
+  border: 1px solid var(--neon-inner);
+  border-radius: inherit;
+  box-shadow: 0 0 5px var(--neon-edge), inset 0 0 5px var(--neon-edge);
+  opacity: .88;
+  pointer-events: none;
 }
 
 /* Gallery cards and the language picker keep a quieter, stationary outline. */
 .locale-switcher__current { --neon-glow: #4df4e83d; }
 .collection-grid button { --neon-glow: #4df4e839; }
+.locale-switcher__current::before,
+.collection-grid button::before { opacity: .45; box-shadow: none; }
+.byte-entry__start:disabled::before { opacity: .15; box-shadow: none; }
+.interior-return-bar__button::before { display: block; content: ""; }
 .byte-entry__start:not(:disabled) { border-color: var(--neon-edge); }
 .interior-return-bar__button { border-color: var(--neon-edge); }
 .mounted-gallery .gallery-status button,
@@ -60,7 +99,7 @@
   border: 1px solid var(--neon-edge);
   padding-inline: 12px;
   background-color: #091521d9;
-  box-shadow: 0 0 10px var(--neon-glow);
+  box-shadow: 0 0 8px var(--neon-glow), 0 0 21px var(--neon-glow);
 }
 .mounted-gallery .gallery-status button { padding-inline: 8px; }
 .dialog-arrows button { padding-inline: 16px; }
@@ -68,7 +107,7 @@
 .mounted-artist .artist-actions a,
 .comp-button,
 .project-submit {
-  box-shadow: 0 0 12px var(--neon-glow), inset 0 0 9px #ffffff22;
+  box-shadow: 0 0 9px var(--neon-glow), 0 0 28px var(--neon-glow), inset 0 0 13px var(--neon-glow);
 }
 .byte-entry__start:disabled { border-color: #a95583; box-shadow: none; }
 
@@ -112,7 +151,7 @@
     -webkit-mask-composite: xor;
     mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     mask-composite: exclude;
-    filter: drop-shadow(0 0 4px #fff9) drop-shadow(0 0 9px var(--neon-edge));
+    filter: drop-shadow(0 0 5px #fff9) drop-shadow(0 0 12px var(--neon-edge));
     pointer-events: none;
   }
 

@@ -16,6 +16,8 @@ CONFIRMED 23/09: a V1 passa a oferecer Português, English e Deutsch. O seletor 
 
 CONFIRMED 23/09: o usuário pediu contornos neon inspirados no componente Neon Border do OriginKit, com cores apropriadas para cada ação. Escopo isolado: botões existentes da experiência e das páginas complementares, sem alterar jornada, textos ou imagens. Recurso escolhido após o roteamento gratuito: CSS próprio com brilho de borda e traço móvel; sem pacote externo, código copiado ou custo. Ciano para retorno, contato e projeto; magenta para avanço e acervo. Movimento reduzido preserva a borda estática. Gate aprovado sem lacunas críticas.
 
+CONFIRMED 23/09: após ver a primeira implementação, o usuário pediu neon mais intenso e linhas duplas. A alteração fica restrita ao desenho e à luminosidade dos mesmos botões; as duas linhas mantêm um intervalo escuro entre si e o traço móvel permanece apenas nas ações principais. Sem nova dependência ou mudança na jornada. Gate permanece aprovado.
+
 CONFIRMED: publicação da V1 no GitHub Pages já autorizada e vigente. A V2 permanece em repositório separado. Formulário prepara WhatsApp, sem armazenamento ou envio automático. Nenhuma lacuna CRITICAL. Ready-to-Start Gate aprovado. Recursos: HTML/CSS/JS e GSAP já existentes; sem nova dependência. Referências reconferidas: The Spark, UI como parte da narrativa; ERA, progressão por capítulos. Sem copiar assets ou código.
 
 Data: 23 de setembro de 2026.

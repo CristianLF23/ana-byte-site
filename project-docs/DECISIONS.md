@@ -54,3 +54,5 @@ A V1 oferece Português, English e Deutsch por meio de um seletor discreto exibi
 ## 23/09: bordas neon nas ações
 
 O efeito de contorno iluminado do OriginKit orienta o comportamento visual, implementado em CSS original no arquivo `assets/neon-actions.css`, sem instalar o componente. Os botões principais exibem uma passagem suave de luz pelo perímetro; controles secundários recebem destaque ao foco ou ao passar o cursor. Ciano identifica retorno, contato e envio de projeto; magenta identifica avanço e acervo. O seletor de idioma e os cartões da coleção mantêm brilho estático e discreto. A animação é desativada em `prefers-reduced-motion`, e a borda permanece visível quando a máscara animada não é suportada.
+
+Revisão visual: os controles passam a usar dois tubos finos separados por um intervalo escuro, com núcleo claro e halo mais intenso na cor de cada ação. O traço móvel percorre a linha externa. O seletor de idioma e os cartões do acervo continuam mais discretos para não competir com os CTAs da experiência.
