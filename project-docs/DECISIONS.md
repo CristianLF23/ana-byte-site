@@ -56,3 +56,11 @@ A V1 oferece Português, English e Deutsch por meio de um seletor discreto exibi
 O efeito de contorno iluminado do OriginKit orienta o comportamento visual, implementado em CSS original no arquivo `assets/neon-actions.css`, sem instalar o componente. Os botões principais exibem uma passagem suave de luz pelo perímetro; controles secundários recebem destaque ao foco ou ao passar o cursor. Ciano identifica retorno, contato e envio de projeto; magenta identifica avanço e acervo. O seletor de idioma e os cartões da coleção mantêm brilho estático e discreto. A animação é desativada em `prefers-reduced-motion`, e a borda permanece visível quando a máscara animada não é suportada.
 
 Revisão visual: os controles passam a usar dois tubos finos separados por um intervalo escuro, com núcleo claro e halo mais intenso na cor de cada ação. O traço móvel percorre a linha externa. O seletor de idioma e os cartões do acervo continuam mais discretos para não competir com os CTAs da experiência.
+
+Correção posterior: a bandeira do idioma e os botões persistentes de WhatsApp também mantêm o traço externo em movimento contínuo, pois o acionamento apenas por hover ou foco os deixava estáticos em telas de toque. O seletor continua com halo suave. `prefers-reduced-motion` mantém as duas linhas sem animação.
+
+Na primeira dobra, o subtítulo do convite passa a ser “Toque e veja meu mundo”, com equivalentes naturais em inglês e alemão. A instrução orienta o gesto principal sem alterar o destino do botão.
+
+## 23/09: abertura limpa e navegação por botões
+
+A rolagem vertical entre cenas foi removida por pedido posterior do usuário. O CTA inicial e as setas inferiores conduzem a jornada; o conteúdo das páginas complementares e dos diálogos continua rolável. A instrução sobre rolar foi retirada e o vídeo da primeira passagem não pode mais ser pulado por um botão. A moldura de Obras desce dentro da tela para deixar mais do gato visível. A marca pequena e o WhatsApp do cabeçalho só aparecem quando a cena Obras é revelada após o vídeo, permanecendo nas cenas seguintes.

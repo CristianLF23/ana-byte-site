@@ -4,7 +4,6 @@
   const video = document.querySelector('#city-flight');
   const layer = document.querySelector('.flight-layer');
   const status = document.querySelector('.flight-status');
-  const skip = document.querySelector('.skip-flight');
   const nav = document.querySelector('.journey-nav');
   const header = document.querySelector('.city-header');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
@@ -39,7 +38,6 @@
     savedInert = [];
     // Arrival visibility is owned by city.js, after the transition lock is lifted.
     announce(destination);
-    skip.hidden = true;
     status.textContent = '';
     focusDestination();
   }
@@ -83,8 +81,6 @@
     // The video is reserved for the first descent. Other destinations use a short dissolve.
     if (reduced.matches || scene !== 'city' || name !== 'works') { arrive(reduced.matches); return; }
     status.textContent = labels[name];
-    skip.hidden = false;
-    skip.focus({ preventScroll: true });
     video.currentTime = 0;
     set(video, { scale: 1, xPercent: 0, yPercent: 0, transformOrigin: name === 'artist' ? '25% 42%' : '69% 42%' });
     set(layer, { autoAlpha: 1 });
@@ -106,7 +102,6 @@
   video.addEventListener('ended', () => { cameraTween = null; arrive(); });
   video.addEventListener('timeupdate', () => { if (video.currentTime >= 2) arrive(); });
   video.addEventListener('error', () => arrive());
-  skip.addEventListener('click', () => arrive());
   document.addEventListener('visibilitychange', () => {
     if (!travelling || settling) return;
     if (document.hidden) {

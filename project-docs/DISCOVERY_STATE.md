@@ -1,5 +1,7 @@
 # Estado de descoberta
 
+CONFIRMED 23/09: a abertura não exibe a marca pequena do canto superior esquerdo nem o botão de WhatsApp; ambos surgem a partir da segunda dobra, após o vídeo. A navegação principal passa a ser feita apenas pelos botões, sem rolagem vertical ou instrução de rolagem. O botão de pular o vídeo é removido e o outdoor de Obras desce um pouco para mostrar mais do gato. Gate aprovado sem lacunas críticas.
+
 CONFIRMED 23/09: o contato persistente do WhatsApp deve permanecer acessível sem cobrir o gato na cena Obras. Correção isolada de apresentação e posição do CTA; destino, páginas e direção visual permanecem confirmados. Gate aprovado sem lacunas críticas.
 
 ## Revisão atual: conteúdo complementar da V1

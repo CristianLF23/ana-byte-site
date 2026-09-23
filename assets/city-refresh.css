@@ -108,11 +108,11 @@
 @media(max-height:720px){.mounted-gallery{height:min(47.5%,calc(100svh - 252px))}.mounted-artist{height:min(39.9%,calc(100svh - 173px))}.mounted-gallery .gallery-instruction{font-size:9px;white-space:nowrap;letter-spacing:-.015em}.city-cinema .journey-nav{bottom:calc(12px + env(safe-area-inset-bottom))}}
 @media(prefers-reduced-motion:reduce){.journey-track .journey-line,.mounted-gallery,.mounted-artist,.contact-portal{transition:none}}
 
-/* Native vertical progress, with the same destinations reachable by the neon controls. */
-html.city-cinema{overflow-x:clip;overflow-y:auto;scroll-behavior:auto;scroll-padding-top:0}
-.city-cinema body{overflow:visible}
-.city-cinema .city-world{height:400svh}
-.city-cinema .city-viewport{position:sticky;top:0;height:100svh}
+/* The illustrated journey changes scenes only through its visible controls. */
+html.city-cinema{overflow:hidden}
+.city-cinema body{overflow:hidden}
+.city-cinema .city-world{height:100svh}
+.city-cinema .city-viewport{position:relative;top:auto;height:100svh}
 .city-cinema .gallery-facade{top:calc(14px + env(safe-area-inset-top))}
 .mounted-gallery{height:min(47.3%,calc(100svh - 155px))}
 .scene-arrows button,.scene-arrows .scene-back,.scene-arrows .scene-next,[data-scene="contact"] .scene-arrows .scene-back{top:auto;bottom:calc(17px + env(safe-area-inset-bottom));transform:none;width:56px;min-height:56px;gap:4px;border:2px solid #8cfff2;border-radius:6px;background:#082d34f5;color:#d5fff9;box-shadow:0 0 7px #bafff2,0 0 21px #20fce9b0,0 0 40px #20fce94d,inset 0 0 12px #20fce94d}
@@ -121,7 +121,6 @@ html.city-cinema{overflow-x:clip;overflow-y:auto;scroll-behavior:auto;scroll-pad
 .scene-arrows svg{width:24px;height:24px;filter:drop-shadow(0 0 5px currentColor)}
 .scene-arrows span{font-size:10px}
 .scene-arrows button:hover{background:#16515b}.scene-arrows .scene-next:hover{background:#5b1744}
-.city-cinema .city-hero .hero-footnote{display:block;position:absolute;bottom:calc(79px + env(safe-area-inset-bottom));font-size:11px;letter-spacing:.02em;color:#ceffff}
 .city-cinema .city-hero .rain-easter-egg{display:flex;align-items:center;justify-content:center;gap:10px;margin:18px auto 0;color:#d5edf0;font:italic 500 clamp(10px,2.8vw,12px)/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.055em;text-shadow:0 1px 5px #020711,0 0 12px #57eaf566;white-space:nowrap}
 .city-cinema .city-hero .rain-easter-egg::before,.city-cinema .city-hero .rain-easter-egg::after{content:"";width:15px;height:1px;background:#ff8bc4;box-shadow:0 0 7px #ff359f}
 .city-cinema .city-hero .rain-easter-egg::after{background:#83f5ff;box-shadow:0 0 7px #4ceeff}
@@ -130,8 +129,10 @@ html.city-cinema{overflow-x:clip;overflow-y:auto;scroll-behavior:auto;scroll-pad
 
 /* Align the illustrated top rails, whose positions differ within the two assets. */
 .city-cinema .gallery-facade,.city-cinema .artist-facade{top:calc(72px + env(safe-area-inset-top))}
-.city-cinema .gallery-facade{transform:translate(-50%,-15.1%);transform-origin:50% 15.1%}
+.city-cinema .gallery-facade{top:calc(96px + env(safe-area-inset-top));transform:translate(-50%,-15.1%);transform-origin:50% 15.1%}
 .city-cinema .artist-facade{transform:translate(-50%,-13.3%);transform-origin:50% 13.3%}
+@media(max-height:720px){.city-cinema .gallery-facade{top:calc(84px + env(safe-area-inset-top))}}
+@media(max-height:620px){.mounted-gallery .gallery-status button{margin-right:12px}}
 
 /* The opening title borrows the angular rhythm of Ana's project lettering. */
 @font-face{font-family:'Oxanium';src:url('fonts/Oxanium-Latin.woff2') format('woff2');font-style:normal;font-weight:200 800;font-display:swap}
@@ -143,6 +144,8 @@ html.city-cinema{overflow-x:clip;overflow-y:auto;scroll-behavior:auto;scroll-pad
 .city-cinema .header-contact svg{display:block;width:25px;height:25px;filter:drop-shadow(0 0 6px #62fff888)}
 .city-cinema .header-contact:hover,.city-cinema .header-contact:focus-visible{background:#164652;box-shadow:0 0 22px #4be5e299}
 .city-cinema .header-contact:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.city-cinema .city-header{transition:opacity .45s ease,visibility .45s ease}
+.city-cinema[data-scene="city"] .city-header{opacity:0;visibility:hidden;pointer-events:none}
 @media(max-width:759px){.city-cinema .city-header{justify-content:flex-start;gap:14px}.city-cinema .header-actions{gap:0}}
 @media(max-width:360px){.city-cinema .city-hero h1{font-size:23vw}}
 .opening-rain-canvas,.contact-rain-canvas{display:none}
@@ -151,6 +154,5 @@ html.city-cinema{overflow-x:clip;overflow-y:auto;scroll-behavior:auto;scroll-pad
 .city-cinema .contact-chapter{isolation:isolate}
 .city-cinema .contact-rain-canvas{display:block;position:absolute;inset:0;z-index:0;width:100%;height:100%;pointer-events:none}
 .city-cinema .contact-chapter .contact-portal{z-index:1}
-@media(max-height:720px){.city-cinema .city-hero .hero-footnote{bottom:calc(57px + env(safe-area-inset-bottom));font-size:9px}}
-@media(max-height:620px){.city-cinema .city-hero .discover-world{bottom:calc(93px + env(safe-area-inset-bottom))}.city-cinema .city-hero .hero-footnote{bottom:calc(62px + env(safe-area-inset-bottom))}}
+@media(max-height:620px){.city-cinema .city-hero .discover-world{bottom:calc(93px + env(safe-area-inset-bottom))}}
 @media(prefers-reduced-motion:reduce){.city-cinema .opening-rain-canvas,.city-cinema .contact-rain-canvas{display:none}}

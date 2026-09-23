@@ -27,18 +27,6 @@
   let savedOverflow = '';
   let dialogScrollLocked = false;
   const pad = n => String(n).padStart(2, '0');
-  let scrollFrame = 0;
-  const scrollStep = () => $('.city-viewport').clientHeight;
-  const scrollScene = () => Math.max(0, Math.min(3, Math.round(scrollY / scrollStep())));
-  function syncScrollScene() {
-    scrollFrame = 0;
-    if (!started || interiorOpen || artDialog.open || collectionDialog.open || window.AnaFlight?.travelling) return;
-    window.AnaFlight?.go(sceneNames[scrollScene()]);
-  }
-  addEventListener('scroll', () => {
-    if (!scrollFrame) scrollFrame = requestAnimationFrame(syncScrollScene);
-  }, { passive: true });
-
   function stopPortfolioVideo() {
     videoPlayToken++;
     videoPlayPending = false;
@@ -278,14 +266,11 @@
   function goTo(name) {
     const n = sceneNames.indexOf(name);
     if (n < 0 || window.AnaFlight?.travelling) return;
-    // The page retains real scroll positions; the painted scene stays on screen.
-    scrollTo({ top: n * scrollStep(), behavior: 'instant' });
     window.AnaFlight?.go(name);
   }
   addEventListener('ana:scenechange', e => {
     const n = sceneNames.indexOf(e.detail.scene);
     if (n >= 0) activateScene(n);
-    if (!window.AnaFlight?.travelling) requestAnimationFrame(syncScrollScene);
   });
   addEventListener('ana:interiorchange', e => { interiorOpen = e.detail.open; syncAutoplay(); });
   document.querySelectorAll('[data-destination]').forEach(a => a.addEventListener('click', e => {
@@ -324,14 +309,10 @@
   });
   addEventListener('ana:experience-start', () => {
     started = true;
-    scrollTo({ top: 0, behavior: 'instant' });
     window.AnaFlight?.start();
     activateScene(sceneNames.indexOf(window.AnaFlight?.scene || 'city'));
-    scrollTo({ top: sceneIndex * scrollStep(), behavior: 'instant' });
     syncAutoplay();
   }, { once: true });
-  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-  scrollTo({ top: 0, behavior: 'instant' });
   configureCamera();
   syncAutoplay();
   // The complete, semantic gallery remains in the document when motion or JS is unavailable.

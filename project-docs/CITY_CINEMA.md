@@ -11,21 +11,21 @@ Referência principal: [The Spark, estudo do criador no Codrops](https://tympanu
 ## Sequência implementada
 
 1. Loading acompanha a resolução de imagens críticas e fontes. Aguarda sempre o botão Começar experiência. Falhas ou oito segundos de espera liberam a alternativa leve.
-2. Cidade inicial mostra o primeiro frame do vídeo, título, subtítulo e Descubra meu mundo. Sem miniatura de galeria na primeira cena.
+2. Cidade inicial mostra o primeiro frame do vídeo, título, subtítulo e Toque e veja meu mundo. Sem miniatura de galeria na primeira cena.
 3. O clique reproduz o vídeo fornecido uma vez. Há chuva, trânsito e movimento do gato dentro do próprio material. Uma aproximação visual suave acompanha a reprodução.
 4. O fim do vídeo revela a fachada do destino. Todo o cenário de chegada se acomoda junto; a foto não viaja isolada pela tela.
-5. Obras reúne quinze imagens, troca automática pausável, gesto horizontal, ampliação e acervo. Ana ocupa outra fachada, com botões explícitos para artista e projetos. Contato preserva o WhatsApp existente.
+5. Obras reúne dezenove imagens, troca automática pausável, gesto horizontal, ampliação e acervo. Ana ocupa outra fachada, com botão explícito para conhecer a artista. Contato preserva o WhatsApp existente.
 6. As páginas internas entram da direita e retornam à mesma cena da cidade. Conteúdo sem JavaScript continua disponível nas páginas próprias e no acervo da home.
 
 ## Material de vídeo e limites
 
 - Fonte: `D:\Downloads\Animate_cat_image_with_looping_20260922130801.mp4`.
 - Inspeção: aproximadamente quatro segundos, 720 × 1280, 24 fps. A câmera do arquivo é fixa.
-- `assets/world/city-flight.mp4` preserva o vídeo H.264 e remove o áudio. Cerca de 1,35 MB. Não recebe loop.
+- `assets/world/city-flight-2s.mp4` é o trecho de dois segundos reproduzido na primeira passagem, sem áudio e sem loop.
 - `city-flight-poster.jpg` corresponde ao primeiro frame e usa o mesmo enquadramento do player.
 - Esta implementação é uma sequência 2D de imagem, vídeo e fachada. A aproximação não representa reconstrução 3D da cidade. Não há continuidade geométrica perfeita entre o filme fornecido e as novas fachadas ilustradas.
 - Os destinos permanecem estáticos depois da chegada, conforme a última proposta do usuário. O movimento real da cidade ocorre durante o vídeo. O gato da fachada de chegada é estático.
-- Movimento reduzido troca diretamente de destino. Falha ou bloqueio do vídeo também permite chegar; existe botão Ir direto ao destino.
+- Movimento reduzido troca diretamente de destino. Falha ou bloqueio do vídeo também permite chegar. A primeira passagem não oferece botão para pular o vídeo.
 - Nenhuma dependência nova de produção, serviço pago ou renderização WebGL foi introduzida. GSAP já existente controla apenas transições.
 
 ## Arte produzida
@@ -48,4 +48,8 @@ Prévia local: http://127.0.0.1:4178/. Servidor estático `preview.cjs`, com sup
 
 Arquivos principais: `index.html`, `assets/city.js`, `assets/city-flight.js`, `assets/city-cinema.css`, `assets/city-entry.js`, `assets/city-entry.css`, `assets/city-interior.js`, `assets/city-interior.css`, imagens em `assets/world`, quatro páginas internas e `preview.cjs`.
 
-Status: prévia local. Sem publicação nova nesta revisão. O endereço de atendimento demonstrativo está identificado no conteúdo.
+Status: a V1 está publicada no GitHub Pages. A prévia local permanece disponível para validação. O endereço de atendimento demonstrativo está identificado no conteúdo.
+
+## Ajustes de 23 de setembro
+
+As cenas principais avançam pelos botões visíveis, sem rolagem vertical. A abertura mostra somente o título, o subtítulo, a referência discreta à chuva e o convite “Toque e veja meu mundo”; a marca pequena do cabeçalho e o WhatsApp surgem no outdoor de obras, depois do vídeo. O outdoor de obras foi baixado dentro da tela para revelar mais do gato. As páginas complementares e os diálogos conservam sua rolagem interna.
