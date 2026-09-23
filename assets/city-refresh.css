@@ -141,8 +141,12 @@ html.city-cinema{overflow-x:clip;overflow-y:auto;scroll-behavior:auto;scroll-pad
 .city-cinema .header-contact:hover,.city-cinema .header-contact:focus-visible{background:#164652;box-shadow:0 0 22px #4be5e299}
 .city-cinema .header-contact:focus-visible{outline:2px solid #fff;outline-offset:3px}
 @media(max-width:360px){.city-cinema .city-hero h1{font-size:23vw}.city-cinema .header-contact{font-size:11px;padding:6px 8px}}
+.opening-rain-canvas,.contact-rain-canvas{display:none}
+.city-cinema .opening-rain-canvas{display:block;position:absolute;inset:0;z-index:3;width:100%;height:100%;pointer-events:none;opacity:0;transition:opacity .45s ease}
+.city-cinema[data-experience="started"][data-scene="city"] .opening-rain-canvas{opacity:1}
 .city-cinema .contact-chapter{isolation:isolate}
-.city-cinema .contact-rain-canvas{position:absolute;inset:0;z-index:0;width:100%;height:100%;pointer-events:none}
+.city-cinema .contact-rain-canvas{display:block;position:absolute;inset:0;z-index:0;width:100%;height:100%;pointer-events:none}
 .city-cinema .contact-chapter .contact-portal{z-index:1}
 @media(max-height:720px){.city-cinema .city-hero .hero-footnote{bottom:calc(57px + env(safe-area-inset-bottom));font-size:9px}}
 @media(max-height:620px){.city-cinema .city-hero .discover-world{bottom:calc(93px + env(safe-area-inset-bottom))}.city-cinema .city-hero .hero-footnote{bottom:calc(62px + env(safe-area-inset-bottom))}}
+@media(prefers-reduced-motion:reduce){.city-cinema .opening-rain-canvas,.city-cinema .contact-rain-canvas{display:none}}
