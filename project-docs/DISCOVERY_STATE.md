@@ -14,6 +14,8 @@ CONFIRMED: o usuário pediu baixar o outdoor de obras para mostrar o gato sob o 
 
 CONFIRMED 23/09: a V1 passa a oferecer Português, English e Deutsch. O seletor de idioma fica exclusivamente na tela de loading, em controle discreto com bandeiras, e a escolha acompanha a experiência, as páginas internas e os links de navegação. As traduções são adaptadas ao idioma para preservar naturalidade; Ana Byte, Ana, São Paulo, Brasil, Jinx e demais nomes próprios permanecem inalterados. A solução é local, sem API externa, dependência nova ou custo recorrente, com Português como fallback e persistência por URL e armazenamento local. Gate aprovado sem lacunas críticas.
 
+CONFIRMED 23/09: o usuário pediu contornos neon inspirados no componente Neon Border do OriginKit, com cores apropriadas para cada ação. Escopo isolado: botões existentes da experiência e das páginas complementares, sem alterar jornada, textos ou imagens. Recurso escolhido após o roteamento gratuito: CSS próprio com brilho de borda e traço móvel; sem pacote externo, código copiado ou custo. Ciano para retorno, contato e projeto; magenta para avanço e acervo. Movimento reduzido preserva a borda estática. Gate aprovado sem lacunas críticas.
+
 CONFIRMED: publicação da V1 no GitHub Pages já autorizada e vigente. A V2 permanece em repositório separado. Formulário prepara WhatsApp, sem armazenamento ou envio automático. Nenhuma lacuna CRITICAL. Ready-to-Start Gate aprovado. Recursos: HTML/CSS/JS e GSAP já existentes; sem nova dependência. Referências reconferidas: The Spark, UI como parte da narrativa; ERA, progressão por capítulos. Sem copiar assets ou código.
 
 Data: 23 de setembro de 2026.

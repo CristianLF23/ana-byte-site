@@ -50,3 +50,7 @@ A primeira dobra exibe “como lágrimas na chuva” como detalhe tipográfico d
 ## 23/09: idiomas na abertura
 
 A V1 oferece Português, English e Deutsch por meio de um seletor discreto exibido somente durante o loading. O idioma escolhido é aplicado à home, aos estados dinâmicos, aos formulários e às páginas complementares, acompanhando a navegação por URL e armazenamento local. O catálogo fica no próprio projeto, sem serviço de tradução, API externa, dependência nova ou custo recorrente; o Português permanece como fallback para conteúdo sem tradução. As adaptações priorizam leitura natural em cada idioma e preservam Ana Byte, Ana, São Paulo, Brasil, Jinx, títulos próprios de obras e demais nomes que não devem ser traduzidos.
+
+## 23/09: bordas neon nas ações
+
+O efeito de contorno iluminado do OriginKit orienta o comportamento visual, implementado em CSS original no arquivo `assets/neon-actions.css`, sem instalar o componente. Os botões principais exibem uma passagem suave de luz pelo perímetro; controles secundários recebem destaque ao foco ou ao passar o cursor. Ciano identifica retorno, contato e envio de projeto; magenta identifica avanço e acervo. O seletor de idioma e os cartões da coleção mantêm brilho estático e discreto. A animação é desativada em `prefers-reduced-motion`, e a borda permanece visível quando a máscara animada não é suportada.

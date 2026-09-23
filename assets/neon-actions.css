@@ -1,0 +1,154 @@
+/* A restrained light trace ties the site's actions to the illustrated signs. */
+@property --neon-turn {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes neon-action-trace {
+  to { --neon-turn: 360deg; }
+}
+
+:where(
+  .byte-entry__start,
+  .locale-switcher__current,
+  .city-hero .discover-world,
+  .city-header .header-contact,
+  .mounted-gallery .gallery-status button,
+  .mounted-artist .artist-actions a,
+  .project-invitation,
+  .scene-arrows button,
+  .skip-flight,
+  .dialog-top button,
+  .dialog-arrows button,
+  .collection-grid button,
+  .comp-button,
+  .project-submit,
+  .interior-return-bar__button,
+  .persistent-whatsapp,
+  .lightbox-close,
+  .lightbox-nav
+) {
+  --neon-edge: #7af7f0;
+  --neon-glow: #4df4e881;
+  position: relative;
+  border-color: var(--neon-edge);
+}
+
+:is(
+  .city-hero .discover-world,
+  .mounted-gallery .gallery-status button,
+  .scene-arrows .scene-next,
+  .dialog-top button,
+  .dialog-arrows #dialog-next,
+  .lightbox-close,
+  .lightbox-next
+) {
+  --neon-edge: #ff75bf;
+  --neon-glow: #ff48a875;
+}
+
+/* Gallery cards and the language picker keep a quieter, stationary outline. */
+.locale-switcher__current { --neon-glow: #4df4e83d; }
+.collection-grid button { --neon-glow: #4df4e839; }
+.byte-entry__start:not(:disabled) { border-color: var(--neon-edge); }
+.interior-return-bar__button { border-color: var(--neon-edge); }
+.mounted-gallery .gallery-status button,
+.dialog-top button,
+.dialog-arrows button,
+.lightbox-nav {
+  border: 1px solid var(--neon-edge);
+  padding-inline: 12px;
+  background-color: #091521d9;
+  box-shadow: 0 0 10px var(--neon-glow);
+}
+.mounted-gallery .gallery-status button { padding-inline: 8px; }
+.dialog-arrows button { padding-inline: 16px; }
+.city-hero .discover-world,
+.mounted-artist .artist-actions a,
+.comp-button,
+.project-submit {
+  box-shadow: 0 0 12px var(--neon-glow), inset 0 0 9px #ffffff22;
+}
+.byte-entry__start:disabled { border-color: #a95583; box-shadow: none; }
+
+/* The brighter segment moves around the perimeter without covering the label. */
+@supports ((-webkit-mask-composite: xor) or (mask-composite: exclude)) {
+  :is(
+    .byte-entry__start,
+    .locale-switcher__current,
+    .city-hero .discover-world,
+    .city-header .header-contact,
+    .mounted-gallery .gallery-status button,
+    .mounted-artist .artist-actions a,
+    .project-invitation,
+    .scene-arrows button,
+    .skip-flight,
+    .dialog-top button,
+    .dialog-arrows button,
+    .collection-grid button,
+    .comp-button,
+    .project-submit,
+    .interior-return-bar__button,
+    .persistent-whatsapp,
+    .lightbox-close,
+    .lightbox-nav
+  )::after {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    inset: -1px;
+    padding: 2px;
+    border-radius: inherit;
+    background: conic-gradient(
+      from var(--neon-turn),
+      transparent 0deg 280deg,
+      var(--neon-edge) 307deg,
+      #fff 328deg 340deg,
+      var(--neon-edge) 356deg,
+      transparent 360deg
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    filter: drop-shadow(0 0 4px #fff9) drop-shadow(0 0 9px var(--neon-edge));
+    pointer-events: none;
+  }
+
+  :is(
+    .byte-entry__start:not(:disabled),
+    .city-hero .discover-world,
+    .mounted-gallery .gallery-status button,
+    .mounted-artist .artist-actions a,
+    .project-invitation,
+    .scene-arrows button,
+    .comp-button,
+    .project-submit
+  )::after {
+    animation: neon-action-trace 4.2s linear infinite;
+  }
+
+  :is(
+    .locale-switcher__current,
+    .city-header .header-contact,
+    .skip-flight,
+    .dialog-top button,
+    .dialog-arrows button,
+    .collection-grid button,
+    .interior-return-bar__button,
+    .persistent-whatsapp,
+    .lightbox-close,
+    .lightbox-nav
+  ):is(:hover, :focus-visible)::after {
+    animation: neon-action-trace 3.2s linear infinite;
+  }
+
+  .byte-entry__start:disabled::after { display: none; }
+  .collection-grid button::after { opacity: .55; filter: none; }
+  .collection-grid button:is(:hover, :focus-visible)::after { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(button, a)::after { animation: none !important; }
+}
