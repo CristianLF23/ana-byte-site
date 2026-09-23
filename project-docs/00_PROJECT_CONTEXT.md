@@ -13,3 +13,5 @@ Escopo da primeira versao: home, portfolio, caso editorial, pagina sobre e pagin
 Referencia principal: https://www.era-residence.com/
 
 Transformacao: preservamos a progressao narrativa, o protagonismo das imagens e a transicao entre atmosfera e decisao. Mudamos geometria, tipografia, paleta, ritmo, conteudo e interacoes para um sistema original baseado em corpo, placas, circuitos e cor.
+
+Atualizacao de idioma em 23/09/2026: a V1 inclui Português, English e Deutsch. A seleção acontece apenas na tela de loading e permanece ativa durante a experiência e nas páginas internas. A implementação usa catálogos locais e persistência por URL e armazenamento local, sem API externa ou nova dependência. Traduções são adaptadas para cada idioma, preservando nomes próprios, cidades, estados, títulos próprios como Jinx e a identidade de Ana Byte.

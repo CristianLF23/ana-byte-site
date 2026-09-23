@@ -46,3 +46,7 @@ No celular, o CTA do WhatsApp usa somente o símbolo do aplicativo e fica ao lad
 ## 23/09: referência cinematográfica na abertura
 
 A primeira dobra exibe “como lágrimas na chuva” como detalhe tipográfico discreto abaixo do subtítulo. A frase foi fornecida pelo usuário como referência a Blade Runner. O convite principal e a instrução de navegação permanecem destacados; não há novo recurso externo ou animação.
+
+## 23/09: idiomas na abertura
+
+A V1 oferece Português, English e Deutsch por meio de um seletor discreto exibido somente durante o loading. O idioma escolhido é aplicado à home, aos estados dinâmicos, aos formulários e às páginas complementares, acompanhando a navegação por URL e armazenamento local. O catálogo fica no próprio projeto, sem serviço de tradução, API externa, dependência nova ou custo recorrente; o Português permanece como fallback para conteúdo sem tradução. As adaptações priorizam leitura natural em cada idioma e preservam Ana Byte, Ana, São Paulo, Brasil, Jinx, títulos próprios de obras e demais nomes que não devem ser traduzidos.

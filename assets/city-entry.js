@@ -16,6 +16,8 @@
     injectStyle();
     root = buildOverlay();
     document.body.appendChild(root);
+    window.AnaLocale?.mountSwitcher(root);
+    window.AnaLocale?.apply(root);
     root.focus({ preventScroll: true });
     lockPage();
     bindKeyboard();
@@ -105,7 +107,9 @@
     });
     root.addEventListener("keydown", function (event) {
       if (event.key !== "Tab") return;
-      var focusable = root.querySelectorAll("button:not([disabled]), [href], [tabindex]:not([tabindex='-1'])");
+      var focusable = Array.prototype.filter.call(root.querySelectorAll("button:not([disabled]), [href], [tabindex]:not([tabindex='-1'])"), function (element) {
+        return element.getClientRects().length && !element.closest('[hidden]');
+      });
       if (!focusable.length) return;
       var first = focusable[0];
       var last = focusable[focusable.length - 1];
@@ -170,7 +174,7 @@
       root.classList.add("is-ready");
       startButton.disabled = false;
       setProgress(100, fallback ? "A cena está pronta em modo leve" : "Sinal estabilizado / pronto para iniciar");
-      startButton.focus({ preventScroll: true });
+      if (!root.contains(document.activeElement) || document.activeElement === root) startButton.focus({ preventScroll: true });
     }
 
     // Resource completion and a visible preparation sequence must both finish.

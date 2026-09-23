@@ -12,9 +12,11 @@ CONFIRMED: refinamento de navegação solicitado nas últimas capturas: remover 
 
 CONFIRMED: o usuário pediu baixar o outdoor de obras para mostrar o gato sob o cabeçalho, ampliar a mídia e o retrato da Ana. O CTA final deve abrir a página Comece pela ideia, translúcida sobre o letreiro final, terminando no formulário de cinco campos já autorizado. Páginas internas devem ser descobertas por links claros e funcionar como continuação da experiência. Menos repetição de botões e texto; fotos nos blocos Estrutura, Energia e Matéria; foto da artista em destaque antes da nota discreta do studio fictício.
 
+CONFIRMED 23/09: a V1 passa a oferecer Português, English e Deutsch. O seletor de idioma fica exclusivamente na tela de loading, em controle discreto com bandeiras, e a escolha acompanha a experiência, as páginas internas e os links de navegação. As traduções são adaptadas ao idioma para preservar naturalidade; Ana Byte, Ana, São Paulo, Brasil, Jinx e demais nomes próprios permanecem inalterados. A solução é local, sem API externa, dependência nova ou custo recorrente, com Português como fallback e persistência por URL e armazenamento local. Gate aprovado sem lacunas críticas.
+
 CONFIRMED: publicação da V1 no GitHub Pages já autorizada e vigente. A V2 permanece em repositório separado. Formulário prepara WhatsApp, sem armazenamento ou envio automático. Nenhuma lacuna CRITICAL. Ready-to-Start Gate aprovado. Recursos: HTML/CSS/JS e GSAP já existentes; sem nova dependência. Referências reconferidas: The Spark, UI como parte da narrativa; ERA, progressão por capítulos. Sem copiar assets ou código.
 
-Data: 21 de setembro de 2026.
+Data: 23 de setembro de 2026.
 
 | Item | Estado | Evidencia ou decisao |
 |---|---|---|

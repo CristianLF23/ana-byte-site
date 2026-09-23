@@ -1,0 +1,12 @@
+.byte-entry .locale-switcher{position:absolute;top:calc(26px + env(safe-area-inset-top));right:calc(27px + env(safe-area-inset-right));z-index:3;font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+.locale-switcher__current{display:grid;place-items:center;width:44px;height:44px;padding:0;border:1px solid #a8f7f756;border-radius:2px;background:#080e20af;color:#f6fcff;cursor:pointer;box-shadow:inset 0 0 0 1px #ff5eae17;transition:background .2s ease,border-color .2s ease}
+.locale-switcher__current:hover,.locale-switcher__current[aria-expanded="true"]{background:#102337e8;border-color:#a8f7f7aa}
+.locale-switcher__current:focus-visible,.locale-switcher__choices button:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.locale-switcher svg{display:block;width:26px;height:18px;flex:none;box-shadow:0 1px 5px #000b}
+.locale-switcher__choices{position:absolute;top:calc(100% + 6px);right:0;min-width:155px;padding:5px;border:1px solid #85dfe2a8;background:#070f20f5;box-shadow:0 12px 28px #000b,0 0 15px #42dce32c;backdrop-filter:blur(12px)}
+.locale-switcher__choices[hidden]{display:none}
+.locale-switcher__choices button{display:flex;align-items:center;gap:11px;width:100%;min-height:44px;padding:8px 10px;border:0;background:transparent;color:#e3f3f5;text-align:left;cursor:pointer;font:500 12px/1.2 ui-monospace,SFMono-Regular,Consolas,monospace}
+.locale-switcher__choices button:hover,.locale-switcher__choices button[aria-pressed="true"]{background:#62dfe728;color:#fff}
+.locale-switcher__choices button[aria-pressed="true"]::after{content:"";width:5px;height:5px;margin-left:auto;border-radius:50%;background:#72f3ed;box-shadow:0 0 7px #72f3ed}
+@media(max-width:360px){.byte-entry .locale-switcher{top:calc(21px + env(safe-area-inset-top));right:calc(22px + env(safe-area-inset-right))}}
+@media(prefers-reduced-motion:reduce){.locale-switcher__current{transition:none}}

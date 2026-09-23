@@ -5,9 +5,10 @@
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const chapters = [$('#inicio'), $('#obras'), $('#atelie'), $('#contato')];
   const sceneNames = ['city', 'works', 'artist', 'contact'];
+  const original = (element, attribute) => window.AnaLocale?.sourceAttribute(element, attribute) ?? element.getAttribute(attribute);
   const works = [...document.querySelectorAll('[data-work]')].map(a => ({
-    src: a.getAttribute('href'), title: a.dataset.title,
-    category: a.dataset.category, alt: a.querySelector('img').alt
+    src: a.getAttribute('href'), title: original(a, 'data-title'),
+    category: original(a, 'data-category'), alt: original(a.querySelector('img'), 'alt')
   }));
   const galleryImage = $('#gallery-image');
   const galleryLink = $('#gallery-open');
@@ -167,7 +168,14 @@
     $('#dialog-title').textContent = work.title;
     $('#dialog-category').textContent = work.category;
     $('#dialog-counter').textContent = pad(dialogIndex + 1) + ' / ' + pad(works.length);
-    $('#dialog-contact').href = 'https://wa.me/5511919007582?text=' + encodeURIComponent('Oi Ana! Vi a obra "' + work.title + '" no seu site e quero conversar sobre uma ideia de tatuagem.');
+    const localizedTitle = window.AnaLocale?.t(work.title) ?? work.title;
+    const language = window.AnaLocale?.language ?? 'pt';
+    const greeting = language === 'en'
+      ? `Hi Ana! I saw "${localizedTitle}" on your website and would love to talk about a tattoo idea.`
+      : language === 'de'
+        ? `Hallo Ana! Ich habe „${localizedTitle}“ auf deiner Website gesehen und möchte über eine Tattoo-Idee sprechen.`
+        : `Oi Ana! Vi a obra "${localizedTitle}" no seu site e quero conversar sobre uma ideia de tatuagem.`;
+    $('#dialog-contact').href = 'https://wa.me/5511919007582?text=' + encodeURIComponent(greeting);
   }
   function lockDialogScroll() {
     if (dialogScrollLocked) return;
