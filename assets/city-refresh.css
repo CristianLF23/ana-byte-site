@@ -59,21 +59,21 @@
 @media(prefers-reduced-motion:reduce){.byte-entry__progress-value{transition:none}}
 
 /* The cat remains below the header; the media now reaches behind its caption. */
-.city-cinema .gallery-facade{width:min(158vw,80svh);height:min(316vw,160svh);top:calc(74px + env(safe-area-inset-top));transform:translate(-50%,-7.3%);transform-origin:50% 7.3%}
+.city-cinema .gallery-facade{width:min(135vw,76svh);height:min(270vw,152svh);top:calc(74px + env(safe-area-inset-top));transform:translate(-50%,-7.3%);transform-origin:50% 7.3%}
 .mounted-gallery{bottom:auto;height:min(47.5%,calc(100svh - 300px))}
 .mounted-gallery .mounted-heading{position:absolute;top:0;left:0;right:0;z-index:2;padding:10px 12px;border:0;font-size:18px;background:linear-gradient(#02070cdb,transparent);pointer-events:none}
 .mounted-gallery .work-caption{position:absolute;bottom:0;left:0;right:0;z-index:2;padding:25px 12px 10px;background:linear-gradient(transparent,#02070cf5);border:0;pointer-events:none}
 .mounted-gallery .work-caption h3{font-size:21px;text-shadow:0 1px 5px #000}
 .mounted-gallery .work-caption>span{color:#bbefe8;text-shadow:0 1px 5px #000}
 .mounted-gallery .gallery-open .expand-image{bottom:74px}
-.city-cinema .artist-facade{width:min(184vw,94svh);height:min(368vw,188svh);top:50%;transform:translate(-50%,-34%);transform-origin:50% 34%}
+.city-cinema .artist-facade{width:min(150vw,89svh);height:min(300vw,178svh);top:50%;transform:translate(-50%,-34%);transform-origin:50% 34%}
 .mounted-artist{bottom:auto;height:min(39.9%,calc(100svh - 232px))}
 .mounted-artist>.eyebrow{font-size:9px;margin-bottom:7px}.mounted-artist h2{font-size:25px}
 .mounted-artist .artist-copy{font-size:12px}.mounted-artist .artist-image{margin:10px 0;flex:1;min-height:0}
 .mounted-artist .artist-image img{object-position:50% 35%}
 .mounted-artist .artist-actions{gap:6px;margin-top:9px}.mounted-artist .artist-actions a{min-height:50px;padding:7px 10px;font-size:13px}
 .mounted-artist .artist-actions small{font-size:10px}
-@media(min-width:760px){.city-cinema .gallery-facade{width:76svh;height:152svh}.city-cinema .artist-facade{width:91svh;height:182svh}}
+@media(min-width:760px){.city-cinema .gallery-facade{width:72svh;height:144svh}.city-cinema .artist-facade{width:86svh;height:172svh}}
 @media(max-height:720px){.mounted-gallery .work-caption h3{font-size:18px}.mounted-gallery .work-caption{padding-bottom:8px}.mounted-artist h2{font-size:23px}.mounted-artist .artist-actions a{min-height:46px;font-size:12px}.mounted-artist .artist-actions small{font-size:9px}.mounted-artist .facade-destination{padding-top:6px}}
 .interior-layer-open .city-header,.interior-layer-open .journey-nav{visibility:hidden}
 .mounted-gallery,.mounted-artist,.contact-portal{transition:opacity .35s ease}
