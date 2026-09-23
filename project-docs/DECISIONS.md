@@ -36,3 +36,5 @@ As molduras de obras e artista compartilham o topo visual em 72 px mais a área 
 O visor de obras passa a seguir a altura proporcional da área preta interna da fachada, com limite para telas muito baixas. Isso reduz a faixa vazia sob Ver acervo sem redimensionar as duas fachadas nem alterar seu alinhamento. Recurso escolhido: CSS existente; pesquisa de referências, catálogos, motion, 3D e novas dependências não agregam a esta correção isolada.
 
 Após a validação do visor, ambas as fachadas receberam limites de largura vinculados à tela, além de uma redução moderada de escala. Isso impede que cresçam excessivamente em celulares altos e dá respiro nas laterais e abaixo dos painéis. As âncoras das bordas superiores continuam iguais, preservando o alinhamento visual entre Obras e Ana. Nenhuma imagem foi refeita.
+
+A cena final recebeu duas camadas leves de chuva diagonal em ciano e magenta, construídas em CSS e animadas por transformações de textura repetível. A chuva só se movimenta quando a cena final está ativa, fica atrás do convite e desaparece em movimento reduzido; não exige novos arquivos de imagem ou dependências.
