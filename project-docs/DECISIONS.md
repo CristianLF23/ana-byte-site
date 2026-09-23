@@ -28,3 +28,7 @@ As cenas Obras e Ana têm controles laterais Voltar e Avançar; a faixa inferior
 ## Correção posterior: rolagem e mídia
 
 A rolagem vertical nativa foi restabelecida, sincronizada com os botões. A cidade ocupa quatro alturas de tela e a cena permanece fixada durante a progressão. As setas ficam nos cantos inferiores, com neon forte; a última dobra tem apenas retorno à Ana. O outdoor de obras subiu 60 px mantendo sua ampliação. A segunda dobra começa com o vídeo de portfólio e termina nas 19 obras, sem retrato fixo da artista. A capa de espera é uma tatuagem; bloqueio de autoplay oferece reprodução ao toque. Falha da fonte e tentativa de início sem resposta levam às obras, e cancelamentos internos não alteram a pausa escolhida pelo visitante.
+
+## 23/09: alinhamento das molduras e coleção
+
+As molduras de obras e artista compartilham o topo visual em 72 px mais a área segura. Cada imagem usa uma âncora própria para posicionar sua borda superior, independente da posição dos ornamentos. O corte no topo do gato foi autorizado. A terceira dobra mantém somente Conheça a Ana, e a foto ocupa o espaço antes reservado ao segundo botão. A coleção complementar mantém duas colunas no celular, com alturas definidas pela fotografia e legenda no fluxo, título sobre categoria. Foi removida a altura mínima herdada de 31 rem, que deixava espaços vazios e legendas estreitas. A imagem completa permanece disponível ao abrir a ampliação.

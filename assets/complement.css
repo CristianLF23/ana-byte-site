@@ -56,3 +56,14 @@ body.comp-page .comp-main>section:first-child{padding-top:48px}
 body.comp-page:not(.interior-embedded){padding-top:65px}.comp-page .interior-return-bar{top:0;width:100%;max-width:none;min-height:60px;border-width:0 0 1px;box-shadow:none}
 @media(min-width:760px){.comp-main{padding:0 55px}.comp-nav{padding-inline:55px}.comp-main .comp-hero{padding-top:64px;padding-bottom:75px}.comp-main .code-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.comp-main .code-grid article>div{padding:18px 15px 22px}.comp-main .code-grid h3{font-size:28px}.comp-main .code-grid article span{display:none}.comp-main .code-grid p{font-size:13px}.artist-feature figure{margin:0}.artist-feature figure img{max-height:760px;object-position:50% 35%}.artist-feature figcaption{padding-left:35px}.comp-main .artist-feature-copy{max-width:630px}.idea-guidance,.idea-form-section{max-width:640px}.comp-main .project-process{grid-template-columns:1fr 1fr}.comp-main .collection-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.comp-main .collection-card.span-two{grid-column:span 2}}
 @media(prefers-reduced-motion:reduce){.comp-root{scroll-behavior:auto}.project-fields input,.project-fields textarea{transition:none}}
+
+/* Thumbnails and captions form one card, without inherited poster-sized gaps. */
+.comp-main .collection-grid{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:20px 14px}
+.comp-main .collection-card,.comp-main .collection-card.span-two{min-width:0;min-height:0;height:auto;display:flex;flex-direction:column;background:#07141dcc}
+.comp-main .collection-card img{display:block;flex:none;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover}
+.comp-main .collection-card.span-two img{aspect-ratio:4/3}
+.comp-main .collection-card>span{position:static;inset:auto;display:flex;flex-direction:column;justify-content:flex-start;gap:6px;padding:12px 11px 14px;margin:0;border-left:2px solid #6be8db;background:#071119e6;min-width:0}
+.comp-main .collection-card b{font:700 21px/1.12 var(--display);color:#f0f7fa;overflow-wrap:break-word}
+.comp-main .collection-card small{font:400 10px/1.5 var(--body);color:#b9cfce;text-transform:none;letter-spacing:.015em}
+.comp-main .collection-card:hover img,.comp-main .collection-card:focus-visible img{transform:none;filter:brightness(1.08)}
+@media(min-width:760px){.comp-main .collection-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px 18px}.comp-main .collection-card b{font-size:24px}.comp-main .collection-card small{font-size:12px}.comp-main .collection-card>span{padding:15px}}

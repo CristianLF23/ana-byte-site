@@ -125,3 +125,8 @@ html.city-cinema{overflow-x:clip;overflow-y:auto;scroll-behavior:auto;scroll-pad
 .city-cinema .city-hero .hero-footnote{display:block;position:absolute;bottom:calc(79px + env(safe-area-inset-bottom));font-size:11px;letter-spacing:.02em;color:#ceffff}
 @media(min-width:760px){.scene-arrows .scene-back{left:28px}.scene-arrows .scene-next{right:28px}.mounted-gallery{height:min(51.8%,calc(100svh - 230px))}}
 @media(max-height:720px){.mounted-gallery{height:min(51.8%,calc(100svh - 206px))}.scene-arrows button,.scene-arrows .scene-back,.scene-arrows .scene-next,[data-scene="contact"] .scene-arrows .scene-back{bottom:calc(12px + env(safe-area-inset-bottom))}}
+
+/* Align the illustrated top rails, whose positions differ within the two assets. */
+.city-cinema .gallery-facade,.city-cinema .artist-facade{top:calc(72px + env(safe-area-inset-top))}
+.city-cinema .gallery-facade{transform:translate(-50%,-15.1%);transform-origin:50% 15.1%}
+.city-cinema .artist-facade{transform:translate(-50%,-13.3%);transform-origin:50% 13.3%}

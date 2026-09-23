@@ -19,6 +19,8 @@ Publicado em https://cristianlf23.github.io/ana-byte-site/
 
 ## Executar e verificar
 
+Correção de 23/09: molduras de Obras e Ana mais altas e alinhadas; terceira dobra com uma única ação e retrato maior. A coleção complementar usa legendas empilhadas logo após as imagens, sem altura mínima artificial nos cards. O teste qa/v1-frame-gallery.cjs confere alinhamento, fotografia, 19 cards, ausência de espaços vazios nas legendas e ampliação nas versões direta e complementar. Capturas locais em qa/v1-frame-gallery/.
+
 Sem instalação ou build. Execute node preview.cjs e abra http://127.0.0.1:4178/.
 
 Os scripts qa/v1-navigation.cjs, qa/v1-complement.cjs e qa/v1-complement-routes.cjs verificam jornada, preparação inicial, vídeo, galeria, formulário, retorno interno, movimento reduzido e conteúdo sem JavaScript. Os antigos pontos de entrada v1-refresh.cjs e v1-refresh-access.cjs encaminham para as verificações atuais. Usam a instalação local de Playwright identificada no início de cada arquivo. QA_URL permite testar a publicação.

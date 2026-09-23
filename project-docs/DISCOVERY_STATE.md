@@ -2,6 +2,8 @@
 
 ## Revisão atual: conteúdo complementar da V1
 
+CONFIRMED 23/09: subir novamente o outdoor de obras, permitindo cortar o topo do gato; alinhar as molduras de Obras e Ana. Remover Da arte à pele da terceira dobra e dedicar o espaço à foto. Corrigir os cards da aba Projetos que herdavam altura mínima e legenda horizontal. Escopo restrito, direção preservada, sem lacunas críticas nem novas dependências. Vídeo, rolagem e setas mantidos. Gate aprovado.
+
 CONFIRMED: correção posterior preserva vídeo inicial e trabalhos na segunda dobra, foto de Ana somente na terceira. Outdoor de obras retorna à altura anterior, 60 px acima da revisão precedente. Setas inferiores com neon ciano/magenta: Voltar e Avançar nas dobras 2/3, somente Voltar na 4. A rolagem vertical nativa também progride entre os quatro destinos. Gate aprovado sem lacunas. Recursos existentes suficientes; catálogos visuais, 3D e dependências adicionais dispensados. UI Skills fixing-accessibility orienta nomes e estados dos controles. Autoplay bloqueado deve ter convite claro para assistir; erro de mídia deve liberar os trabalhos.
 
 CONFIRMED: refinamento de navegação solicitado nas últimas capturas: remover Pausar, Visitar o ateliê e Vamos criar dos painéis de obras e Ana. Controles laterais Voltar e Avançar conduzem as cenas 2 e 3; indicador inferior apenas informa o progresso. Vídeo pausa ao toque e obras trocam ao deslizar. O espaço liberado amplia a mídia, preservando o gato visível sob o cabeçalho.
