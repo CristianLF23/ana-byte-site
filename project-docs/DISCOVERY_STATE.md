@@ -1,5 +1,7 @@
 # Estado de descoberta
 
+CONFIRMED 23/09: o contato persistente do WhatsApp deve permanecer acessível sem cobrir o gato na cena Obras. Correção isolada de apresentação e posição do CTA; destino, páginas e direção visual permanecem confirmados. Gate aprovado sem lacunas críticas.
+
 ## Revisão atual: conteúdo complementar da V1
 
 CONFIRMED 23/09: subir novamente o outdoor de obras, permitindo cortar o topo do gato; alinhar as molduras de Obras e Ana. Remover Da arte à pele da terceira dobra e dedicar o espaço à foto. Corrigir os cards da aba Projetos que herdavam altura mínima e legenda horizontal. Escopo restrito, direção preservada, sem lacunas críticas nem novas dependências. Vídeo, rolagem e setas mantidos. Gate aprovado.

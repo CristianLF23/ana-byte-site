@@ -38,3 +38,7 @@ O visor de obras passa a seguir a altura proporcional da área preta interna da 
 Após a validação do visor, ambas as fachadas receberam limites de largura vinculados à tela, além de uma redução moderada de escala. Isso impede que cresçam excessivamente em celulares altos e dá respiro nas laterais e abaixo dos painéis. As âncoras das bordas superiores continuam iguais, preservando o alinhamento visual entre Obras e Ana. Nenhuma imagem foi refeita.
 
 A cena final recebeu duas camadas leves de chuva diagonal em ciano e magenta, construídas em CSS e animadas por transformações de textura repetível. A chuva só se movimenta quando a cena final está ativa, fica atrás do convite e desaparece em movimento reduzido; não exige novos arquivos de imagem ou dependências.
+
+## 23/09: contato persistente sem obstruir o gato
+
+No celular, o CTA do WhatsApp usa somente o símbolo do aplicativo e fica ao lado da marca, liberando a área superior direita da cena Obras. A área de toque mede 46 × 46 px, o link mantém nome acessível e foco visível. O SVG é do Bootstrap Icons sob licença MIT incluída no projeto. A solução preserva o destino existente e não adiciona dependência de produção; catálogos de componentes, motion e 3D não agregariam a esta correção isolada.

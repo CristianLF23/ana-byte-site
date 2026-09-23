@@ -136,11 +136,12 @@ html.city-cinema{overflow-x:clip;overflow-y:auto;scroll-behavior:auto;scroll-pad
 .city-cinema .city-hero h1{font-family:'Oxanium',var(--display);font-size:clamp(72px,24vw,185px);font-weight:800;line-height:.86;letter-spacing:-.075em;transform:skewX(-9deg);white-space:nowrap}
 .city-cinema .city-hero h1>span:first-child{text-shadow:0 0 1px #fff,0 0 24px #b9f9ff4d}
 .city-cinema .city-hero .byte-word{margin-left:5px;text-shadow:1px 0 #ffb7dc,0 0 24px #ff2f9955}
-.city-cinema .header-contact{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:7px 10px;background:#061923e8;border:1px solid #72e9e7;color:#d8fffc;box-shadow:0 0 14px #4be5e266;font-size:12px;font-weight:600;text-decoration:none}
-.city-cinema .header-contact .wa-mark{display:grid;place-items:center;width:23px;height:23px;border:1px solid #8afcf1;border-radius:50%;font:700 8px/1 ui-monospace,monospace;letter-spacing:-.04em;color:#a7fff7}
+.city-cinema .header-contact{display:grid;place-items:center;flex:none;width:46px;height:46px;min-height:46px;padding:0;background:#061923e8;border:1px solid #72e9e7;color:#a7fff7;box-shadow:0 0 14px #4be5e266;text-decoration:none}
+.city-cinema .header-contact svg{display:block;width:25px;height:25px;filter:drop-shadow(0 0 6px #62fff888)}
 .city-cinema .header-contact:hover,.city-cinema .header-contact:focus-visible{background:#164652;box-shadow:0 0 22px #4be5e299}
 .city-cinema .header-contact:focus-visible{outline:2px solid #fff;outline-offset:3px}
-@media(max-width:360px){.city-cinema .city-hero h1{font-size:23vw}.city-cinema .header-contact{font-size:11px;padding:6px 8px}}
+@media(max-width:759px){.city-cinema .city-header{justify-content:flex-start;gap:14px}.city-cinema .header-actions{gap:0}}
+@media(max-width:360px){.city-cinema .city-hero h1{font-size:23vw}}
 .opening-rain-canvas,.contact-rain-canvas{display:none}
 .city-cinema .opening-rain-canvas{display:block;position:absolute;inset:0;z-index:3;width:100%;height:100%;pointer-events:none;opacity:0;transition:opacity .45s ease}
 .city-cinema[data-experience="started"][data-scene="city"] .opening-rain-canvas{opacity:1}
