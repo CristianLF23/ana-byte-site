@@ -115,7 +115,7 @@ html.city-cinema{overflow-x:clip;overflow-y:auto;scroll-behavior:auto;scroll-pad
 .city-cinema .city-world{height:400svh}
 .city-cinema .city-viewport{position:sticky;top:0;height:100svh}
 .city-cinema .gallery-facade{top:calc(14px + env(safe-area-inset-top))}
-.mounted-gallery{height:min(51.8%,calc(100svh - 220px))}
+.mounted-gallery{height:min(47.3%,calc(100svh - 155px))}
 .scene-arrows button,.scene-arrows .scene-back,.scene-arrows .scene-next,[data-scene="contact"] .scene-arrows .scene-back{top:auto;bottom:calc(17px + env(safe-area-inset-bottom));transform:none;width:56px;min-height:56px;gap:4px;border:2px solid #8cfff2;border-radius:6px;background:#082d34f5;color:#d5fff9;box-shadow:0 0 7px #bafff2,0 0 21px #20fce9b0,0 0 40px #20fce94d,inset 0 0 12px #20fce94d}
 .scene-arrows .scene-back{left:16px}
 .scene-arrows .scene-next{left:auto;right:16px;color:#fff1f8;background:#341027f5;border-color:#ff91cf;box-shadow:0 0 7px #ffc5e7,0 0 21px #ff2daebf,0 0 40px #ff2dae55,inset 0 0 12px #ff2dae55}
@@ -123,8 +123,8 @@ html.city-cinema{overflow-x:clip;overflow-y:auto;scroll-behavior:auto;scroll-pad
 .scene-arrows span{font-size:10px}
 .scene-arrows button:hover{background:#16515b}.scene-arrows .scene-next:hover{background:#5b1744}
 .city-cinema .city-hero .hero-footnote{display:block;position:absolute;bottom:calc(79px + env(safe-area-inset-bottom));font-size:11px;letter-spacing:.02em;color:#ceffff}
-@media(min-width:760px){.scene-arrows .scene-back{left:28px}.scene-arrows .scene-next{right:28px}.mounted-gallery{height:min(51.8%,calc(100svh - 230px))}}
-@media(max-height:720px){.mounted-gallery{height:min(51.8%,calc(100svh - 206px))}.scene-arrows button,.scene-arrows .scene-back,.scene-arrows .scene-next,[data-scene="contact"] .scene-arrows .scene-back{bottom:calc(12px + env(safe-area-inset-bottom))}}
+@media(min-width:760px){.scene-arrows .scene-back{left:28px}.scene-arrows .scene-next{right:28px}}
+@media(max-height:720px){.scene-arrows button,.scene-arrows .scene-back,.scene-arrows .scene-next,[data-scene="contact"] .scene-arrows .scene-back{bottom:calc(12px + env(safe-area-inset-bottom))}}
 
 /* Align the illustrated top rails, whose positions differ within the two assets. */
 .city-cinema .gallery-facade,.city-cinema .artist-facade{top:calc(72px + env(safe-area-inset-top))}

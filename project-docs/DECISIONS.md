@@ -32,3 +32,5 @@ A rolagem vertical nativa foi restabelecida, sincronizada com os botões. A cida
 ## 23/09: alinhamento das molduras e coleção
 
 As molduras de obras e artista compartilham o topo visual em 72 px mais a área segura. Cada imagem usa uma âncora própria para posicionar sua borda superior, independente da posição dos ornamentos. O corte no topo do gato foi autorizado. A terceira dobra mantém somente Conheça a Ana, e a foto ocupa o espaço antes reservado ao segundo botão. A coleção complementar mantém duas colunas no celular, com alturas definidas pela fotografia e legenda no fluxo, título sobre categoria. Foi removida a altura mínima herdada de 31 rem, que deixava espaços vazios e legendas estreitas. A imagem completa permanece disponível ao abrir a ampliação.
+
+O visor de obras passa a seguir a altura proporcional da área preta interna da fachada, com limite para telas muito baixas. Isso reduz a faixa vazia sob Ver acervo sem redimensionar as duas fachadas nem alterar seu alinhamento. Recurso escolhido: CSS existente; pesquisa de referências, catálogos, motion, 3D e novas dependências não agregam a esta correção isolada.
