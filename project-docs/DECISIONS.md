@@ -42,3 +42,7 @@ A cena final recebeu duas camadas leves de chuva diagonal em ciano e magenta, co
 ## 23/09: contato persistente sem obstruir o gato
 
 No celular, o CTA do WhatsApp usa somente o símbolo do aplicativo e fica ao lado da marca, liberando a área superior direita da cena Obras. A área de toque mede 46 × 46 px, o link mantém nome acessível e foco visível. O SVG é do Bootstrap Icons sob licença MIT incluída no projeto. A solução preserva o destino existente e não adiciona dependência de produção; catálogos de componentes, motion e 3D não agregariam a esta correção isolada.
+
+## 23/09: referência cinematográfica na abertura
+
+A primeira dobra exibe “como lágrimas na chuva” como detalhe tipográfico discreto abaixo do subtítulo. A frase foi fornecida pelo usuário como referência a Blade Runner. O convite principal e a instrução de navegação permanecem destacados; não há novo recurso externo ou animação.

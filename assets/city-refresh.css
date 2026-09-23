@@ -122,6 +122,9 @@ html.city-cinema{overflow-x:clip;overflow-y:auto;scroll-behavior:auto;scroll-pad
 .scene-arrows span{font-size:10px}
 .scene-arrows button:hover{background:#16515b}.scene-arrows .scene-next:hover{background:#5b1744}
 .city-cinema .city-hero .hero-footnote{display:block;position:absolute;bottom:calc(79px + env(safe-area-inset-bottom));font-size:11px;letter-spacing:.02em;color:#ceffff}
+.city-cinema .city-hero .rain-easter-egg{display:flex;align-items:center;justify-content:center;gap:10px;margin:18px auto 0;color:#d5edf0;font:italic 500 clamp(10px,2.8vw,12px)/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.055em;text-shadow:0 1px 5px #020711,0 0 12px #57eaf566;white-space:nowrap}
+.city-cinema .city-hero .rain-easter-egg::before,.city-cinema .city-hero .rain-easter-egg::after{content:"";width:15px;height:1px;background:#ff8bc4;box-shadow:0 0 7px #ff359f}
+.city-cinema .city-hero .rain-easter-egg::after{background:#83f5ff;box-shadow:0 0 7px #4ceeff}
 @media(min-width:760px){.scene-arrows .scene-back{left:28px}.scene-arrows .scene-next{right:28px}}
 @media(max-height:720px){.scene-arrows button,.scene-arrows .scene-back,.scene-arrows .scene-next,[data-scene="contact"] .scene-arrows .scene-back{bottom:calc(12px + env(safe-area-inset-bottom))}}
 
