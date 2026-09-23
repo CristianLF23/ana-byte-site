@@ -99,7 +99,6 @@
 .scene-arrows button:hover{background:#14303b}.scene-arrows button:focus-visible{outline:2px solid #fff;outline-offset:2px}
 .city-travelling .scene-arrows{opacity:.35;pointer-events:none}.city-travelling .scene-arrows button{pointer-events:none}
 .interior-layer-open .scene-arrows{visibility:hidden}
-[data-scene="works"] .header-contact,[data-scene="artist"] .header-contact{visibility:hidden;pointer-events:none}
 .mounted-gallery .billboard-controls{padding:0 10px 4px}.gallery-instruction{padding:9px 0 2px;color:#b5d1d8;font-size:10px;line-height:1.45;text-align:center}
 .mounted-gallery .gallery-status{gap:9px}.mounted-gallery .gallery-status button{font-size:12px;min-height:44px}
 .mounted-gallery{height:min(47.5%,calc(100svh - 273px))}
@@ -131,13 +130,19 @@ html.city-cinema{overflow-x:clip;overflow-y:auto;scroll-behavior:auto;scroll-pad
 .city-cinema .gallery-facade{transform:translate(-50%,-15.1%);transform-origin:50% 15.1%}
 .city-cinema .artist-facade{transform:translate(-50%,-13.3%);transform-origin:50% 13.3%}
 
-/* Wind-driven neon rain belongs to the final city scene, behind its invitation. */
+/* The opening title borrows the angular rhythm of Ana's project lettering. */
+@font-face{font-family:'Oxanium';src:url('fonts/Oxanium-Latin.woff2') format('woff2');font-style:normal;font-weight:200 800;font-display:swap}
+.city-cinema .city-hero .hero-copy{width:max-content;max-width:calc(100vw - 40px);margin-inline:auto}
+.city-cinema .city-hero h1{font-family:'Oxanium',var(--display);font-size:clamp(72px,24vw,185px);font-weight:800;line-height:.86;letter-spacing:-.075em;transform:skewX(-9deg);white-space:nowrap}
+.city-cinema .city-hero h1>span:first-child{text-shadow:0 0 1px #fff,0 0 24px #b9f9ff4d}
+.city-cinema .city-hero .byte-word{margin-left:5px;text-shadow:1px 0 #ffb7dc,0 0 24px #ff2f9955}
+.city-cinema .header-contact{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:7px 10px;background:#061923e8;border:1px solid #72e9e7;color:#d8fffc;box-shadow:0 0 14px #4be5e266;font-size:12px;font-weight:600;text-decoration:none}
+.city-cinema .header-contact .wa-mark{display:grid;place-items:center;width:23px;height:23px;border:1px solid #8afcf1;border-radius:50%;font:700 8px/1 ui-monospace,monospace;letter-spacing:-.04em;color:#a7fff7}
+.city-cinema .header-contact:hover,.city-cinema .header-contact:focus-visible{background:#164652;box-shadow:0 0 22px #4be5e299}
+.city-cinema .header-contact:focus-visible{outline:2px solid #fff;outline-offset:3px}
+@media(max-width:360px){.city-cinema .city-hero h1{font-size:23vw}.city-cinema .header-contact{font-size:11px;padding:6px 8px}}
 .city-cinema .contact-chapter{isolation:isolate}
-.city-cinema .contact-chapter::before,.city-cinema .contact-chapter::after{content:"";position:absolute;inset:-280px;z-index:0;pointer-events:none;background-image:linear-gradient(108deg,transparent 47.5%,#d4faffc4 49%,#b4f4ff7a 50.3%,transparent 52%);background-size:var(--rain-x) var(--rain-y);background-repeat:repeat;-webkit-mask-image:linear-gradient(to bottom,transparent 0 7%,#000 9% 15%,transparent 17% 35%,#000 38% 47%,transparent 49% 69%,#000 72% 79%,transparent 82% 100%);mask-image:linear-gradient(to bottom,transparent 0 7%,#000 9% 15%,transparent 17% 35%,#000 38% 47%,transparent 49% 69%,#000 72% 79%,transparent 82% 100%);-webkit-mask-size:var(--rain-x) var(--rain-y);mask-size:var(--rain-x) var(--rain-y);animation:contact-rain 2.8s linear infinite paused}
-.city-cinema .contact-chapter::before{--rain-x:72px;--rain-y:216px;opacity:.78}
-.city-cinema .contact-chapter::after{--rain-x:91px;--rain-y:273px;opacity:.45;background-image:linear-gradient(108deg,transparent 47.5%,#ff91d1a6 49%,#ff91d15e 50.3%,transparent 52%);animation-duration:4.1s}
-.city-cinema .contact-chapter.is-current::before,.city-cinema .contact-chapter.is-current::after{animation-play-state:running}
+.city-cinema .contact-rain-canvas{position:absolute;inset:0;z-index:0;width:100%;height:100%;pointer-events:none}
 .city-cinema .contact-chapter .contact-portal{z-index:1}
-.effects-paused .contact-chapter::before,.effects-paused .contact-chapter::after,.page-hidden .contact-chapter::before,.page-hidden .contact-chapter::after{animation-play-state:paused!important}
-@keyframes contact-rain{to{transform:translate3d(var(--rain-x),var(--rain-y),0)}}
-@media(prefers-reduced-motion:reduce){.city-cinema .contact-chapter::before,.city-cinema .contact-chapter::after{display:none}}
+@media(max-height:720px){.city-cinema .city-hero .hero-footnote{bottom:calc(57px + env(safe-area-inset-bottom));font-size:9px}}
+@media(max-height:620px){.city-cinema .city-hero .discover-world{bottom:calc(93px + env(safe-area-inset-bottom))}.city-cinema .city-hero .hero-footnote{bottom:calc(62px + env(safe-area-inset-bottom))}}

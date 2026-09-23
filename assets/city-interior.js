@@ -18,9 +18,23 @@
     return button;
   };
 
+  const makeWhatsApp = () => {
+    if (document.querySelector('[data-persistent-whatsapp]')) return;
+    const link = document.createElement('a');
+    link.className = 'persistent-whatsapp';
+    link.dataset.persistentWhatsapp = 'true';
+    link.href = 'https://wa.me/5511919007582';
+    link.target = '_blank';
+    link.rel = 'noopener';
+    link.setAttribute('aria-label', 'Falar com Ana Byte pelo WhatsApp');
+    link.innerHTML = '<span aria-hidden="true">WA</span><span>WhatsApp</span>';
+    document.body.append(link);
+  };
+
   const setupEmbedded = () => {
     document.body.classList.add('interior-page', 'interior-embedded');
     document.documentElement.classList.add("interior-embedded-root");
+    makeWhatsApp();
     document.addEventListener('click', event => {
       const link = event.target.closest('a[href]');
       if (!link || link.target === '_blank' || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
@@ -49,7 +63,7 @@
     });
   };
 
-  const setupDirect = () => { document.body.classList.add('interior-page'); makeReturnBar(false); };
+  const setupDirect = () => { document.body.classList.add('interior-page'); makeReturnBar(false); makeWhatsApp(); };
 
   const setupParent = () => {
     const layer = document.createElement('div');
