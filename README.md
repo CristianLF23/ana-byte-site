@@ -9,8 +9,9 @@ Publicado em https://cristianlf23.github.io/ana-byte-site/
 - Preparação visual de pelo menos 2,6 segundos, barra progressiva e entrada somente após o toque no botão habilitado.
 - Identidade ANA BYTE sem emojis, barra azul neon e convite inicial com fundo.
 - Vídeo de deslocamento cortado fisicamente para 2 segundos e usado apenas de Cidade para Obras. Outros destinos têm dissolução curta.
-- Outdoors ampliados, gato visível abaixo do cabeçalho e retrato maior da artista. Cenas Obras e Ana usam somente os controles laterais Voltar e Avançar para seguir a jornada. A faixa inferior indica a etapa atual.
+- Outdoor de obras ampliado e mais alto, retrato da artista na terceira dobra. A rolagem vertical conduz os quatro destinos, sincronizada com as setas neon dos cantos inferiores. Obras e Ana têm Voltar e Avançar; a última dobra tem somente Voltar. A faixa inferior indica a etapa atual.
 - Vídeo fornecido pelo usuário de 25 segundos como primeira mídia do acervo. Depois entram 19 imagens. Toque no vídeo pausa ou retoma; deslize sobre a mídia muda a obra; toque na fotografia abre a ampliação. Ver acervo mostra a coleção completa. Os antigos botões Pausar, Visitar o ateliê e Vamos criar foram removidos dos painéis.
+- A capa de espera do vídeo é uma tatuagem. Bloqueio de reprodução automática mostra Assistir ao vídeo; erro de carregamento libera o acervo. As verificações adicionais v1-video-recovery.cjs e v1-native-scroll.cjs cobrem falha de mídia, bloqueio de autoplay, cancelamento interno, rolagem vertical por roda/toque e retorno das páginas complementares.
 - Vídeo e imagens preenchem o visor sem faixas laterais. O enquadramento usa recorte central; a ampliação mantém a fotografia completa.
 - Nova foto de Ana no painel da artista. Gatos dos painéis de obras e contato adaptados à referência de pelagem preta e branca.
 - Convite final abre a página complementar Comece pela ideia com entrada lateral, fundo translúcido sobre o letreiro final, orientações curtas e formulário ao fim: nome, idade, ideia, região do corpo e tamanho. A mensagem é preparada no WhatsApp para revisão pelo visitante. Nenhum dado é armazenado ou enviado automaticamente.

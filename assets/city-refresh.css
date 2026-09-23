@@ -88,6 +88,11 @@
 .journey-track .journey-line{position:absolute;left:0!important;bottom:0;height:2px;width:25%;background:#ee4d9f;box-shadow:0 0 8px #ee4d9f66;transition:width .45s ease}
 .scene-arrows{position:absolute;inset:0;z-index:25;pointer-events:none}
 .scene-arrows[hidden]{display:none}
+.scene-arrows button[hidden]{display:none}
+[data-scene="contact"] .scene-arrows .scene-back{top:auto;bottom:calc(76px + env(safe-area-inset-bottom));transform:none}
+.gallery-open .video-hint{position:absolute;left:50%;top:50%;z-index:4;transform:translate(-50%,-50%);display:flex;align-items:center;gap:9px;padding:14px 18px;border:1px solid #8cf6ee;background:#071a23eb;color:#ddffff;font-size:13px;white-space:nowrap;pointer-events:none}
+.gallery-open .video-hint[hidden]{display:none}
+.video-hint svg{width:18px;height:18px;fill:currentColor}
 .scene-arrows button{pointer-events:auto;position:absolute;top:50%;transform:translateY(-50%);width:44px;min-height:64px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:7px;background:#06131eeb;border:1px solid #80dfdf88;box-shadow:0 0 15px #04141ee0;color:#c3ffff}
 .scene-arrows .scene-back{left:4px;border-radius:0 5px 5px 0}.scene-arrows .scene-next{right:4px;border-color:#ef61aa;border-radius:5px 0 0 5px;color:#ffcce6}
 .scene-arrows svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.5}.scene-arrows span{font-size:9px;line-height:1.2}
@@ -103,3 +108,20 @@
 @media(min-width:760px){.scene-arrows .scene-back{left:max(20px,calc(50% - 330px))}.scene-arrows .scene-next{right:max(20px,calc(50% - 330px))}.scene-arrows button{width:55px;min-height:76px}.scene-arrows span{font-size:11px}.mounted-gallery .gallery-instruction{font-size:11px}.mounted-gallery{height:min(47.5%,calc(100svh - 285px))}}
 @media(max-height:720px){.mounted-gallery{height:min(47.5%,calc(100svh - 252px))}.mounted-artist{height:min(39.9%,calc(100svh - 173px))}.mounted-gallery .gallery-instruction{font-size:9px;white-space:nowrap;letter-spacing:-.015em}.city-cinema .journey-nav{bottom:calc(12px + env(safe-area-inset-bottom))}}
 @media(prefers-reduced-motion:reduce){.journey-track .journey-line,.mounted-gallery,.mounted-artist,.contact-portal{transition:none}}
+
+/* Native vertical progress, with the same destinations reachable by the neon controls. */
+html.city-cinema{overflow-x:clip;overflow-y:auto;scroll-behavior:auto;scroll-padding-top:0}
+.city-cinema body{overflow:visible}
+.city-cinema .city-world{height:400svh}
+.city-cinema .city-viewport{position:sticky;top:0;height:100svh}
+.city-cinema .gallery-facade{top:calc(14px + env(safe-area-inset-top))}
+.mounted-gallery{height:min(51.8%,calc(100svh - 220px))}
+.scene-arrows button,.scene-arrows .scene-back,.scene-arrows .scene-next,[data-scene="contact"] .scene-arrows .scene-back{top:auto;bottom:calc(17px + env(safe-area-inset-bottom));transform:none;width:56px;min-height:56px;gap:4px;border:2px solid #8cfff2;border-radius:6px;background:#082d34f5;color:#d5fff9;box-shadow:0 0 7px #bafff2,0 0 21px #20fce9b0,0 0 40px #20fce94d,inset 0 0 12px #20fce94d}
+.scene-arrows .scene-back{left:16px}
+.scene-arrows .scene-next{left:auto;right:16px;color:#fff1f8;background:#341027f5;border-color:#ff91cf;box-shadow:0 0 7px #ffc5e7,0 0 21px #ff2daebf,0 0 40px #ff2dae55,inset 0 0 12px #ff2dae55}
+.scene-arrows svg{width:24px;height:24px;filter:drop-shadow(0 0 5px currentColor)}
+.scene-arrows span{font-size:10px}
+.scene-arrows button:hover{background:#16515b}.scene-arrows .scene-next:hover{background:#5b1744}
+.city-cinema .city-hero .hero-footnote{display:block;position:absolute;bottom:calc(79px + env(safe-area-inset-bottom));font-size:11px;letter-spacing:.02em;color:#ceffff}
+@media(min-width:760px){.scene-arrows .scene-back{left:28px}.scene-arrows .scene-next{right:28px}.mounted-gallery{height:min(51.8%,calc(100svh - 230px))}}
+@media(max-height:720px){.mounted-gallery{height:min(51.8%,calc(100svh - 206px))}.scene-arrows button,.scene-arrows .scene-back,.scene-arrows .scene-next,[data-scene="contact"] .scene-arrows .scene-back{bottom:calc(12px + env(safe-area-inset-bottom))}}

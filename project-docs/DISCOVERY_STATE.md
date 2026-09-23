@@ -2,6 +2,8 @@
 
 ## Revisão atual: conteúdo complementar da V1
 
+CONFIRMED: correção posterior preserva vídeo inicial e trabalhos na segunda dobra, foto de Ana somente na terceira. Outdoor de obras retorna à altura anterior, 60 px acima da revisão precedente. Setas inferiores com neon ciano/magenta: Voltar e Avançar nas dobras 2/3, somente Voltar na 4. A rolagem vertical nativa também progride entre os quatro destinos. Gate aprovado sem lacunas. Recursos existentes suficientes; catálogos visuais, 3D e dependências adicionais dispensados. UI Skills fixing-accessibility orienta nomes e estados dos controles. Autoplay bloqueado deve ter convite claro para assistir; erro de mídia deve liberar os trabalhos.
+
 CONFIRMED: refinamento de navegação solicitado nas últimas capturas: remover Pausar, Visitar o ateliê e Vamos criar dos painéis de obras e Ana. Controles laterais Voltar e Avançar conduzem as cenas 2 e 3; indicador inferior apenas informa o progresso. Vídeo pausa ao toque e obras trocam ao deslizar. O espaço liberado amplia a mídia, preservando o gato visível sob o cabeçalho.
 
 CONFIRMED: o usuário pediu baixar o outdoor de obras para mostrar o gato sob o cabeçalho, ampliar a mídia e o retrato da Ana. O CTA final deve abrir a página Comece pela ideia, translúcida sobre o letreiro final, terminando no formulário de cinco campos já autorizado. Páginas internas devem ser descobertas por links claros e funcionar como continuação da experiência. Menos repetição de botões e texto; fotos nos blocos Estrutura, Energia e Matéria; foto da artista em destaque antes da nota discreta do studio fictício.
