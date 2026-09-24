@@ -1,5 +1,7 @@
 # Ana Byte site
 
+Revisão desktop de 24/09/2026: a página principal passa a ter um percurso vertical contínuo, sem controles para trocar de dobra. O panorama da cidade permanece na abertura; obras reais, processo, retrato da artista, linguagem visual e formulário compõem os capítulos seguintes na própria página. A implementação desktop é isolada por breakpoint e a experiência mobile aprovada permanece igual. A base do estudo visual é `output/ana-byte-era-audit/`; princípios de ritmo e progressão foram transferidos sem reproduzir a identidade ou a geometria da ERA.
+
 Execução de 23/09/2026: redesign desktop da V1, guiado pela identidade mobile aprovada. Quatro panoramas próprios e rolagem vertical nativa no desktop; mobile aprovado preservado com comparação visual pixel a pixel. Especificação, registro de execução e limites em DESKTOP_EXECUTION_PLAN.md.
 
 Revisão atual V2 em 22/09/2026: portfólio experimental e imersivo com foco mobile, baseado em um tour guiado pelas tatuagens. Loading cyberpunk, neon, linguagem biotecnológica e interação por rolagem e toque. Escopo comercial e WhatsApp preservados.

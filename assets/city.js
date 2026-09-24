@@ -23,6 +23,7 @@
   let started = false, userPaused = reduced.matches, effectsPaused = false;
   let galleryTimer = 0, transitionTimer = 0, swipeStart = null, suppressClick = false;
   let galleryVisible = false, dialogTrigger = null;
+  let desktopGalleryInView = false;
   let dialogScroll = 0;
   let savedOverflow = '';
   let dialogScrollLocked = false;
@@ -228,6 +229,13 @@
     });
     $('#collection-grid').append(button);
   });
+  document.querySelectorAll('.static-collection [data-work]').forEach((anchor, n) => {
+    anchor.addEventListener('click', event => {
+      if (!isDesktop() || !artDialog.showModal || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      openArt(n, anchor);
+    });
+  });
   $('#open-collection').addEventListener('click', () => {
     pauseGallery(); lockDialogScroll(); collectionDialog.showModal(); $('#close-collection').focus();
   });
@@ -247,7 +255,7 @@
 
   function activateScene(n) {
     sceneIndex = n;
-    galleryVisible = n === 1;
+    galleryVisible = n === 1 && (!isDesktop() || desktopGalleryInView);
     root.dataset.scene = sceneNames[n];
     chapters.forEach((chapter, i) => {
       chapter.classList.toggle('is-current', i === n);
@@ -295,6 +303,14 @@
     entries.forEach(entry => { if (entry.isIntersecting) activateScene(chapters.indexOf(entry.target)); });
   }, { threshold: .4 });
   chapters.forEach(c => observer.observe(c));
+  const galleryObserver = new IntersectionObserver(entries => {
+    desktopGalleryInView = entries[0]?.isIntersecting ?? false;
+    if (isDesktop() && sceneIndex === 1) {
+      galleryVisible = desktopGalleryInView;
+      syncAutoplay();
+    }
+  }, { rootMargin: '200px 0px', threshold: .01 });
+  galleryObserver.observe($('.mounted-gallery'));
   const motionToggle = $('#motion-toggle');
   motionToggle.hidden = reduced.matches;
   motionToggle.addEventListener('click', () => {
@@ -317,6 +333,7 @@
   addEventListener('resize', () => {
     if (innerWidth === lastWidth) return;
     lastWidth = innerWidth;
+    if (isDesktop()) return;
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => { const name = sceneNames[sceneIndex]; configureCamera(); goTo(name); }, 180);
   });

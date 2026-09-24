@@ -5,6 +5,11 @@
   const viewport = document.querySelector('.city-viewport');
   const contact = document.querySelector('.contact-chapter');
   if (!viewport || !contact || !window.HTMLCanvasElement) return;
+  const desktopMedia = matchMedia('(min-width:1024px) and (min-aspect-ratio:6/5)');
+  const hero = document.querySelector('.city-hero');
+  const desktopFinal = document.querySelector('.desktop-contact-intro');
+  if (!hero || !desktopFinal) return;
+  let heroInView = true;
 
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const colors = ['205,246,255', '232,248,255', '250,177,220'];
@@ -13,7 +18,8 @@
     !root.classList.contains('interior-layer-open') &&
     !document.hidden && !reduced.matches;
 
-  function makeRain(host, className, before, isActive, preserveExitFrame) {
+  function makeRain(initialHost, className, before, isActive, preserveExitFrame) {
+    let host = initialHost;
     const canvas = document.createElement('canvas');
     canvas.className = className;
     canvas.setAttribute('aria-hidden', 'true');
@@ -115,27 +121,52 @@
       }
     }
 
-    return { sync, resize };
+    function rehost(nextHost, nextBefore) {
+      if (host === nextHost) return;
+      cancelAnimationFrame(frame);
+      frame = 0;
+      host = nextHost;
+      host.insertBefore(canvas, nextBefore);
+      width = 0;
+      height = 0;
+      resize();
+      sync();
+    }
+
+    return { sync, resize, rehost };
   }
 
   // One layer bridges the opening city and its first camera descent; the other
   // remains physically inside the final sign, behind the invitation.
   const opening = makeRain(
-    viewport,
+    desktopMedia.matches ? hero : viewport,
     'opening-rain-canvas',
-    viewport.querySelector('.flight-status'),
-    () => root.dataset.experience === 'started' && (root.dataset.scene === 'city' || root.classList.contains('city-desktop-mode')),
+    desktopMedia.matches ? null : viewport.querySelector('.flight-status'),
+    () => root.dataset.experience === 'started' && root.dataset.scene === 'city' &&
+      (!desktopMedia.matches || heroInView),
     true
   );
   const final = makeRain(
-    contact,
+    desktopMedia.matches ? desktopFinal : contact,
     'contact-rain-canvas',
-    contact.querySelector('.contact-portal'),
+    desktopMedia.matches ? null : contact.querySelector('.contact-portal'),
     () => contact.classList.contains('is-current') && !root.classList.contains('city-travelling'),
     false
   );
   const syncAll = () => { opening?.sync(); final?.sync(); };
   const resizeAll = () => { opening?.resize(); final?.resize(); };
+
+  new IntersectionObserver(entries => {
+    heroInView = entries[0]?.isIntersecting ?? false;
+    opening?.sync();
+  }).observe(hero);
+  desktopMedia.addEventListener('change', () => {
+    opening?.rehost(desktopMedia.matches ? hero : viewport,
+      desktopMedia.matches ? null : viewport.querySelector('.flight-status'));
+    final?.rehost(desktopMedia.matches ? desktopFinal : contact,
+      desktopMedia.matches ? null : contact.querySelector('.contact-portal'));
+    requestAnimationFrame(() => { resizeAll(); syncAll(); });
+  });
 
   new MutationObserver(syncAll).observe(root, { attributes: true, attributeFilter: ['class', 'data-scene', 'data-experience'] });
   new MutationObserver(syncAll).observe(contact, { attributes: true, attributeFilter: ['class'] });
