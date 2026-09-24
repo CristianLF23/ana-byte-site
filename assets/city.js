@@ -29,6 +29,7 @@
   const desktopQuery = matchMedia('(min-width:1024px) and (min-aspect-ratio:6/5)');
   const isDesktop = () => desktopQuery.matches;
   const pad = n => String(n).padStart(2, '0');
+  const workInstruction = () => isDesktop() ? 'Arraste para explorar · Clique para ampliar' : 'Deslize para explorar · Toque para ampliar';
   function stopPortfolioVideo() {
     videoPlayToken++;
     videoPlayPending = false;
@@ -38,7 +39,9 @@
   function showVideoPrompt() {
     const paused = userPaused || videoBlocked || (reduced.matches && !videoRequested);
     $('.video-hint').hidden = introFinished || !paused;
-    $('#gallery-instruction').textContent = paused ? 'Toque para assistir · Deslize para ver obras' : 'Toque para pausar · Deslize para ver obras';
+    $('#gallery-instruction').textContent = isDesktop()
+      ? (paused ? 'Clique para assistir · Arraste para ver obras' : 'Clique para pausar · Arraste para ver obras')
+      : (paused ? 'Toque para assistir · Deslize para ver obras' : 'Toque para pausar · Deslize para ver obras');
     galleryLink.setAttribute('aria-label', paused ? 'Reproduzir o vídeo dos trabalhos de Ana Byte' : 'Pausar o vídeo dos trabalhos de Ana Byte');
   }
   function finishPortfolioIntro() {
@@ -84,7 +87,7 @@
       } else stopPortfolioVideo();
       showVideoPrompt();
     }
-    if (introFinished) $('#gallery-instruction').textContent = 'Deslize para explorar · Toque para ampliar';
+    if (introFinished) $('#gallery-instruction').textContent = workInstruction();
     if (introFinished && canPlay && !reduced.matches) {
       galleryTimer = setInterval(() => selectWork(index + 1, false), 5500);
     }
@@ -96,7 +99,7 @@
     videoBlocked = false;
     $('.video-hint').hidden = true;
     galleryLink.classList.remove('is-video');
-    $('#gallery-instruction').textContent = 'Deslize para explorar · Toque para ampliar';
+    $('#gallery-instruction').textContent = workInstruction();
     if (manual) pauseGallery();
     index = (next + works.length) % works.length;
     const work = works[index];
@@ -143,6 +146,10 @@
   });
   galleryLink.addEventListener('pointercancel', () => { swipeStart = null; });
   galleryLink.addEventListener('dragstart', e => e.preventDefault());
+  desktopQuery.addEventListener('change', () => {
+    if (introFinished) $('#gallery-instruction').textContent = workInstruction();
+    else showVideoPrompt();
+  });
   galleryLink.addEventListener('click', e => {
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     if (!artDialog.showModal) return;
