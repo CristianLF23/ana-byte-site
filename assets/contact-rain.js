@@ -124,7 +124,7 @@
     viewport,
     'opening-rain-canvas',
     viewport.querySelector('.flight-status'),
-    () => root.dataset.experience === 'started' && root.dataset.scene === 'city',
+    () => root.dataset.experience === 'started' && (root.dataset.scene === 'city' || root.classList.contains('city-desktop-mode')),
     true
   );
   const final = makeRain(

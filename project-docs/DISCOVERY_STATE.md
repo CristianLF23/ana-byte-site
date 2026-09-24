@@ -1,5 +1,7 @@
 # Estado de descoberta
 
+CONFIRMED 23/09 — planejamento desktop: preservar identidade da V1 mobile e retrabalhar desktop com backgrounds próprios e maior resolução. Usuário pediu plano para execução posterior no GPT-6 Sol. RECOMMENDATION: scroll vertical nativo apenas no layout largo, com quatro cenas panorâmicas e câmera ilustrada em camadas. Escopo comercial, idiomas, fotos reais e CTA existentes confirmados. Gate de planejamento aprovado sem lacunas críticas. Implementação não iniciada; detalhes e critérios em DESKTOP_EXECUTION_PLAN.md.
+
 CONFIRMED 23/09: a abertura não exibe a marca pequena do canto superior esquerdo nem o botão de WhatsApp; ambos surgem a partir da segunda dobra, após o vídeo. A navegação principal passa a ser feita apenas pelos botões, sem rolagem vertical ou instrução de rolagem. O botão de pular o vídeo é removido e o outdoor de Obras desce um pouco para mostrar mais do gato. Gate aprovado sem lacunas críticas.
 
 CONFIRMED 23/09: o contato persistente do WhatsApp deve permanecer acessível sem cobrir o gato na cena Obras. Correção isolada de apresentação e posição do CTA; destino, páginas e direção visual permanecem confirmados. Gate aprovado sem lacunas críticas.
@@ -41,6 +43,13 @@ Data: 23 de setembro de 2026.
 | Imagens adicionais do Instagram | UNCERTAIN OPTIONAL | Autorizadas, mas a sessao autenticada nao ficou disponivel |
 
 Ready to Start Gate: aprovado para construcao local. Publicacao continua fora do escopo atual.
+
+## Execução desktop autorizada em 23 de setembro de 2026
+
+- CONFIRMED: executar o plano desktop salvo para a V1 na mesma URL, preservando o mobile aprovado sem alterações visuais.
+- IMPLEMENTED: quatro panoramas próprios, painéis arquitetônicos horizontais, progressão vertical por rolagem no desktop, páginas complementares e formulário existentes.
+- VERIFIED: 0 pixels diferentes nas quatro cenas mobile em 320 × 568 e 390 × 844 contra o commit aprovado; cenas desktop e navegação funcional conferidas localmente.
+- LIMIT: masters gerados em 1672 × 941; não são 4K nativos. Publicação e verificação da URL pública registradas ao final da entrega.
 
 ## Atualização confirmada em 22 de setembro de 2026
 

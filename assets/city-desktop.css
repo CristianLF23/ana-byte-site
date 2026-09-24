@@ -1,0 +1,93 @@
+/* Desktop chapter: native document scroll with a pinned cinematic stage. */
+.desktop-discover-title,.desktop-scroll-hint{display:none}
+.contact-chapter>picture{position:absolute;inset:0;pointer-events:none}
+@media (min-width:1024px) and (min-aspect-ratio:6/5) {
+  html.city-desktop-mode { overflow-x:clip; overflow-y:auto; }
+  html.city-desktop-mode body { overflow:visible; }
+  html.city-desktop-mode { scroll-behavior:auto; scroll-padding-top:0; }
+  html.city-desktop-mode .city-world { height:680vh; position:relative; }
+  html.city-desktop-mode .city-viewport { position:sticky; top:0; height:100svh; min-height:640px; overflow:hidden; background:#050914; }
+  html.city-desktop-mode .city-environment { position:absolute; inset:0; z-index:0; }
+  html.city-cinema.city-desktop-mode[data-experience="started"] .opening-rain-canvas { z-index:7; opacity:.32; }
+  html.city-desktop-mode .city-painting { inset:-4%; transform:none!important; }
+  html.city-desktop-mode .city-painting picture { display:block; width:100%; height:100%; }
+  html.city-desktop-mode .city-painting img { object-fit:cover; object-position:50% 50%; }
+  html.city-desktop-mode:not([data-reduced="true"]) .city-painting img { animation:desktop-city-breathe 17s ease-in-out infinite alternate; transform-origin:50% 47%; }
+  html.city-desktop-mode .city-vignette { background:linear-gradient(180deg,#02050ccc 0%,transparent 30%,#05091422 62%,#050914e8 100%),linear-gradient(90deg,#02050dcc,transparent 24%,transparent 76%,#02050dcc); }
+  html.city-desktop-mode .city-header { z-index:40; padding:30px 5vw 24px; }
+  html.city-desktop-mode .city-header .small-brand { font-size:30px; }
+  html.city-desktop-mode .city-header .header-contact { font-size:13px; }
+  html.city-desktop-mode .city-chapter { position:absolute; inset:0; height:100%; min-height:0; padding:0 7vw; display:grid; place-items:center; visibility:visible; opacity:0; pointer-events:none; z-index:5; }
+  html.city-desktop-mode .city-chapter.is-current { visibility:visible; pointer-events:auto; }
+  html.city-desktop-mode .city-chapter .hero-copy,
+  html.city-desktop-mode .city-chapter .facade-stage,
+  html.city-desktop-mode .city-chapter .contact-portal { will-change:transform,opacity; }
+  html.city-desktop-mode .city-hero { z-index:6; text-align:left; place-items:start; align-content:center; }
+  html.city-desktop-mode .city-hero .hero-copy { width:min(650px,48vw); padding:0; transform:translate3d(0,0,0); }
+  html.city-desktop-mode .city-hero .hero-copy .eyebrow { font-size:13px; letter-spacing:.2em; margin-bottom:36px; }
+  html.city-desktop-mode .city-hero h1 { font-size:clamp(170px,18vw,310px); line-height:.73; }
+  html.city-desktop-mode .city-hero .hero-subtitle { font-size:24px; margin-top:42px; line-height:1.35; }
+  html.city-desktop-mode .city-hero .rain-easter-egg { margin-top:22px; font-size:13px; letter-spacing:.18em; color:#b7d4da; }
+  html.city-desktop-mode .city-hero .discover-world { left:7vw; bottom:13vh; transform:none; align-items:flex-start; min-width:300px; font-size:19px; }
+  html.city-desktop-mode .discover-world .mobile-discover-title,
+  html.city-desktop-mode .discover-world .mobile-discover-hint { display:none; }
+  html.city-desktop-mode .discover-world .desktop-discover-title,
+  html.city-desktop-mode .discover-world .desktop-scroll-hint { display:block; }
+  html.city-desktop-mode .city-hero .discover-world small { font-size:12px; }
+  html.city-desktop-mode .city-hero .discover-world svg { width:24px; height:38px; margin-top:5px; }
+  html.city-desktop-mode .works-chapter,
+  html.city-desktop-mode .atelier-chapter { place-items:center; }
+  html.city-desktop-mode .facade-stage,
+  html.city-desktop-mode .artist-facade { position:absolute; left:50%; top:50%; width:max(100vw,177.78svh); height:max(100svh,56.25vw); max-width:none; aspect-ratio:16/9; margin:0; transform:translate(-50%,-50%); transform-origin:center; }
+  html.city-desktop-mode .scene-matte { object-fit:cover; object-position:50% 50%; border:0; box-shadow:none; mask-image:none; }
+  html.city-desktop-mode .mounted-gallery { left:34%; right:23%; top:22.5%; bottom:31%; }
+  html.city-desktop-mode .mounted-gallery .billboard-screen { flex-direction:row; padding-top:52px; }
+  html.city-desktop-mode .mounted-gallery .gallery-open { flex:0 0 45%; }
+  html.city-desktop-mode .mounted-gallery .gallery-open.is-video { flex-basis:26%; }
+  html.city-desktop-mode .mounted-gallery .gallery-open>img,
+  html.city-desktop-mode .mounted-gallery .gallery-open>video { object-fit:cover; object-position:center; background:#020509; }
+  html.city-desktop-mode .mounted-gallery .work-caption { position:relative; inset:auto; align-self:stretch; flex:1; display:flex; flex-direction:column; justify-content:center; padding:30px 24px; background:linear-gradient(90deg,#03070ae8,#07141be8); border-left:1px solid #62c7c749; pointer-events:auto; }
+  html.city-desktop-mode .mounted-gallery .work-caption h3 { font-size:clamp(34px,3.4vw,58px); line-height:.95; }
+  html.city-desktop-mode .mounted-gallery .work-caption>span { font-size:13px; }
+  html.city-desktop-mode .mounted-heading { position:absolute; top:0; left:0; right:0; z-index:3; padding:13px 20px; font-size:clamp(19px,1.8vw,28px); background:#070e14ee; }
+  html.city-desktop-mode .mounted-gallery .billboard-controls { padding:0 25px 13px; }
+  html.city-desktop-mode .mounted-gallery .gallery-instruction { font-size:12px; }
+  html.city-desktop-mode .mounted-gallery .gallery-status { font-size:13px; }
+  html.city-desktop-mode .mounted-artist { left:33.5%; right:23%; top:28%; bottom:30%; padding:22px; display:grid; grid-template-columns:56% minmax(0,1fr); grid-template-rows:auto auto 1fr auto; column-gap:24px; align-items:start; }
+  html.city-desktop-mode .mounted-artist .artist-image { grid-column:1; grid-row:1 / -1; min-height:0; height:100%; margin:0; }
+  html.city-desktop-mode .mounted-artist .artist-image img { object-position:50% 25%; }
+  html.city-desktop-mode .mounted-artist>.eyebrow { grid-column:2; grid-row:1; }
+  html.city-desktop-mode .mounted-artist h2 { grid-column:2; grid-row:2; }
+  html.city-desktop-mode .mounted-artist .artist-copy { grid-column:2; grid-row:3; }
+  html.city-desktop-mode .artist-actions { grid-column:2; grid-row:4; }
+  html.city-desktop-mode .mounted-artist>.eyebrow { font-size:12px; margin-bottom:14px; }
+  html.city-desktop-mode .mounted-artist h2 { font-size:clamp(30px,3vw,52px); }
+  html.city-desktop-mode .mounted-artist .artist-copy { font-size:clamp(14px,1.05vw,20px); }
+  html.city-desktop-mode .artist-actions { width:100%; }
+  html.city-desktop-mode .artist-actions a { min-height:58px; font-size:clamp(14px,1vw,19px); }
+  html.city-desktop-mode .contact-chapter { place-items:center; text-align:center; }
+  html.city-desktop-mode .contact-city-matte { object-position:50% 50%; filter:brightness(.48) saturate(1.2); }
+  html.city-desktop-mode .contact-portal { width:min(620px,60vw); max-width:none; padding:50px 55px; background:#050b16c9; border:1px solid #ff4cae99; box-shadow:0 0 0 1px #66f4ed33,0 0 60px #ff2f9944; }
+  html.city-desktop-mode .contact-portal .contact-kicker { font-size:21px; max-width:420px; }
+  html.city-desktop-mode .project-invitation { margin-top:34px; font-size:21px; }
+  html.city-desktop-mode .journey-nav { position:fixed; bottom:28px; width:auto; min-width:260px; z-index:41; }
+  html.city-desktop-mode .scene-arrows { display:none!important; }
+  html.city-desktop-mode .static-collection { display:none; }
+  html.city-desktop-mode .city-signature { display:block; position:absolute; right:4vw; top:50%; writing-mode:vertical-rl; font-size:10px; letter-spacing:.25em; opacity:.52; }
+  html.city-desktop-mode .flight-layer { display:none!important; }
+  html.city-desktop-mode .city-world[data-desktop-reduced='true'] { height:auto; }
+  html.city-desktop-mode[data-reduced='true'] .city-world { height:auto; }
+  html.city-desktop-mode[data-reduced='true'] .city-viewport { position:relative; height:auto; min-height:0; overflow:visible; }
+  html.city-desktop-mode[data-reduced='true'] .city-chapter { position:relative; inset:auto; min-height:100svh; height:auto; visibility:visible; opacity:1; pointer-events:auto; padding:110px 7vw; }
+  html.city-desktop-mode[data-reduced='true'] .city-environment { position:fixed; opacity:.42; }
+  @media (min-width:1800px) { html.city-desktop-mode .city-chapter { padding-inline:11vw; } html.city-desktop-mode .city-hero .discover-world { left:11vw; } }
+  @media (min-aspect-ratio:2/1) {
+    html.city-desktop-mode .facade-stage,
+    html.city-desktop-mode .artist-facade { top:calc(50% + 20vw - 35.556svh); }
+    html.city-desktop-mode .contact-city-matte { object-position:50% 12%; }
+  }
+  @keyframes desktop-city-breathe {
+    from { transform:scale(1.025) translate3d(0,0,0); }
+    to { transform:scale(1.055) translate3d(-.4%,.3%,0); }
+  }
+}

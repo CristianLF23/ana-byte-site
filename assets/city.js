@@ -26,6 +26,8 @@
   let dialogScroll = 0;
   let savedOverflow = '';
   let dialogScrollLocked = false;
+  const desktopQuery = matchMedia('(min-width:1024px) and (min-aspect-ratio:6/5)');
+  const isDesktop = () => desktopQuery.matches;
   const pad = n => String(n).padStart(2, '0');
   function stopPortfolioVideo() {
     videoPlayToken++;
@@ -242,7 +244,7 @@
     root.dataset.scene = sceneNames[n];
     chapters.forEach((chapter, i) => {
       chapter.classList.toggle('is-current', i === n);
-      if (root.classList.contains('city-enhanced') || root.classList.contains('city-cinema')) {
+      if ((root.classList.contains('city-enhanced') || root.classList.contains('city-cinema')) && !isDesktop()) {
         chapter.inert = i !== n;
         chapter.setAttribute('aria-hidden', String(i !== n));
       }
@@ -266,6 +268,10 @@
   function goTo(name) {
     const n = sceneNames.indexOf(name);
     if (n < 0 || window.AnaFlight?.travelling) return;
+    if (isDesktop()) {
+      document.dispatchEvent(new CustomEvent('ana:desktop-navigate', { detail: { scene: name, index: n } }));
+      return;
+    }
     window.AnaFlight?.go(name);
   }
   addEventListener('ana:scenechange', e => {

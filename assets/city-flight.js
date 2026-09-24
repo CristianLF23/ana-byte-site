@@ -120,6 +120,12 @@
       const requested = new URLSearchParams(location.search).get('scene');
       announce(scenes[requested] ? requested : 'city');
     },
+    sync(name) {
+      if (!scenes[name] || travelling) return;
+      started = true;
+      destination = name;
+      announce(name);
+    },
     get scene() { return scene; },
     get travelling() { return travelling; }
   };

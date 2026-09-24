@@ -1,6 +1,6 @@
 # Ana Byte V1
 
-Experiência estática para celular, com quatro destinos: cidade, obras, Ana e contato. A V2 experimental pertence a outro repositório.
+Experiência estática responsiva com quatro destinos: cidade, obras, Ana e contato. No celular, a jornada aprovada avança por botões; no desktop, por rolagem vertical nativa. A V2 experimental pertence a outro repositório.
 
 Publicado em https://cristianlf23.github.io/ana-byte-site/
 
@@ -9,7 +9,7 @@ Publicado em https://cristianlf23.github.io/ana-byte-site/
 - Preparação visual de pelo menos 2,6 segundos, barra progressiva e entrada somente após o toque no botão habilitado.
 - Identidade ANA BYTE sem emojis, barra azul neon e convite inicial com fundo.
 - Vídeo de deslocamento cortado fisicamente para 2 segundos e usado apenas de Cidade para Obras. Outros destinos têm dissolução curta.
-- Outdoor de obras ampliado e mais alto, retrato da artista na terceira dobra. A rolagem vertical conduz os quatro destinos, sincronizada com as setas neon dos cantos inferiores. Obras e Ana têm Voltar e Avançar; a última dobra tem somente Voltar. A faixa inferior indica a etapa atual.
+- Outdoor de obras ampliado e mais alto, retrato da artista na terceira dobra. Obras e Ana têm Voltar e Avançar; a última dobra tem somente Voltar. A faixa inferior indica a etapa atual.
 - Vídeo fornecido pelo usuário de 25 segundos como primeira mídia do acervo. Depois entram 19 imagens. Toque no vídeo pausa ou retoma; deslize sobre a mídia muda a obra; toque na fotografia abre a ampliação. Ver acervo mostra a coleção completa. Os antigos botões Pausar, Visitar o ateliê e Vamos criar foram removidos dos painéis.
 - A capa de espera do vídeo é uma tatuagem. Bloqueio de reprodução automática mostra Assistir ao vídeo; erro de carregamento libera o acervo. As verificações adicionais v1-video-recovery.cjs e v1-native-scroll.cjs cobrem falha de mídia, bloqueio de autoplay, cancelamento interno, rolagem vertical por roda/toque e retorno das páginas complementares.
 - Vídeo e imagens preenchem o visor sem faixas laterais. O enquadramento usa recorte central; a ampliação mantém a fotografia completa.
@@ -18,6 +18,10 @@ Publicado em https://cristianlf23.github.io/ana-byte-site/
 - Páginas complementares compartilham navegação A Ana, Projetos e Sua ideia, além de retorno fixo à cidade. A página da artista mostra obras em Estrutura, Energia e Matéria, depois seu retrato em destaque e a nota secundária de local demonstrativo.
 
 ## Executar e verificar
+
+### Desktop de 23 de setembro de 2026
+
+Quatro artes panorâmicas próprias substituem os fundos retrato somente em telas largas. O palco desktop reúne outdoors arquitetônicos, vídeo e obras reais, fotografia de Ana trabalhando e convite final sobre o letreiro neon. A rolagem nativa controla aproximações e dissoluções entre capítulos; a chuva Canvas, o modo de movimento reduzido e os três idiomas continuam ativos. Imagens são escolhidas por `<picture>`, de modo que o mobile preserva seus assets aprovados. Os PNGs fonte ficam fora do repositório publicado, na pasta irmã `ana-byte-desktop-masters`. Direção, QA e limite de resolução constam em `project-docs/DESKTOP_EXECUTION_PLAN.md`.
 
 Correção de 23/09: molduras de Obras e Ana mais altas e alinhadas; terceira dobra com uma única ação e retrato maior. A coleção complementar usa legendas empilhadas logo após as imagens, sem altura mínima artificial nos cards. O teste qa/v1-frame-gallery.cjs confere alinhamento, fotografia, 19 cards, ausência de espaços vazios nas legendas e ampliação nas versões direta e complementar. Capturas locais em qa/v1-frame-gallery/.
 

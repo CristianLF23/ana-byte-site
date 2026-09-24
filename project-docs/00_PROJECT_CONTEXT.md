@@ -1,5 +1,7 @@
 # Ana Byte site
 
+Execução de 23/09/2026: redesign desktop da V1, guiado pela identidade mobile aprovada. Quatro panoramas próprios e rolagem vertical nativa no desktop; mobile aprovado preservado com comparação visual pixel a pixel. Especificação, registro de execução e limites em DESKTOP_EXECUTION_PLAN.md.
+
 Revisão atual V2 em 22/09/2026: portfólio experimental e imersivo com foco mobile, baseado em um tour guiado pelas tatuagens. Loading cyberpunk, neon, linguagem biotecnológica e interação por rolagem e toque. Escopo comercial e WhatsApp preservados.
 
 Classificacao: novo portfolio autoral, guiado por referencia, focado em conversao e com marca em estagio inicial.
