@@ -61,4 +61,3 @@ Amostra local de 120 frames: mediana 16,7 ms, p95 16,7 ms; aproximadamente 1,56 
 - Etapas do processo ausentes no acervo não foram fabricadas.
 - As cenas foram limpas para retirar UI rasterizada e editadas no gato; preservam a composição fornecida, mas não são cópias binárias do screenshot.
 - Safari e iPhone físico não estavam disponíveis. Validação em Chromium no Windows; sem alegação de certificação WCAG completa.
-

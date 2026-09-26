@@ -57,7 +57,7 @@ Cat identity reference: `C:/Users/crist.PC/AppData/Local/Temp/codex-clipboard-51
 
 Final edited PNGs retained outside the public website:
 
-- Desktop: `C:/Users/crist.PC/.codex/generated_images/01a0c614-ebfb-7a53-a3f7-1e4594d7e148/exec-1f56f3db-41d3-4f6c-afe1-132ca15dba43.png` (2016 × 780).
+- Desktop: `C:/Users/crist.PC/.codex/generated_images/01a0c614-ebfb-7a53-a3f7-1e4594d7e148/exec-1f56f3db-41d3-4f6c-afe1-132ca15dba43.png` (2017 × 780).
 - Mobile: `C:/Users/crist.PC/.codex/generated_images/01a0c614-ebfb-7a53-a3f7-1e4594d7e148/exec-12c2cdcb-d00f-46b2-bb30-2e66f2839ef9.png` (828 × 1900).
 
 Edit directions: retain the approved scene's architecture, perspective, illustrated Ana, signs and relative positions; remove rasterized interactive UI so the interface is real HTML; edit the environmental cat to match the supplied green eyes and asymmetrical white forehead, muzzle, chest and paws. Avoid duplicate edges, ghosting, invented tattoos and replacement people. These directions summarize the edits, not a verbatim record of generation prompts.

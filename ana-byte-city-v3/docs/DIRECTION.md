@@ -62,4 +62,3 @@ Fontes auxiliares técnicas, sem substituir os mockups como alvo:
 V3: https://cristianlf23.github.io/ana-byte-site/ana-byte-city-v3/
 
 Nenhuma mudança desta entrega deve incluir arquivos fora de `ana-byte-city-v3/`. O original da V1 continua no endereço raiz. A validação é em Chromium no Windows; não equivale a inspeção em Safari/iPhone físico. Fotos pequenas do acervo preservam a resolução original, sem upscale generativo.
-
