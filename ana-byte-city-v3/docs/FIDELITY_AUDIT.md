@@ -86,5 +86,10 @@ Fontes técnicas consultadas: documentação oficial de [ScrollTrigger](https://
 - Correção após inspeção: ampliada a área do brilho lateral para não cortar o glow ao redor das linhas.
 - Visual 2: **81 capturas**, acrescentando a apresentação ampliada da página sobre. Novamente sem overflow, imagens ausentes ou erros de execução. Conferidas folhas comparativas de desktop, tablet e mobile.
 - Evidências locais em `qa/round-refinement-1/` e `qa/round-refinement-2/`. Scripts de QA versionados; capturas excluídas da publicação.
+- Produção: **16/16 verificações funcionais aprovadas** no endereço público. Mais 12 capturas desktop/mobile, nove arquivos publicados conferidos contra os locais e zero erros. Fotografias e fontes comparadas byte a byte; CSS/JS comparados após normalizar somente as quebras de linha Windows/Git. Evidências em `qa/production/` e `qa/check-report.json`.
+
+Arquivos principais alterados: `build.mjs` (galeria compartilhada e rodapé), `sections.mjs` (acervo padrão, biografia e campo de tamanho), `assets/fidelity.css` (composição, cores e luz), `assets/v3.js` (filtros inline, parallax e controles de movimento). Páginas geradas: `index.html`, `portfolio/index.html` e `sobre/index.html`. Scripts de verificação e documentação também foram atualizados.
+
+Para repetir: iniciar `node server.mjs`, executar `node qa/check.cjs` e `node qa/visual-round.cjs round-recheck`. Para verificar a publicação, usar `node qa/production-check.cjs`; a suíte funcional aceita `ANA_QA_URL` com o endereço público.
 
 Esta passagem não altera nenhum arquivo da V1. As limitações documentadas de fonte, acervo e ausência de Safari/iPhone físico continuam válidas.

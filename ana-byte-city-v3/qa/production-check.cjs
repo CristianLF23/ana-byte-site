@@ -10,8 +10,11 @@ const base=process.env.ANA_QA_URL||'https://cristianlf23.github.io/ana-byte-site
     for(const file of ['assets/backgrounds/city-desktop.webp','assets/backgrounds/city-mobile.webp','assets/backgrounds/city-mobile-600.webp','assets/ui/ana-byte-mark.png','assets/fonts/Orbitron-Variable.ttf','assets/artist/15-ana-working.jpg','assets/artist/23-ana-studio.jpg','assets/fidelity.css','assets/v3.js']){
       const response=await context.request.get(new URL(file,base).href);assert.equal(response.status(),200,file);
       const remote=await response.body(),local=fs.readFileSync(path.join(root,file));
-      const hash=b=>crypto.createHash('sha256').update(b).digest('hex');assert.equal(hash(remote),hash(local),file);
-      report.assets.push({file,status:response.status(),sha256:hash(remote)});
+      const hash=b=>crypto.createHash('sha256').update(b).digest('hex');
+      // Git publishes LF text while the Windows checkout may use CRLF.
+      const textFile=/\.(css|js)$/.test(file),canonical=b=>textFile?Buffer.from(b.toString('utf8').replace(/\r\n/g,'\n')):b;
+      assert.equal(hash(canonical(remote)),hash(canonical(local)),file);
+      report.assets.push({file,status:response.status(),sha256:hash(remote),comparison:textFile?'content with normalized line endings':'byte identical'});
     }
     await context.close();
     for(const [width,height] of [[1440,900],[390,844]]){
