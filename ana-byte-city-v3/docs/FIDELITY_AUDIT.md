@@ -93,3 +93,18 @@ Arquivos principais alterados: `build.mjs` (galeria compartilhada e rodapé), `s
 Para repetir: iniciar `node server.mjs`, executar `node qa/check.cjs` e `node qa/visual-round.cjs round-recheck`. Para verificar a publicação, usar `node qa/production-check.cjs`; a suíte funcional aceita `ANA_QA_URL` com o endereço público.
 
 Esta passagem não altera nenhum arquivo da V1. As limitações documentadas de fonte, acervo e ausência de Safari/iPhone físico continuam válidas.
+
+## Arquivo Vivo único, com vídeo de abertura
+
+O screenshot de 26/09 esclareceu que a transposição inclui o cabeçalho da página de portfólio. Corrigidos:
+
+- Cabeçalho com foto real da Ana, título em duas linhas, supporting copy e filtros incorporado à home.
+- Vídeo de 25 segundos no próprio quadro do acervo, como primeira mídia; foto seguinte mantém a altura no fim da reprodução.
+- Removido o modal separado de vídeo. A ação “Ver em movimento” reproduz dentro da seção.
+- Removida a segunda página navegável de portfólio. Links antigos redirecionam à home, preservando parâmetros e compartilhamentos.
+- Ajustados os filtros mobile para a composição de três colunas mostrada no screenshot.
+- Nenhuma fotografia ou trecho de vídeo gerado; poster reaproveitado do material real já fornecido.
+
+Validação local: 16/16 verificações gerais aprovadas. `qa/archive-flow.cjs` confirma reprodução inline, pausa fora da tela, respeito à pausa manual, passagem estável para fotografia, filtros no mesmo documento, endereço legado, movimento reduzido, autoplay bloqueado e falha de mídia sem bloquear o acervo. Primeira inspeção: 6 screenshots em 1440/390 px; segunda: 81 capturas nos nove breakpoints, sem overflow horizontal, imagens ausentes ou erros de execução.
+
+Arquivos: `archive.mjs`, `sections.mjs`, `build.mjs`, `assets/v3.js`, `assets/fidelity.css`, poster real, páginas geradas e verificadores. Evidências locais: `qa/round-archive-film-1/`, `qa/round-archive-film-2/` e `qa/round-archive-flow-final/`. O roteiro direcionado também aceita `ANA_QA_URL` para conferir a publicação. Limite: Chromium no Windows, sem iPhone físico.

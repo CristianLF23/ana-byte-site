@@ -18,7 +18,14 @@ export function createSections({works,img,icon,eyebrow,artButton,wa,gallery}) {
       <button class="ambience-toggle" aria-pressed="false" aria-label="Pausar efeitos de movimento"><span></span> Atmosfera ativa</button>
     </section>`}
   function archive(b=''){
-    return `<section class="chapter archive archive-expanded" id="trabalhos" aria-labelledby="archive-title"><div class="archive-heading"><div>${eyebrow('02','TRABALHOS')}<h2 id="archive-title">ARQUIVO <span class="spectrum">VIVO.</span></h2></div><div class="archive-heading-copy"><p class="tracked">Tatuagens como portais.<br>Fragmentos de outros mundos na pele real.</p><button class="text-link watch-film">Ver em movimento ${icon('arrow')}</button></div></div>${gallery(b,true)}</section>`;
+    return `<section class="chapter archive archive-expanded archive-transposed" id="trabalhos" aria-labelledby="archive-title">
+      <div class="portfolio-hero archive-heading">
+        <div class="portfolio-portrait"><img src="${b}assets/artist/15-ana-working.jpg" alt="Ana Byte trabalhando em uma tatuagem" width="863" height="1145" loading="lazy"></div>
+        <div>${eyebrow('02','TRABALHOS')}<h2 id="archive-title">ARQUIVO<br><span class="spectrum">VIVO.</span></h2><p class="tracked">Tatuagens como portais.<br>Fragmentos de outros mundos<br>na pele real.</p><button class="text-link archive-replay" type="button" aria-controls="archive-video">Ver em movimento ${icon('arrow')}</button></div>
+        <div class="portfolio-quote"><p>Arte autoral.<br>Corpo como<br>território.<br>Imaginação<br>sem fronteiras.</p><span class="signature">Ana Byte</span></div>
+      </div>
+      ${gallery(b)}
+    </section>`;
   }
   function process(b='',compact=false){
     const comparisons=['09-heart-process','12-cat-process','11-dagger-process'].map(get).filter(Boolean);

@@ -150,18 +150,18 @@ const visibleIds=page=>page.locator('.portfolio-thumb:visible').evaluateAll(els=
       return {externalCalls:0,draftFields:5,stored:false};
     }finally{await close()}
   });
-  await check('Vídeo por escolha, controles nativos e pausa ao fechar',async()=>{
-    const {page,close}=await pageAt('portfolio/');
+  await check('Vídeo inline inicia na seção e pausa fora da tela',async()=>{
+    const {page,close}=await pageAt();
     try{
       assert.equal(await page.locator('video').evaluate(v=>v.paused&&!v.autoplay&&v.preload==='none'),true);
-      await page.locator('.watch-film').click();
+      await page.locator('#archive-video').evaluate(v=>v.scrollIntoView({block:'center',behavior:'instant'}));
       await page.waitForFunction(()=>document.querySelector('video').readyState>=2);
       const video=await page.locator('video').evaluate(v=>({controls:v.controls,duration:v.duration,paused:v.paused}));
       assert.equal(video.controls,true);assert.ok(video.duration>1);assert.equal(video.paused,false);
-      await page.keyboard.press('Escape');
+      assert.equal(await page.locator('dialog[open]').count(),0);
+      await page.evaluate(()=>scrollTo({top:0,behavior:'instant'}));
       await page.waitForFunction(()=>document.querySelector('video').paused);
       assert.equal(await page.locator('video').evaluate(v=>v.paused),true);
-      assert.equal(await page.locator('.watch-film').evaluate(el=>el===document.activeElement),true);
       return video;
     }finally{await close()}
   });
@@ -178,12 +178,13 @@ const visibleIds=page=>page.locator('.portfolio-thumb:visible').evaluateAll(els=
   await check('Sem JavaScript: conteúdo, 19 obras e links continuam acessíveis',async()=>{
     const sizes=[1440,390],proof=[];
     for(const width of sizes){
-      const {page,close}=await pageAt('portfolio/',{javaScriptEnabled:false,viewport:{width,height:900}});
+      const {page,close}=await pageAt('',{javaScriptEnabled:false,viewport:{width,height:900}});
       try{
         assert.equal(await page.locator('.portfolio-thumb:visible').count(),19);
         assert.equal(await page.locator('#main-nav a:visible').count(),5);
-        assert.equal(await page.locator('h1').textContent(),'ARQUIVOVIVO.');
-        assert.equal(await page.locator('.portfolio-thumb').first().getAttribute('href'),'../'+catalog[0].src);
+        assert.ok((await page.locator('h1').textContent()).includes('UM LUGAR'));
+        assert.equal(await page.locator('.portfolio-thumb').first().getAttribute('href'),catalog[0].src);
+        assert.equal(await page.locator('#archive-video').isVisible(),true);
         const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1);assert.equal(overflow,false);
         proof.push({width,works:19,navLinks:5});
       }finally{await close()}

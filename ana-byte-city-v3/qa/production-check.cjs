@@ -7,7 +7,7 @@ const base=process.env.ANA_QA_URL||'https://cristianlf23.github.io/ana-byte-site
   const report={date:new Date().toISOString(),base,assets:[],views:[],errors:[]};
   try{
     const context=await browser.newContext();
-    for(const file of ['assets/backgrounds/city-desktop.webp','assets/backgrounds/city-mobile.webp','assets/backgrounds/city-mobile-600.webp','assets/ui/ana-byte-mark.png','assets/fonts/Orbitron-Variable.ttf','assets/artist/15-ana-working.jpg','assets/artist/23-ana-studio.jpg','assets/fidelity.css','assets/v3.js']){
+    for(const file of ['assets/backgrounds/city-desktop.webp','assets/backgrounds/city-mobile.webp','assets/backgrounds/city-mobile-600.webp','assets/ui/ana-byte-mark.png','assets/fonts/Orbitron-Variable.ttf','assets/artist/15-ana-working.jpg','assets/artist/23-ana-studio.jpg','assets/video/ana-portfolio-poster.jpg','assets/fidelity.css','assets/v3.js']){
       const response=await context.request.get(new URL(file,base).href);assert.equal(response.status(),200,file);
       const remote=await response.body(),local=fs.readFileSync(path.join(root,file));
       const hash=b=>crypto.createHash('sha256').update(b).digest('hex');

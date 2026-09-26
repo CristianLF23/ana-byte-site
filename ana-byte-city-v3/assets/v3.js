@@ -40,6 +40,20 @@
 
   const dialog=$('.art-dialog');
   let detailIndex=0, returnFocus=null, selectedId=catalog[0]?.id, filter='all', galleryPage=0, sort='curated';
+  const archive=$('.portfolio-browser'), archiveVideo=$('#archive-video');
+  let filmInView=false, filmUserPaused=false, filmManagedPause=false, filmAutoplayBlocked=false, filmStarting=false;
+  function pauseFilm(){if(archiveVideo&&!archiveVideo.paused){filmManagedPause=true;archiveVideo.pause()}}
+  function showArtwork(){archive?.classList.remove('is-film');pauseFilm();if($('.archive-replay'))$('.archive-replay').hidden=false}
+  function leaveIntro(){
+    if(!archive?.classList.contains('is-intro'))return;
+    const compact=matchMedia('(max-width:767px)').matches;
+    archive.classList.remove('is-intro');showArtwork();
+    if(compact)requestAnimationFrame(()=>{
+      const toolbar=$('.portfolio-toolbar');
+      scrollTo({top:toolbar.getBoundingClientRect().top+scrollY-90,behavior:'instant'});
+      window.ScrollTrigger?.refresh();
+    });
+  }
   function setDetail(index){
     detailIndex=(index+catalog.length)%catalog.length;
     const w=catalog[detailIndex];if(!w)return;
@@ -67,7 +81,7 @@
     else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first?.focus()}
   });
   document.addEventListener('click',e=>{const a=e.target.closest('[data-art]');if(!a||e.ctrlKey||e.metaKey||e.shiftKey||e.altKey)return;e.preventDefault();if(a.classList.contains('portfolio-thumb')&&matchMedia('(min-width:768px)').matches){selectWork(a.dataset.art);return}openArt(a.dataset.art,a)});
-  $('.share-work')?.addEventListener('click',async()=>{const w=catalog[detailIndex];const url=new URL(base+'portfolio/',location.href);url.hash='obra='+w.id;const status=$('.share-status');try{if(navigator.share){await navigator.share({title:w.title+' · Ana Byte',url:url.href})}else{await navigator.clipboard.writeText(url.href);status.textContent='Link da obra copiado.'}}catch(e){if(e.name!=='AbortError'){status.replaceChildren(document.createTextNode('Link da obra: '));const a=document.createElement('a');a.href=url.href;a.textContent=url.href;status.append(a)}}});
+  $('.share-work')?.addEventListener('click',async()=>{const w=catalog[detailIndex];const url=new URL(base+'index.html',location.href);url.hash='obra='+w.id;const status=$('.share-status');try{if(navigator.share){await navigator.share({title:w.title+' · Ana Byte',url:url.href})}else{await navigator.clipboard.writeText(url.href);status.textContent='Link da obra copiado.'}}catch(e){if(e.name!=='AbortError'){status.replaceChildren(document.createTextNode('Link da obra: '));const a=document.createElement('a');a.href=url.href;a.textContent=url.href;status.append(a)}}});
 
   function visibleWorks(){return catalog.filter(w=>filter==='all'||(filter==='process'?w.kind==='Processo real':filter==='tattoo'?w.kind==='Tatuagem autoral':w.category===filter)).sort(sort==='title'?(a,b)=>a.title.localeCompare(b.title,'pt-BR'):(a,b)=>a.order-b.order)}
   function syncGalleryUrl(){
@@ -88,8 +102,9 @@
     $('.portfolio-count').textContent=list.length+' trabalhos nesta seleção';
     syncGalleryUrl();
   }
-  function selectWork(id){
+  function selectWork(id,{keepFilm=false}={}){
     const w=catalog.find(a=>a.id===id);if(!w||!$('.selected-work'))return;selectedId=w.id;
+    if(!keepFilm)showArtwork();
     const selected=$('[data-selected-open]'),image=$('img',selected);selected.href=base+w.src;selected.dataset.art=w.id;selected.setAttribute('aria-label','Ampliar '+w.title);image.src=base+w.src;image.alt=w.alt;image.width=w.width;image.height=w.height;image.style.objectPosition=w.desktopPosition;
     for(const key of ['title','kind','description','technique'])$(`[data-selected-${key}]`).textContent=w[key];
     $('[data-selected-contact]').href=contactFor(w);
@@ -99,7 +114,7 @@
   }
   function moveSelected(delta){const list=visibleWorks();const i=list.findIndex(w=>w.id===selectedId),next=(i+delta+list.length)%list.length;galleryPage=Math.floor(next/6);renderPage();selectWork(list[next].id)}
   $('.selected-prev')?.addEventListener('click',()=>moveSelected(-1));$('.selected-next')?.addEventListener('click',()=>moveSelected(1));
-  $$('.filters button').forEach(button=>{button.addEventListener('click',()=>{filter=button.dataset.filter;galleryPage=0;$$('.filters button').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));renderPage();if(visibleWorks().length)selectWork(visibleWorks()[0].id);window.ScrollTrigger?.refresh()})});
+  $$('.filters button').forEach(button=>{button.addEventListener('click',()=>{leaveIntro();filter=button.dataset.filter;galleryPage=0;$$('.filters button').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));renderPage();if(visibleWorks().length)selectWork(visibleWorks()[0].id);window.ScrollTrigger?.refresh()})});
   $('#portfolio-sort')?.addEventListener('change',e=>{sort=e.target.value;galleryPage=0;renderPage();selectWork(visibleWorks()[0].id)});
   $('.page-prev')?.addEventListener('click',()=>{galleryPage--;renderPage();selectWork(visibleWorks()[galleryPage*6].id)});
   $('.page-next')?.addEventListener('click',()=>{galleryPage++;renderPage();selectWork(visibleWorks()[galleryPage*6].id)});
@@ -109,7 +124,9 @@
     if(params.get('ordem')==='title'){sort='title';$('#portfolio-sort').value=sort}
     const requestedPage=Number(params.get('pagina'));
     if(Number.isInteger(requestedPage)&&requestedPage>0)galleryPage=requestedPage-1;
-    renderPage();selectWork(visibleWorks()[galleryPage*6]?.id||catalog[0].id);
+    const initialFilm=!requested&&!requestedPage&&!location.hash.startsWith('#obra=');
+    if(!initialFilm)archive.classList.remove('is-intro');
+    renderPage();selectWork(visibleWorks()[galleryPage*6]?.id||catalog[0].id,{keepFilm:initialFilm});
   }
   function showLinkedArtwork(){
     if(!location.hash.startsWith('#obra='))return;
@@ -119,10 +136,42 @@
   }
   addEventListener('hashchange',showLinkedArtwork);showLinkedArtwork();
 
-  const film=$('.film-dialog');let filmTrigger;
-  $('.watch-film')?.addEventListener('click',e=>{filmTrigger=e.currentTarget;film.showModal();document.body.classList.add('modal-open');$('video',film).play().catch(()=>{});$('.film-close').focus()});
-  $('.film-close')?.addEventListener('click',()=>film.close());
-  film?.addEventListener('close',()=>{$('video',film).pause();document.body.classList.remove('modal-open');filmTrigger?.focus()});
+  // First media in the actual archive. The browser stays on the same document.
+  if(archiveVideo){
+    function syncFilm(){
+      if(!filmInView||document.hidden||!archive.classList.contains('is-film')||dialog?.open){pauseFilm();return}
+      if(reduced.matches||effectsPaused||filmUserPaused||filmAutoplayBlocked||filmStarting||!archiveVideo.paused)return;
+      filmStarting=true;
+      archiveVideo.play().catch(error=>{if(error.name!=='AbortError')filmAutoplayBlocked=true}).finally(()=>{filmStarting=false});
+    }
+    archiveVideo.addEventListener('pause',()=>{
+      if(!filmManagedPause&&!archiveVideo.ended)filmUserPaused=true;
+      filmManagedPause=false;
+    });
+    archiveVideo.addEventListener('play',()=>{
+      filmUserPaused=false;filmAutoplayBlocked=false;
+      if(document.hidden||!archive.classList.contains('is-film'))pauseFilm();
+    });
+    archiveVideo.addEventListener('ended',()=>{
+      selectWork(visibleWorks()[0]?.id||catalog[0].id);
+      window.ScrollTrigger?.refresh();
+    });
+    archiveVideo.addEventListener('error',()=>{$('.film-error').hidden=false;filmAutoplayBlocked=true},true);
+    new IntersectionObserver(entries=>{filmInView=entries[0].intersectionRatio>=.5;syncFilm()},{threshold:[0,.5,1]}).observe(archiveVideo);
+    document.addEventListener('visibilitychange',syncFilm);
+    document.addEventListener('ana:effects-change',()=>{if(effectsPaused)pauseFilm();else syncFilm()});
+    reduced.addEventListener('change',()=>{if(reduced.matches)pauseFilm();else syncFilm()});
+    dialog?.addEventListener('close',syncFilm);
+    new MutationObserver(()=>{if(dialog.open)pauseFilm()}).observe(dialog,{attributes:true,attributeFilter:['open']});
+    $('.archive-replay')?.addEventListener('click',()=>{
+      archive.classList.add('is-film','is-intro');filmUserPaused=false;filmAutoplayBlocked=false;
+      archiveVideo.currentTime=0;
+      archiveVideo.scrollIntoView({block:'center',behavior:reduced.matches?'instant':'smooth'});
+      archiveVideo.play().catch(()=>{filmAutoplayBlocked=true});
+      window.ScrollTrigger?.refresh();
+    });
+    $('.archive-film-copy .text-link')?.addEventListener('click',()=>leaveIntro());
+  }
 
   // Contact drafts are handed to WhatsApp only after explicit form submission.
   $$('.project-form').forEach(form=>form.addEventListener('submit',e=>{e.preventDefault();if(!form.reportValidity())return;const data=new FormData(form);const text=`Oi, Ana! Quero conversar sobre uma tatuagem.\n\nMeu nome: ${String(data.get('nome')).trim()}\nMinha ideia: ${String(data.get('ideia')).trim()}\nRegião do corpo: ${data.get('regiao')}\nTamanho aproximado: ${data.get('tamanho')}${String(data.get('telefone')||'').trim()?'\nMeu WhatsApp: '+String(data.get('telefone')).trim():''}`;const link=whatsapp+'?text='+encodeURIComponent(text);const popup=window.open(link,'_blank','noopener,noreferrer');const status=$('.form-status',form);status.replaceChildren(document.createTextNode('Sua ideia está pronta para revisar no WhatsApp. '));const a=document.createElement('a');a.href=link;a.target='_blank';a.rel='noopener';a.textContent='Abrir conversa';status.append(a)}));

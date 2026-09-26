@@ -33,8 +33,9 @@ Orbitron variável, peso 700 a 850, é a família ativa de títulos. No letreiro
 - Preto profundo #05070B; texto #E8F1F4; magenta #FF2996; ciano #62E5ED; verde #70FFC5; azul #58ADFF. Magenta conduz a ação principal, ciano/azul o acervo e a artista, verde o processo e os acessos ao WhatsApp.
 - Rail de 120/128 px em desktop; cabeçalho compacto no tablet e mobile, com composição própria sobre o hero mobile.
 - Painéis com contornos técnicos, cantos interrompidos, linhas duplas nos CTAs e brilho localizado.
-- Arquivo home: por solicitação posterior, a versão completa do acervo passou a ser a segunda seção padrão. Filtros de Todos, Tatuagens, Processo e Arte digital atualizam as obras no próprio lugar.
-- Portfólio: componente compartilhado entre home e página dedicada, com ordenação, seis miniaturas por página, destaque lateral no desktop e ampliação em modal no mobile.
+- Arquivo home: a página aprovada foi transposta por inteiro para a segunda seção: cabeçalho com a fotografia real da Ana, título em duas linhas, supporting copy, ordenação e galeria. Filtros de Todos, Tatuagens, Processo e Arte digital atualizam as obras no próprio lugar.
+- Portfólio único: `#trabalhos` na home. `portfolio/` é somente compatibilidade para endereços antigos, redirecionando à mesma seção com filtros e links de obras preservados. Menu e compartilhamento usam a home.
+- Primeira mídia do acervo: vídeo real da Ana tatuando dentro da janela de destaque desktop; no mobile ele vem antes dos filtros e miniaturas. Ao terminar, a primeira tatuagem ocupa a mesma janela, sem alterar a altura. Escolher um filtro no mobile libera a grade na composição do screenshot.
 - Processo: três comparações reais entre desenho e pele, sem inventar etapas ausentes.
 - Sobre: fotografia real da Ana tatuando, mais um retrato real no estúdio e conteúdo sobre os cinco anos de atuação informados, base em São Paulo, viagens, influências e produção de arte digital. A página dedicada desenvolve esses pontos e conserva os pilares com tatuagens reais.
 - Contato: cinco campos, duas colunas desktop e uma no mobile. Tamanho é texto livre em centímetros, incluindo estimativas como “12,5 x 8 cm”. A pessoa revisa o rascunho no WhatsApp; o site não guarda dados nem envia mensagens sozinho.
@@ -44,11 +45,13 @@ Orbitron variável, peso 700 a 850, é a família ativa de títulos. No letreiro
 
 Rolagem nativa. Sem bloqueio de roda do mouse, cenas por botão ou loader obrigatório. Parallax discreto do conjunto arquitetônico e das fotografias dentro de suas janelas; profundidade menor em telas compactas. Chuva aleatória em profundidades independentes. Camada de primeiro plano preserva a oclusão da personagem e do gato. Luzes discretas percorrem os contornos dos painéis visíveis; as fotografias de tatuagens não recebem filtros de cor.
 
-A chuva para fora da viewport e quando a aba perde visibilidade. As luzes dos painéis também pausam fora de vista. `prefers-reduced-motion` remove chuva, parallax, tilt e scroll animado. Os controles de efeitos do menu/rodapé estão disponíveis nas três páginas e sincronizam pausa de luzes, chuva e parallax. O vídeo de 25 segundos carrega e reproduz apenas por escolha do usuário, com controles nativos, e pausa ao fechar.
+A chuva para fora da viewport e quando a aba perde visibilidade. As luzes dos painéis também pausam fora de vista. `prefers-reduced-motion` remove chuva, parallax, tilt e scroll animado. Os controles de efeitos do menu/rodapé sincronizam pausa de luzes, chuva, parallax e início automático do vídeo.
+
+O vídeo de 25 segundos usa reprodução inline, sem som inicialmente, quando pelo menos metade do quadro entra na viewport. Pausa fora da tela, em aba oculta ou ao abrir um detalhe. A pausa manual é preservada ao rolar. Em movimento reduzido ou bloqueio de autoplay, permanece o poster real com controles nativos. “Ver em movimento” toca/reinicia o vídeo na própria seção; não abre modal. Falha de vídeo não impede a exploração das obras. Políticas técnicas: [MDN](https://developer.mozilla.org/en-US/docs/Web/Media/Guides/Autoplay) e [WebKit](https://webkit.org/blog/6784/new-video-policies-for-ios/).
 
 ## Stack e reuso
 
-HTML, CSS e JavaScript estáticos; GSAP e ScrollTrigger locais. Sem dependências de produção instaladas. `build.mjs` + `sections.mjs` geram as três páginas a partir de `data/catalog.js`. Estilo ativo: `assets/fidelity.css`. O arquivo antigo `assets/v3.css` não é carregado.
+HTML, CSS e JavaScript estáticos; GSAP e ScrollTrigger locais. Sem dependências de produção instaladas. `build.mjs`, `sections.mjs` e `archive.mjs` geram início, sobre e redirecionamento legado a partir de `data/catalog.js`. Estilo ativo: `assets/fidelity.css`. CSS/JS recebem revisão por conteúdo na URL para evitar combinação de HTML novo com lógica antiga em cache. O arquivo antigo `assets/v3.css` não é carregado.
 
 Skills aplicadas: discovery do estúdio, free resource router, frontend design, referência visual, imagegen, PDF, GSAP e Web Design Guidelines. O catálogo UI Skills não estava acessível offline. O navegador integrado estava indisponível; a inspeção usou Chromium/Playwright local.
 
