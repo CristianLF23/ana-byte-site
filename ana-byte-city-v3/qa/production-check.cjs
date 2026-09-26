@@ -2,6 +2,15 @@ const {chromium}=require('C:/Users/crist.PC/.cache/codex-runtimes/codex-primary-
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),assert=require('node:assert/strict');
 const root=path.resolve(__dirname,'..'),out=path.join(__dirname,'production');fs.mkdirSync(out,{recursive:true});
 const base=process.env.ANA_QA_URL||'https://cristianlf23.github.io/ana-byte-site/ana-byte-city-v3/';
+async function readyViewport(page){
+  await page.evaluate(()=>document.fonts.ready.then(()=>true));
+  // Offscreen lazy images intentionally do not load. Verify only the media
+  // being captured, with a bounded wait so a missing asset fails the check.
+  await page.waitForFunction(()=>[...document.images].filter(i=>{
+    const r=i.getBoundingClientRect();
+    return i.getAttribute('src')&&i.checkVisibility()&&r.bottom>0&&r.top<innerHeight&&r.right>0&&r.left<innerWidth;
+  }).every(i=>i.complete&&i.naturalWidth>0),{},{timeout:15000});
+}
 (async()=>{
   const browser=await chromium.launch({headless:true,executablePath:'C:/Users/crist.PC/AppData/Local/ms-playwright/chromium_headless_shell-1243/chrome-headless-shell-win64/chrome-headless-shell.exe'});
   const report={date:new Date().toISOString(),base,assets:[],views:[],errors:[]};
@@ -23,15 +32,16 @@ const base=process.env.ANA_QA_URL||'https://cristianlf23.github.io/ana-byte-site
       page.on('response',r=>{if(r.status()>=400)report.errors.push(r.status()+' '+r.url())});
       for(const [route,label] of [['','home'],['portfolio/','portfolio'],['sobre/','about']]){
         const response=await page.goto(new URL(route,base).href,{waitUntil:'networkidle'});assert.equal(response.status(),200);
-        await page.evaluate(async()=>{await document.fonts.ready;await Promise.all([...document.images].filter(i=>i.getAttribute('src')&&i.checkVisibility()).map(i=>i.decode().catch(()=>{})))});
-        const metrics=await page.evaluate(()=>({title:document.title,width:innerWidth,scrollWidth:document.documentElement.scrollWidth,badImages:[...document.images].filter(i=>i.getAttribute('src')&&i.checkVisibility()&&(!i.complete||!i.naturalWidth)).map(i=>i.src),heading:document.querySelector('h1')?.textContent}));
+        if(label==='portfolio')await page.waitForURL(url=>!url.pathname.includes('/portfolio/'),{waitUntil:'networkidle'});
+        await readyViewport(page);
+        const metrics=await page.evaluate(()=>({title:document.title,width:innerWidth,scrollWidth:document.documentElement.scrollWidth,badImages:[...document.images].filter(i=>{const r=i.getBoundingClientRect();return i.getAttribute('src')&&i.checkVisibility()&&r.bottom>0&&r.top<innerHeight&&r.right>0&&r.left<innerWidth&&(!i.complete||!i.naturalWidth)}).map(i=>i.src),heading:document.querySelector('h1')?.textContent}));
         assert.ok(metrics.scrollWidth<=width+1);assert.deepEqual(metrics.badImages,[]);
         await page.screenshot({path:path.join(out,`${label}-${width}.png`)});
         report.views.push({route,width,status:200,...metrics});
         if(label==='home')for(const [selector,view] of [['#trabalhos','archive'],['.artist-story','story'],['.footer','footer']]){
           await page.locator(selector).evaluate(el=>scrollTo({top:el.getBoundingClientRect().top+scrollY-(innerWidth<1024?82:0),behavior:'instant'}));
           await page.waitForTimeout(900);
-          await page.evaluate(async()=>Promise.all([...document.images].filter(i=>i.getAttribute('src')&&i.checkVisibility()).map(i=>i.decode().catch(()=>{}))));
+          await readyViewport(page);
           await page.screenshot({path:path.join(out,`${view}-${width}.png`)});
           report.views.push({route,width,status:200,view});
         }
