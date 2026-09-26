@@ -1,0 +1,8 @@
+qa/screens/
+qa/round-*/
+qa/production/
+qa/*-report.json
+qa/functional-check.cjs
+qa/refine-builder.cjs
+node_modules/
+*.log

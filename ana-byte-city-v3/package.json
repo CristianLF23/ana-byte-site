@@ -1,0 +1,6 @@
+{
+  "name": "ana-byte-city-v3",
+  "version": "3.0.0",
+  "private": true,
+  "scripts": {"build": "node build.mjs", "start": "node server.mjs", "test": "node qa/check.cjs"}
+}
