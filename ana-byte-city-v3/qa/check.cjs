@@ -61,10 +61,10 @@ const visibleIds=page=>page.locator('.portfolio-thumb:visible').evaluateAll(els=
     const {page,close}=await pageAt('portfolio/');
     try{
       const counts={};
-      for(const kind of ['animal','figure','cyber','process','digital']){
+      for(const kind of ['tattoo','process','digital']){
         await page.locator(`[data-filter="${kind}"]`).click();
-        const expected=catalog.filter(w=>kind==='process'?w.kind==='Processo real':w.category===kind);
-        assert.deepEqual(await visibleIds(page),expected.map(w=>w.id));counts[kind]=expected.length;
+        const expected=catalog.filter(w=>kind==='process'?w.kind==='Processo real':kind==='tattoo'?w.kind==='Tatuagem autoral':w.category===kind);
+        assert.deepEqual(await visibleIds(page),expected.slice(0,6).map(w=>w.id));counts[kind]=expected.length;
         assert.equal(await page.locator(`[data-filter="${kind}"]`).getAttribute('aria-pressed'),'true');
         assert.equal(new URL(page.url()).searchParams.get('tipo'),kind);
       }
@@ -136,7 +136,7 @@ const visibleIds=page=>page.locator('.portfolio-thumb:visible').evaluateAll(els=
       assert.equal(await form.evaluate(el=>el.checkValidity()),false);
       await form.locator('[name=ideia]').fill('Um corvo com circuitos e cores da Ana.');
       await form.locator('[name=regiao]').selectOption({label:'Antebraço'});
-      await form.locator('[name=tamanho]').selectOption({label:'10 a 20 cm'});
+      await form.locator('[name=tamanho]').fill('12,5 x 8 cm');
       await form.locator('[name=nome]').fill('Teste de validação');
       await form.locator('[name=telefone]').fill('(11) 99999 0000');
       assert.equal(await form.evaluate(el=>el.checkValidity()),true);
@@ -144,7 +144,7 @@ const visibleIds=page=>page.locator('.portfolio-thumb:visible').evaluateAll(els=
       const opened=await page.evaluate(()=>window.__opened);assert.equal(opened.length,1);
       const url=new URL(opened[0]);assert.equal(url.origin+url.pathname,'https://wa.me/5511919007582');
       const message=url.searchParams.get('text');
-      for(const text of ['Teste de validação','Um corvo com circuitos','Antebraço','10 a 20 cm','(11) 99999 0000'])assert.ok(message.includes(text),text);
+      for(const text of ['Teste de validação','Um corvo com circuitos','Antebraço','12,5 x 8 cm','(11) 99999 0000'])assert.ok(message.includes(text),text);
       assert.equal(await form.locator('.form-status a').getAttribute('href'),opened[0]);
       assert.equal(await page.evaluate(()=>Object.keys(localStorage).length),0);
       return {externalCalls:0,draftFields:5,stored:false};
@@ -223,6 +223,62 @@ const visibleIds=page=>page.locator('.portfolio-thumb:visible').evaluateAll(els=
         return {initialBytes:resources.reduce((n,r)=>n+r.transferSize,0),requests:resources.length,videoRequests:resources.filter(r=>r.name.endsWith('.mp4')).length,frameMedianMs:Number(frames[60].toFixed(2)),frameP95Ms:Number(frames[114].toFixed(2)),lazyImages:document.querySelectorAll('img[loading=lazy]').length};
       });assert.equal(stats.videoRequests,0);assert.ok(stats.lazyImages>8);return stats;
     }finally{await close()}
+  });
+  await check('Acervo ampliado padrão na home e filtros sem mudança de página',async()=>{
+    for(const width of [1440,390]){
+      const {page,close}=await pageAt('',{viewport:{width,height:900}});
+      try{
+        assert.equal(await page.locator('#trabalhos .portfolio-grid').count(),1);
+        assert.equal((await visibleIds(page)).length,6);
+        const pathname=new URL(page.url()).pathname;
+        for(const filter of ['tattoo','process','digital']){
+          await page.locator(`[data-filter="${filter}"]`).click();
+          assert.equal(new URL(page.url()).pathname,pathname);
+          assert.equal(new URL(page.url()).searchParams.get('tipo'),filter);
+        }
+        if(width>767)assert.equal(await page.locator('.selected-work').isVisible(),true);
+        else {await page.locator('.portfolio-thumb:visible').first().click();assert.equal(await page.locator('.art-dialog').evaluate(d=>d.open),true)}
+      }finally{await close()}
+    }
+    return {widths:[1440,390],inlineFilters:3};
+  });
+  await check('Mesma logo no rodapé, segunda foto real e tamanho em texto livre',async()=>{
+    const proof=[];
+    for(const route of ['','portfolio/','sobre/']){
+      const {page,close}=await pageAt(route);
+      try{
+        const logo=await page.locator('.brand .wordmark img').evaluate(img=>img.src);
+        assert.equal(await page.locator('.footer-brand img').evaluate(img=>img.src),logo);
+        if(route!=='portfolio/'){
+          assert.equal(await page.locator('.artist-story-portrait img').count(),1);
+          assert.ok((await page.locator('.artist-story-copy').textContent()).includes('cinco anos'));
+          const field=page.locator('[name=tamanho]');assert.equal(await field.getAttribute('type'),'text');
+          for(const value of ['12 cm','12,5 x 8 cm','Aproximadamente 18 centímetros','Ainda quero decidir']){await field.fill(value);assert.equal(await field.evaluate(el=>el.checkValidity()),true)}
+        }
+        proof.push(route||'home');
+      }finally{await close()}
+    }
+    return {pages:proof,freeText:true};
+  });
+  await check('Parallax real com rolagem e pausa reversível em todas as páginas',async()=>{
+    const proof=[];
+    for(const width of [1440,390]){
+      const {page,close}=await pageAt('',{viewport:{width,height:900}});
+      try{
+        const before=await page.locator('.hero-depth').evaluate(el=>el.style.transform);
+        await page.evaluate(()=>scrollTo({top:250,behavior:'instant'}));await page.waitForTimeout(950);
+        const after=await page.locator('.hero-depth').evaluate(el=>el.style.transform);assert.notEqual(after,before);
+        await page.locator('.motion-switch').click();
+        assert.equal(await page.evaluate(()=>ScrollTrigger.getAll().length),0);
+        assert.equal(await page.locator('.light-rail i').first().evaluate(el=>getComputedStyle(el).animationPlayState),'paused');
+        await page.locator('.motion-switch').click();assert.ok(await page.evaluate(()=>ScrollTrigger.getAll().length)>0);
+        assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
+        proof.push({width,before,after});
+      }finally{await close()}
+    }
+    const {page,close}=await pageAt('sobre/');
+    try{await page.locator('.motion-switch').click();assert.equal(await page.evaluate(()=>ScrollTrigger.getAll().length),0)}finally{await close()}
+    return proof;
   });
   await check('Nenhum erro de execução ou resposta HTTP ausente',async()=>{assert.deepEqual(errors,[]);return {errors:0}});
   await browser.close();

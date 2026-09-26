@@ -14,9 +14,9 @@ async function visit([width,height]){
  async function shot(name){await page.screenshot({path:path.join(out,`${name}-${width}.png`)});const m=await page.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth,broken:[...document.images].filter(i=>i.getAttribute('src')&&!i.closest('dialog')&&(!i.complete||!i.naturalWidth)).map(i=>i.src),heading:[...document.querySelectorAll('h1,h2')].filter(e=>e.checkVisibility()).map(e=>({text:e.textContent,w:e.clientWidth,scroll:e.scrollWidth})),page:document.body.dataset.page}));report.push({width,view:name,...m,errors:[...errors],failed:[...failed]})}
  async function align(id){await page.evaluate(id=>{const el=document.querySelector(id);const top=el.getBoundingClientRect().top+scrollY-(innerWidth<1024?82:0);scrollTo({top,behavior:'instant'})},id);await page.waitForTimeout(900)}
  await page.goto(base,{waitUntil:'networkidle'});await ready();await shot('home');
- for(const [id,name] of [['#trabalhos','archive'],['#sobre','artist'],['#contato','contact']]){await align(id);await shot(name)}
+ for(const [id,name] of [['#trabalhos','archive'],['#sobre','artist'],['#contato','contact'],['.artist-story','story'],['.footer','footer']]){await align(id);await shot(name)}
  await page.goto(new URL('portfolio/',base).href,{waitUntil:'networkidle'});await ready();await shot('portfolio');
- await page.goto(new URL('sobre/',base).href,{waitUntil:'networkidle'});await ready();await shot('about');
+ await page.goto(new URL('sobre/',base).href,{waitUntil:'networkidle'});await ready();await shot('about');await align('.artist-story');await shot('about-story');
  await page.close();console.log(`${round}: ${width} captured`);
 }
 for(let i=0;i<sizes.length;i+=3)await Promise.all(sizes.slice(i,i+3).map(visit));

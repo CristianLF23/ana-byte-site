@@ -30,20 +30,21 @@ Orbitron variável, peso 700 a 850, é a família ativa de títulos. No letreiro
 
 ## Sistema visual
 
-- Preto profundo #05070B; texto #E8F1F4; magenta #FF2996; ciano #62E5ED.
+- Preto profundo #05070B; texto #E8F1F4; magenta #FF2996; ciano #62E5ED; verde #70FFC5; azul #58ADFF. Magenta conduz a ação principal, ciano/azul o acervo e a artista, verde o processo e os acessos ao WhatsApp.
 - Rail de 120/128 px em desktop; cabeçalho compacto no tablet e mobile, com composição própria sobre o hero mobile.
 - Painéis com contornos técnicos, cantos interrompidos, linhas duplas nos CTAs e brilho localizado.
-- Arquivo home: uma obra dominante e três fotos de mesma altura no desktop; grade 2 × 2 no mobile.
-- Portfólio: filtros, ordenação, seis miniaturas por página, destaque lateral no desktop, ampliação em modal no mobile.
+- Arquivo home: por solicitação posterior, a versão completa do acervo passou a ser a segunda seção padrão. Filtros de Todos, Tatuagens, Processo e Arte digital atualizam as obras no próprio lugar.
+- Portfólio: componente compartilhado entre home e página dedicada, com ordenação, seis miniaturas por página, destaque lateral no desktop e ampliação em modal no mobile.
 - Processo: três comparações reais entre desenho e pele, sem inventar etapas ausentes.
-- Sobre: fotografia documental, título sobreposto, texto, ambiente secundário e pilares com tatuagens reais.
-- Contato: cinco campos, duas colunas desktop e uma no mobile. A pessoa revisa o rascunho no WhatsApp; o site não guarda dados nem envia mensagens sozinho.
+- Sobre: fotografia real da Ana tatuando, mais um retrato real no estúdio e conteúdo sobre os cinco anos de atuação informados, base em São Paulo, viagens, influências e produção de arte digital. A página dedicada desenvolve esses pontos e conserva os pilares com tatuagens reais.
+- Contato: cinco campos, duas colunas desktop e uma no mobile. Tamanho é texto livre em centímetros, incluindo estimativas como “12,5 x 8 cm”. A pessoa revisa o rascunho no WhatsApp; o site não guarda dados nem envia mensagens sozinho.
+- Rodapé: usa o mesmo arquivo de lettering do topo nas três páginas, com caminhos relativos corretos.
 
 ## Movimento e desempenho
 
-Rolagem nativa. Sem bloqueio de roda do mouse, cenas por botão ou loader obrigatório. Parallax discreto do conjunto arquitetônico, chuva aleatória em profundidades independentes e revelação das obras por máscara. Camada de primeiro plano preserva a oclusão da personagem e do gato.
+Rolagem nativa. Sem bloqueio de roda do mouse, cenas por botão ou loader obrigatório. Parallax discreto do conjunto arquitetônico e das fotografias dentro de suas janelas; profundidade menor em telas compactas. Chuva aleatória em profundidades independentes. Camada de primeiro plano preserva a oclusão da personagem e do gato. Luzes discretas percorrem os contornos dos painéis visíveis; as fotografias de tatuagens não recebem filtros de cor.
 
-A chuva para fora da viewport e quando a aba perde visibilidade. `prefers-reduced-motion` remove chuva, parallax, tilt e scroll animado. O controle de atmosfera permite pausar efeitos. O vídeo de 25 segundos carrega e reproduz apenas por escolha do usuário, com controles nativos, e pausa ao fechar.
+A chuva para fora da viewport e quando a aba perde visibilidade. As luzes dos painéis também pausam fora de vista. `prefers-reduced-motion` remove chuva, parallax, tilt e scroll animado. Os controles de efeitos do menu/rodapé estão disponíveis nas três páginas e sincronizam pausa de luzes, chuva e parallax. O vídeo de 25 segundos carrega e reproduz apenas por escolha do usuário, com controles nativos, e pausa ao fechar.
 
 ## Stack e reuso
 

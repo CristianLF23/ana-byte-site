@@ -61,3 +61,30 @@ Amostra local de 120 frames: mediana 16,7 ms, p95 16,7 ms; aproximadamente 1,56 
 - Etapas do processo ausentes no acervo não foram fabricadas.
 - As cenas foram limpas para retirar UI rasterizada e editadas no gato; preservam a composição fornecida, mas não são cópias binárias do screenshot.
 - Safari e iPhone físico não estavam disponíveis. Validação em Chromium no Windows; sem alegação de certificação WCAG completa.
+
+## Refinamento posterior solicitado pelo usuário
+
+Nova passagem em 26/09/2026, mantendo os fundos e a composição da abertura aprovados.
+
+| Antes | Ajuste conferido |
+|---|---|
+| Rodapé exibia o nome com fonte | Mesmo arquivo de lettering do topo nas três páginas |
+| Home tinha prévia de quatro obras; filtros abriam outra página | Acervo ampliado compartilhado como segunda seção padrão; filtros atuam no lugar, destaque lateral desktop e modal mobile |
+| Apenas uma fotografia e apresentação curta da artista | Segunda fotografia real no estúdio, texto de trajetória, São Paulo, circulação por outras cidades e produção de arte digital; conteúdo mais extenso na página sobre |
+| Tamanho limitado a faixas de seleção | Campo de texto livre com exemplo em centímetros; valor integral preservado no rascunho do WhatsApp |
+| Magenta predominava em todos os elementos | Luzes ciano, verde e azul distribuídas por acervo, processo e artista; ação principal conserva magenta; fotografias não são recoloridas |
+| Movimento concentrado na abertura | Parallax da cidade, fotografias e sequência do processo; menor deslocamento no mobile; pausa reversível disponível em todas as páginas |
+
+Discovery: correção e expansão de um produto existente com materiais, objetivo e linguagem já aprovados. Nenhuma dependência externa, fotografia nova gerada, mudança comercial ou informação biográfica inventada foi necessária. O texto usa as informações enviadas pelo usuário e as fotografias já presentes no acervo.
+
+Fontes técnicas consultadas: documentação oficial de [ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/) e [gsap.matchMedia](https://gsap.com/docs/v3/GSAP/gsap.matchMedia()/). Não houve mudança de direção visual nem importação de componentes externos.
+
+### Verificação desta passagem
+
+- Funcional: **16/16 verificações locais aprovadas**, incluindo filtros inline em 1440/390 px, logo idêntica por URL, texto livre com decimais e duas dimensões, parallax medido em scroll, pausa/reinício e movimento reduzido.
+- Visual 1: **72 capturas**, incluindo nova seção e rodapé nos nove breakpoints do contrato. Zero overflow horizontal, imagens ausentes ou erros de execução.
+- Correção após inspeção: ampliada a área do brilho lateral para não cortar o glow ao redor das linhas.
+- Visual 2: **81 capturas**, acrescentando a apresentação ampliada da página sobre. Novamente sem overflow, imagens ausentes ou erros de execução. Conferidas folhas comparativas de desktop, tablet e mobile.
+- Evidências locais em `qa/round-refinement-1/` e `qa/round-refinement-2/`. Scripts de QA versionados; capturas excluídas da publicação.
+
+Esta passagem não altera nenhum arquivo da V1. As limitações documentadas de fonte, acervo e ausência de Safari/iPhone físico continuam válidas.

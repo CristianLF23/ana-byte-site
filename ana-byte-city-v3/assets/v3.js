@@ -16,7 +16,19 @@
   nav?.addEventListener('click',e=>{if(e.target.closest('a'))closeMenu()});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&nav.classList.contains('is-open'))closeMenu(true)});
   matchMedia('(min-width:1024px)').addEventListener('change',e=>{if(e.matches)closeMenu()});
-  $('.menu-effects')?.addEventListener('click',()=>{$('.ambience-toggle')?.click();const b=$('.menu-effects');b.setAttribute('aria-pressed',String(effectsPaused));b.textContent=effectsPaused?'Ativar atmosfera':'Pausar atmosfera'});
+  function toggleEffects(){
+    effectsPaused=!effectsPaused;
+    document.documentElement.classList.toggle('effects-paused',effectsPaused);
+    $$('.menu-effects,.motion-switch,.ambience-toggle').forEach(button=>{
+      button.setAttribute('aria-pressed',String(effectsPaused));
+      if(button.classList.contains('ambience-toggle')){
+        button.setAttribute('aria-label',effectsPaused?'Ativar efeitos de movimento':'Pausar efeitos de movimento');
+        button.innerHTML='<span></span> '+(effectsPaused?'Atmosfera pausada':'Atmosfera ativa');
+      }else button.textContent=effectsPaused?'Ativar efeitos':'Pausar efeitos';
+    });
+    document.dispatchEvent(new Event('ana:effects-change'));
+  }
+  $$('.menu-effects,.motion-switch,.ambience-toggle').forEach(button=>button.addEventListener('click',toggleEffects));
 
   // The browser owns scrolling; chapter highlighting follows the real document.
   if(document.body.dataset.page==='inicio'){
@@ -57,7 +69,7 @@
   document.addEventListener('click',e=>{const a=e.target.closest('[data-art]');if(!a||e.ctrlKey||e.metaKey||e.shiftKey||e.altKey)return;e.preventDefault();if(a.classList.contains('portfolio-thumb')&&matchMedia('(min-width:768px)').matches){selectWork(a.dataset.art);return}openArt(a.dataset.art,a)});
   $('.share-work')?.addEventListener('click',async()=>{const w=catalog[detailIndex];const url=new URL(base+'portfolio/',location.href);url.hash='obra='+w.id;const status=$('.share-status');try{if(navigator.share){await navigator.share({title:w.title+' · Ana Byte',url:url.href})}else{await navigator.clipboard.writeText(url.href);status.textContent='Link da obra copiado.'}}catch(e){if(e.name!=='AbortError'){status.replaceChildren(document.createTextNode('Link da obra: '));const a=document.createElement('a');a.href=url.href;a.textContent=url.href;status.append(a)}}});
 
-  function visibleWorks(){return catalog.filter(w=>filter==='all'||(filter==='process'?w.kind==='Processo real':w.category===filter)).sort(sort==='title'?(a,b)=>a.title.localeCompare(b.title,'pt-BR'):(a,b)=>a.order-b.order)}
+  function visibleWorks(){return catalog.filter(w=>filter==='all'||(filter==='process'?w.kind==='Processo real':filter==='tattoo'?w.kind==='Tatuagem autoral':w.category===filter)).sort(sort==='title'?(a,b)=>a.title.localeCompare(b.title,'pt-BR'):(a,b)=>a.order-b.order)}
   function syncGalleryUrl(){
     const url=new URL(location.href);
     for(const [key,value] of [['tipo',filter==='all'?'':filter],['ordem',sort==='curated'?'':sort],['pagina',galleryPage?String(galleryPage+1):'']]){
@@ -93,7 +105,7 @@
   $('.page-next')?.addEventListener('click',()=>{galleryPage++;renderPage();selectWork(visibleWorks()[galleryPage*6].id)});
   if($('.selected-work')){
     const params=new URLSearchParams(location.search),requested=params.get('tipo');
-    if(['animal','figure','cyber','process','digital'].includes(requested)){filter=requested;$$('.filters button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.filter===filter)))}
+    if(['tattoo','animal','figure','cyber','process','digital'].includes(requested)){filter=requested;$$('.filters button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.filter===filter)))}
     if(params.get('ordem')==='title'){sort='title';$('#portfolio-sort').value=sort}
     const requestedPage=Number(params.get('pagina'));
     if(Number.isInteger(requestedPage)&&requestedPage>0)galleryPage=requestedPage-1;
@@ -116,19 +128,49 @@
   $$('.project-form').forEach(form=>form.addEventListener('submit',e=>{e.preventDefault();if(!form.reportValidity())return;const data=new FormData(form);const text=`Oi, Ana! Quero conversar sobre uma tatuagem.\n\nMeu nome: ${String(data.get('nome')).trim()}\nMinha ideia: ${String(data.get('ideia')).trim()}\nRegião do corpo: ${data.get('regiao')}\nTamanho aproximado: ${data.get('tamanho')}${String(data.get('telefone')||'').trim()?'\nMeu WhatsApp: '+String(data.get('telefone')).trim():''}`;const link=whatsapp+'?text='+encodeURIComponent(text);const popup=window.open(link,'_blank','noopener,noreferrer');const status=$('.form-status',form);status.replaceChildren(document.createTextNode('Sua ideia está pronta para revisar no WhatsApp. '));const a=document.createElement('a');a.href=link;a.target='_blank';a.rel='noopener';a.textContent='Abrir conversa';status.append(a)}));
   const floating=$('.floating-whatsapp');if(floating){let atForm=false,atHero=false;const syncFloating=()=>{floating.classList.toggle('over-form',atForm);floating.classList.toggle('at-hero',atHero);floating.tabIndex=atForm||atHero?-1:0};new IntersectionObserver(entries=>{atForm=entries.some(e=>e.isIntersecting);syncFloating()},{threshold:.12}).observe($('.project-form')||$('.footer'));if($('.hero'))new IntersectionObserver(entries=>{atHero=entries[0].isIntersecting;syncFloating()},{threshold:.3}).observe($('.hero'))}
 
-  // Light depth and linked entrances. Never intercept wheel/touch or pin the visitor.
+  // Small lights live on the panel edges, outside the actual tattoo photographs.
+  const litPanels=$$('.chapter,.portfolio-browser');
+  litPanels.forEach(panel=>{const light=document.createElement('span');light.className='light-rail';light.setAttribute('aria-hidden','true');light.innerHTML='<i></i><i></i>';panel.append(light)});
+  const lightsObserver=new IntersectionObserver(entries=>entries.forEach(entry=>entry.target.classList.toggle('is-in-view',entry.isIntersecting)),{rootMargin:'40px'});
+  litPanels.forEach(panel=>lightsObserver.observe(panel));
+  document.addEventListener('visibilitychange',()=>document.documentElement.classList.toggle('page-hidden',document.hidden));
+
+  // The complete scene travels together so billboard text stays on its painted plane.
+  // Cropped documentary photos move inside their own windows; no scroll interception.
   if(window.gsap&&window.ScrollTrigger){
-    gsap.registerPlugin(ScrollTrigger);const mm=gsap.matchMedia();
-    mm.add('(min-width:1024px) and (prefers-reduced-motion:no-preference)',()=>{
-      const hero=$('.hero');if(hero){
-        gsap.to('.hero-depth',{y:28,scale:1.035,transformOrigin:'75% 50%',ease:'none',scrollTrigger:{trigger:hero,start:'top top',end:'bottom top',scrub:.7}});
-      }
-      if($('.archive-works'))gsap.from('.archive-works .art-card',{clipPath:'inset(0 0 8% 0)',duration:.9,stagger:.08,ease:'power2.out',scrollTrigger:{trigger:'.archive-works',start:'top 87%'}});
-      $$('.artist-photo img').forEach(photo=>gsap.fromTo(photo,{yPercent:-1,scale:1.045},{yPercent:1,scale:1.045,ease:'none',scrollTrigger:{trigger:photo.parentElement,start:'top bottom',end:'bottom top',scrub:.6}}));
-      const cards=$$('.archive .art-card');
-      const listeners=cards.map(card=>{let bounds;const enter=()=>{bounds=card.getBoundingClientRect()};const move=e=>{if(!bounds||effectsPaused)return;const x=(e.clientX-bounds.left)/bounds.width-.5,y=(e.clientY-bounds.top)/bounds.height-.5;gsap.to(card,{rotationY:x*3,rotationX:-y*3,y:-3,transformPerspective:900,duration:.5,overwrite:true})};const leave=()=>gsap.to(card,{rotationY:0,rotationX:0,y:0,duration:.55,overwrite:true});card.addEventListener('pointerenter',enter);card.addEventListener('pointermove',move);card.addEventListener('pointerleave',leave);return()=>{card.removeEventListener('pointerenter',enter);card.removeEventListener('pointermove',move);card.removeEventListener('pointerleave',leave);gsap.set(card,{clearProps:'transform'})}});
-      return()=>listeners.forEach(fn=>fn());
-    });
+    gsap.registerPlugin(ScrollTrigger);let motionContext;
+    function setupMotion(){
+      motionContext?.revert();if(effectsPaused)return;
+      motionContext=gsap.matchMedia();
+      motionContext.add({wide:'(min-width:1024px)',compact:'(max-width:1023px)',reduce:'(prefers-reduced-motion:reduce)'},context=>{
+        const {wide,reduce}=context.conditions;if(reduce)return;
+        const hero=$('.hero');
+        if(hero)gsap.to('.hero-depth',{
+          y:()=>Math.min(hero.offsetHeight*(wide?.115:.042),wide?68:32),
+          scale:wide?1.075:1.03,transformOrigin:'68% 20%',ease:'none',
+          scrollTrigger:{id:'city-depth',trigger:hero,start:'top top',end:'bottom top',scrub:.65,invalidateOnRefresh:true}
+        });
+        $$('.artist-photo-frame img,.story-photo-window img,.portfolio-portrait img').forEach((photo,index)=>{
+          const distance=photo.closest('.story-photo-window')?(wide?28:14):(wide?18:9);
+          gsap.fromTo(photo,{y:-distance},{y:distance,ease:'none',scrollTrigger:{id:'photo-depth-'+index,trigger:photo.closest('.artist-composition,.artist-story,.portfolio-hero'),start:'clamp(top bottom)',end:'clamp(bottom top)',scrub:.6,invalidateOnRefresh:true}});
+        });
+        $$('.artist-city img').forEach(photo=>gsap.fromTo(photo,{y:-14,scale:1.14},{y:14,scale:1.14,ease:'none',scrollTrigger:{trigger:photo.parentElement,start:'top bottom',end:'bottom top',scrub:.8}}));
+        if(!wide)return;
+        $$('.process-proof').forEach((card,index)=>gsap.fromTo(card,{y:index===1?18:8},{y:index===1?-18:-8,ease:'none',scrollTrigger:{id:'process-depth-'+index,trigger:card.closest('.process'),start:'clamp(top bottom)',end:'clamp(bottom top)',scrub:.75}}));
+        const cleanups=$$('.archive .art-card').map(card=>{
+          let bounds;
+          const tiltX=gsap.quickTo(card,'rotationX',{duration:.45,ease:'power2.out'}),tiltY=gsap.quickTo(card,'rotationY',{duration:.45,ease:'power2.out'});
+          const enter=()=>{bounds=card.getBoundingClientRect();gsap.set(card,{transformPerspective:1000})};
+          const move=e=>{if(!bounds)return;tiltY(((e.clientX-bounds.left)/bounds.width-.5)*3);tiltX(-((e.clientY-bounds.top)/bounds.height-.5)*3)};
+          const leave=()=>{tiltX(0);tiltY(0)};
+          card.addEventListener('pointerenter',enter);card.addEventListener('pointermove',move);card.addEventListener('pointerleave',leave);
+          return()=>{card.removeEventListener('pointerenter',enter);card.removeEventListener('pointermove',move);card.removeEventListener('pointerleave',leave);tiltX.tween.kill();tiltY.tween.kill();gsap.set(card,{clearProps:'transform'})};
+        });
+        return()=>cleanups.forEach(cleanup=>cleanup());
+      });
+      ScrollTrigger.refresh();
+    }
+    setupMotion();document.addEventListener('ana:effects-change',setupMotion);
     document.fonts.ready.then(()=>ScrollTrigger.refresh());
     addEventListener('load',()=>ScrollTrigger.refresh(),{once:true});
   }
@@ -141,6 +183,6 @@
     function draw(now){rainFrame=0;if(reduced.matches||effectsPaused||document.hidden||!inView)return;const dt=Math.min(.035,(now-last)/1000);last=now;ctx.clearRect(0,0,width,height);for(const d of drops){const angle=d.angle+Math.sin(now*.0004+d.phase)*.03;d.y+=d.speed*dt;d.x+=d.speed*angle*dt;if(d.y>height+30||d.x>width+30){spawn(d);continue}ctx.strokeStyle=`rgba(191,225,247,${d.alpha})`;ctx.lineWidth=d.width;ctx.beginPath();ctx.moveTo(d.x-d.length*angle,d.y-d.length);ctx.lineTo(d.x,d.y);ctx.stroke()}rainFrame=requestAnimationFrame(draw)}
     function sync(){cancelAnimationFrame(rainFrame);rainFrame=0;if(reduced.matches||effectsPaused||document.hidden||!inView){ctx.clearRect(0,0,width,height);return}last=performance.now();rainFrame=requestAnimationFrame(draw)}
     resize();new ResizeObserver(()=>{resize();sync()}).observe(canvas);new IntersectionObserver(entries=>{inView=entries[0].isIntersecting;sync()}).observe($('.hero'));document.addEventListener('visibilitychange',sync);reduced.addEventListener('change',sync);
-    $('.ambience-toggle')?.addEventListener('click',e=>{effectsPaused=!effectsPaused;document.documentElement.classList.toggle('effects-paused',effectsPaused);const b=e.currentTarget;b.setAttribute('aria-pressed',String(effectsPaused));b.setAttribute('aria-label',effectsPaused?'Ativar efeitos de movimento':'Pausar efeitos de movimento');b.innerHTML='<span></span> '+(effectsPaused?'Atmosfera pausada':'Atmosfera ativa');sync();if(window.ScrollTrigger)ScrollTrigger.getAll().forEach(t=>effectsPaused?t.disable(false):t.enable())});sync();
+    document.addEventListener('ana:effects-change',sync);sync();
   }
 })();

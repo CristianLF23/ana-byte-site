@@ -7,7 +7,7 @@ const base=process.env.ANA_QA_URL||'https://cristianlf23.github.io/ana-byte-site
   const report={date:new Date().toISOString(),base,assets:[],views:[],errors:[]};
   try{
     const context=await browser.newContext();
-    for(const file of ['assets/backgrounds/city-desktop.webp','assets/backgrounds/city-mobile.webp','assets/backgrounds/city-mobile-600.webp','assets/ui/ana-byte-mark.png','assets/fonts/Orbitron-Variable.ttf','assets/artist/15-ana-working.jpg']){
+    for(const file of ['assets/backgrounds/city-desktop.webp','assets/backgrounds/city-mobile.webp','assets/backgrounds/city-mobile-600.webp','assets/ui/ana-byte-mark.png','assets/fonts/Orbitron-Variable.ttf','assets/artist/15-ana-working.jpg','assets/artist/23-ana-studio.jpg','assets/fidelity.css','assets/v3.js']){
       const response=await context.request.get(new URL(file,base).href);assert.equal(response.status(),200,file);
       const remote=await response.body(),local=fs.readFileSync(path.join(root,file));
       const hash=b=>crypto.createHash('sha256').update(b).digest('hex');assert.equal(hash(remote),hash(local),file);
@@ -25,6 +25,13 @@ const base=process.env.ANA_QA_URL||'https://cristianlf23.github.io/ana-byte-site
         assert.ok(metrics.scrollWidth<=width+1);assert.deepEqual(metrics.badImages,[]);
         await page.screenshot({path:path.join(out,`${label}-${width}.png`)});
         report.views.push({route,width,status:200,...metrics});
+        if(label==='home')for(const [selector,view] of [['#trabalhos','archive'],['.artist-story','story'],['.footer','footer']]){
+          await page.locator(selector).evaluate(el=>scrollTo({top:el.getBoundingClientRect().top+scrollY-(innerWidth<1024?82:0),behavior:'instant'}));
+          await page.waitForTimeout(900);
+          await page.evaluate(async()=>Promise.all([...document.images].filter(i=>i.getAttribute('src')&&i.checkVisibility()).map(i=>i.decode().catch(()=>{}))));
+          await page.screenshot({path:path.join(out,`${view}-${width}.png`)});
+          report.views.push({route,width,status:200,view});
+        }
       }
       await page.close();
     }
