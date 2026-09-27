@@ -248,7 +248,7 @@
     function setupMotion(){
       motionContext?.revert();if(effectsPaused)return;
       motionContext=gsap.matchMedia();
-      motionContext.add({wide:'(min-width:1024px)',small:'(max-width:767px)',reduce:'(prefers-reduced-motion:reduce)'},context=>{
+      motionContext.add({wide:'(min-width:1024px)',medium:'(min-width:768px) and (max-width:1023px)',small:'(max-width:767px)',reduce:'(prefers-reduced-motion:reduce)'},context=>{
         const {wide,small,reduce}=context.conditions;if(reduce)return;
         const hero=$('.hero');
         if(hero)gsap.to('.hero-depth',{
@@ -261,18 +261,30 @@
           gsap.fromTo(photo,{y:-distance},{y:distance,ease:'none',scrollTrigger:{id:'photo-depth-'+index,trigger:photo.closest('.artist-composition,.artist-story,.portfolio-hero'),start:'clamp(top bottom)',end:'clamp(bottom top)',scrub:.6,invalidateOnRefresh:true}});
         });
         $$('.artist-city img').forEach(photo=>gsap.fromTo(photo,{y:-14,scale:1.14},{y:14,scale:1.14,ease:'none',scrollTrigger:{trigger:photo.parentElement,start:'top bottom',end:'bottom top',scrub:.8}}));
-        if(!wide)return;
-        $$('.process-proof').forEach((card,index)=>gsap.fromTo(card,{y:index===1?18:8},{y:index===1?-18:-8,ease:'none',scrollTrigger:{id:'process-depth-'+index,trigger:card.closest('.process'),start:'clamp(top bottom)',end:'clamp(bottom top)',scrub:.75}}));
+        const processSections=$$('.process');
+        processSections.forEach((section,sectionIndex)=>{
+          section.classList.add('has-process-motion');
+          const cards=$$('.process-proof',section);
+          const progress=$('.process-progress span',section);
+          if(progress){const axis=wide?'scaleY':'scaleX';gsap.fromTo(progress,{[axis]:0},{[axis]:1,ease:'none',scrollTrigger:{id:'process-progress-'+sectionIndex,trigger:section,start:'top 75%',end:'bottom 35%',scrub:.55}})}
+          cards.forEach((card,index)=>{
+            const photo=$('.process-image img',card),curtain=$('.process-curtain',card);
+            if(photo)gsap.fromTo(photo,{scale:1.09,y:18},{scale:1,y:-12,ease:'none',scrollTrigger:{id:`process-photo-${sectionIndex}-${index}`,trigger:card,start:'top 90%',end:'bottom 20%',scrub:.65}});
+            if(curtain)gsap.fromTo(curtain,{xPercent:0},{xPercent:105,ease:'none',scrollTrigger:{id:`process-reveal-${sectionIndex}-${index}`,trigger:card,start:'top 88%',end:'top 42%',scrub:.45}});
+            ScrollTrigger.create({id:`process-active-${sectionIndex}-${index}`,trigger:card,start:'top 67%',end:'bottom 30%',toggleClass:{targets:card,className:'is-process-active'}});
+          });
+        });
+        if(!wide||!matchMedia('(hover:hover) and (pointer:fine)').matches)return()=>processSections.forEach(section=>section.classList.remove('has-process-motion'));
         const cleanups=$$('.archive .art-card').map(card=>{
           let bounds;
           const tiltX=gsap.quickTo(card,'rotationX',{duration:.45,ease:'power2.out'}),tiltY=gsap.quickTo(card,'rotationY',{duration:.45,ease:'power2.out'});
           const enter=()=>{bounds=card.getBoundingClientRect();gsap.set(card,{transformPerspective:1000})};
-          const move=e=>{if(!bounds)return;tiltY(((e.clientX-bounds.left)/bounds.width-.5)*3);tiltX(-((e.clientY-bounds.top)/bounds.height-.5)*3)};
-          const leave=()=>{tiltX(0);tiltY(0)};
+          const move=e=>{if(!bounds)return;const x=(e.clientX-bounds.left)/bounds.width,y=(e.clientY-bounds.top)/bounds.height;tiltY((x-.5)*8);tiltX(-(y-.5)*8);card.style.setProperty('--glow-x',`${x*100}%`);card.style.setProperty('--glow-y',`${y*100}%`)};
+          const leave=()=>{tiltX(0);tiltY(0);bounds=null};
           card.addEventListener('pointerenter',enter);card.addEventListener('pointermove',move);card.addEventListener('pointerleave',leave);
-          return()=>{card.removeEventListener('pointerenter',enter);card.removeEventListener('pointermove',move);card.removeEventListener('pointerleave',leave);tiltX.tween.kill();tiltY.tween.kill();gsap.set(card,{clearProps:'transform'})};
+          return()=>{card.removeEventListener('pointerenter',enter);card.removeEventListener('pointermove',move);card.removeEventListener('pointerleave',leave);tiltX.tween.kill();tiltY.tween.kill();card.style.removeProperty('--glow-x');card.style.removeProperty('--glow-y');gsap.set(card,{clearProps:'transform'})};
         });
-        return()=>cleanups.forEach(cleanup=>cleanup());
+        return()=>{cleanups.forEach(cleanup=>cleanup());processSections.forEach(section=>section.classList.remove('has-process-motion'))};
       });
       ScrollTrigger.refresh();
     }

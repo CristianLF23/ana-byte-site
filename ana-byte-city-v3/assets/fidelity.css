@@ -241,3 +241,34 @@ html.effects-paused *,html.effects-paused *:before,html.effects-paused *:after,h
   .project-form label small,.contact-details small,.form-microcopy{font-size:11px}
   .project-form textarea,.project-form input,.project-form select,.about-lower .project-form input,.about-lower .project-form textarea,.about-lower .project-form select{font-size:16px}
 }
+
+/* Real drawing-to-skin comparisons, revealed in the rhythm of native scroll. */
+.process{grid-template-columns:minmax(220px,.72fr) minmax(0,1.55fr);gap:clamp(28px,5vw,100px);align-items:start;padding-block:clamp(55px,7vw,105px)}
+.process-intro{position:sticky;top:clamp(36px,8vh,100px)}
+.process-progress{display:block;width:2px;height:clamp(110px,20vh,230px);margin-top:36px;background:#70ffc52b;overflow:hidden}
+.process-progress>span{display:block;width:100%;height:100%;transform:scaleY(0);transform-origin:top;background:linear-gradient(var(--cyan),var(--mint),var(--pink));box-shadow:0 0 12px var(--mint)}
+.process-sequence{display:grid;grid-template-columns:1fr;gap:clamp(25px,4vw,58px)}
+.process-proof{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(195px,.72fr);gap:0;padding:8px;min-height:clamp(350px,39vw,500px);transition:border-color .35s,box-shadow .35s}
+.process-proof.is-process-active{border-color:#70ffc5a8;box-shadow:0 0 30px #70ffc51b,inset 0 0 20px #70ffc50d}
+.process-proof>a{height:100%;min-height:330px;aspect-ratio:auto;background:#03070b}
+.process-image{display:block;width:100%;height:100%;overflow:hidden}
+.process-image img{width:100%;height:100%;object-fit:contain;object-position:center}
+.process-curtain{display:none;position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,#04090ddd 0%,#062224c9 85%,#70ffc5af 100%)}
+.has-process-motion .process-curtain{display:block}
+.process-proof .art-plus{z-index:2}
+.process-proof figcaption{justify-content:end;gap:13px;padding:clamp(22px,3vw,42px);border-left:1px solid #70ffc533}
+.process-proof figcaption small{font-size:10px;color:var(--mint)}
+.process-proof figcaption>span{font:clamp(17px,1.65vw,25px)/1.3 var(--display);letter-spacing:-.025em;color:#e8f8f5}
+.process-proof figcaption p{font-size:14px;line-height:1.7;color:#c2d1d2}
+.process-proof figcaption em{font-size:9px;letter-spacing:.18em;color:var(--mint)}
+.process-proof:not(:last-child):after{display:none}
+@media(min-width:768px) and (max-width:1023px){.process{grid-template-columns:1fr;gap:30px}.process-intro{position:static}.process-progress{height:2px;width:100%;margin-top:24px}.process-progress>span{transform:scaleX(0);transform-origin:left}.process-proof{min-height:370px}}
+@media(max-width:767px){.process{display:block;padding-block:42px 55px}.process-intro{position:static}.process-intro h2{font-size:31px}.process-intro>p:not(.tracked):not(.eyebrow){font-size:14px;line-height:1.8}.process-progress{height:2px;width:100%;margin:25px 0 32px}.process-progress>span{transform:scaleX(0);transform-origin:left}.process-sequence{display:grid;grid-template-columns:1fr;gap:28px}.process-proof{display:block;min-height:0;padding:5px}.process-proof>a{display:block;min-height:0;height:auto;aspect-ratio:4/4.3}.process-proof figcaption{padding:17px 15px 20px;border-left:0;border-top:1px solid #70ffc533;gap:8px}.process-proof figcaption small{font-size:9px}.process-proof figcaption>span{font-size:18px}.process-proof figcaption p{font-size:13px}.process-proof figcaption em{display:block;font-size:8px}}
+@media(prefers-reduced-motion:reduce){.process-progress>span{transform:none!important}.process-curtain{display:none}.process-image img{transform:none!important}}
+
+/* A small light field follows the pointer; touch gets a pressed response. */
+.archive .art-card::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;opacity:0;background:radial-gradient(circle at var(--glow-x,50%) var(--glow-y,50%),color-mix(in srgb,var(--card-neon) 38%,transparent),transparent 55%);mix-blend-mode:screen;transition:opacity .28s}
+.archive .art-card .card-caption,.archive .art-card .art-plus{z-index:2}
+@media(hover:hover) and (pointer:fine){.archive .art-card:hover::before,.archive .art-card:focus-visible::before{opacity:1}.archive .art-card:hover img{transform:scale(1.045)}}
+@media(hover:none){.archive .art-card:active{border-color:var(--card-neon);box-shadow:0 0 18px color-mix(in srgb,var(--card-neon) 35%,transparent);transform:scale(.985)}}
+@media(prefers-reduced-motion:reduce){.archive .art-card::before{display:none}.archive .art-card:active{transform:none}}
