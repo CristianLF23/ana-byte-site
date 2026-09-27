@@ -53,6 +53,8 @@ Os títulos com degradê conservam sua própria paleta e recebem um deslocamento
 
 O topo da primeira dobra apresenta “Studio em São Paulo”: entre a marca e o menu em telas compactas, e como pequena sinalização sobre a cidade em desktop. A barra de progresso fixa no topo usa verde neon, magenta e verde, atualizada pelo scroll nativo. O menu compacto abre/fecha com deslocamento e opacidade suaves, incluindo os links; categorias, ordenação e setas do acervo revelam as obras selecionadas com movimento curto. O parallax da cidade e dos retratos é mais perceptível somente no mobile. Movimento reduzido e pausa de efeitos tornam essas transições imediatas, sem impedir o uso.
 
+Na cidade da primeira dobra, a personagem ilustrada conserva pose, rosto, escala e vestuário principal. Uma mecha platinada visível junto à orelha dialoga com as fotos reais fornecidas, e uma manga preta cobre o braço antes exposto. As variantes mobile e desktop foram compostas sobre seus fundos originais para preservar gato, fachadas, letreiros e chuva. O restante do site mantém as fotos reais, sem retratos ou tatuagens artificiais. Fontes e prompt em [CHARACTER_EDIT.md](CHARACTER_EDIT.md).
+
 ## Stack e reuso
 
 HTML, CSS e JavaScript estáticos; GSAP e ScrollTrigger locais. Sem dependências de produção instaladas. `build.mjs`, `sections.mjs` e `archive.mjs` geram início, sobre e redirecionamento legado a partir de `data/catalog.js`. Estilo ativo: `assets/fidelity.css`. CSS/JS recebem revisão por conteúdo na URL para evitar combinação de HTML novo com lógica antiga em cache. O arquivo antigo `assets/v3.css` não é carregado.

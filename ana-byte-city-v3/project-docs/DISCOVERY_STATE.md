@@ -41,3 +41,11 @@ Verificação: fluxo de vídeo e filtros em desktop/mobile, navegação por link
 - CONFIRMED: parallax mobile mais perceptível, preservando texto legível e o modo de movimento reduzido. Desktop mantém sua amplitude atual.
 - Recursos: GSAP e ScrollTrigger locais já presentes, HTML/CSS/JS atuais. Nenhum novo pacote, asset gerado, serviço externo ou compra. Gate aprovado, sem item crítico em aberto. Publicação no link da V3 autorizada pela conversa.
 - Validação: abertura, fechamento, Escape e toque rápido no menu; filtros e setas; início, meio e fim do progresso; recortes mobile, tablet e desktop; movimento reduzido; ausência de overflow e erros de execução.
+
+## 27/09 · Personagem ilustrada na primeira dobra
+
+- CONFIRMED: as duas capturas do Instagram mostram a Ana com mecha branca/loira perto da orelha, em contraste com o cabelo escuro. O pedido é aplicado à personagem já pintada na cidade, sem substituir sua identidade por uma pessoa gerada.
+- CONFIRMED: cobrir o braço exposto mais visível com manga preta ajustada à pose. Preservar gato frajola, cidade, letreiros, chuva, enquadramento e texto; fotos reais de trabalhos e da Ana não são alteradas.
+- Classificação: correção localizada de asset visual existente, sem nova direção estética, oferta, CTA, página ou integração. Gate aprovado; nenhuma lacuna crítica. A edição com ferramenta integrada de imagem foi autorizada pelo pedido, sem ferramenta externa paga ou dependência de produção.
+- Recursos: `imagegen` integrado para a edição raster; composição determinística apenas dentro da silhueta da personagem para resguardar o fundo original; variantes WebP para carregamento responsivo. Catálogos de componentes, 3D e novas referências online não acrescentam a esta correção isolada.
+- Validação: comparação das regiões externas à pessoa, inspeção visual da hero em mobile e desktop, integridade dos quatro tamanhos, carregamento real no navegador e regressões de navegação.

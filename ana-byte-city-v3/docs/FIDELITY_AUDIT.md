@@ -137,3 +137,11 @@ Arquivos: `build.mjs`, `sections.mjs`, `assets/fidelity.css`, `assets/v3.js`, p�
 Refino posterior: “Studio em São Paulo” ocupa agora uma única linha horizontal também no mobile. Conferido em 320, 375, 390, 430 e 768 px: sem quebra, sem colisão com logo/menu e sem overflow horizontal. Capturas em `qa/round-motion-navigation/`.
 
 Alinhamento final: na abertura mobile, a frase usa o mesmo centro vertical do botão de menu. A checagem de posicionamento cobre 320, 375, 390, 430 e 768 px, além da largura e da ausência de quebra.
+
+## 27/09 · Mecha clara e braço coberto na abertura
+
+- Inspecionadas as duas fotos reais enviadas da Ana, a arte mobile aprovada e a arte desktop aprovada. Edição raster integrada aplicada somente à personagem sentada, com versões independentes para as duas composições.
+- A pessoa recebeu mecha platinada próxima à orelha e manga preta longa no braço antes exposto. A saída foi composta com máscara suave sobre a imagem original; billboard, cidade, letreiros, chuva e gato ficaram no original, sem regenerar seu conteúdo.
+- Diferença média de pixels nas regiões sem edição, após exportação WebP: mobile 1,25–1,98/255; desktop 1,00–2,11/255. A diferença residual decorre da recodificação WebP. Formato e proporção originais foram preservados (940 × 2156 e 2017 × 780), com variantes 600/1280 px. Os arquivos principais ficaram menores que os fundos anteriores.
+- Capturas de 390 e 1440 px inspecionadas lado a lado; inspeção responsiva de 320 a 1440 px sem overflow ou erro de execução. `qa/motion-navigation.cjs` e `qa/check.cjs` (16/16) aprovados. A personagem continua atrás das camadas de interface e a máscara de primeiro plano permanece alinhada porque ambas usam o mesmo asset novo.
+- Fonte, prompt, técnica e assets em [CHARACTER_EDIT.md](CHARACTER_EDIT.md). Limite: Chromium no Windows; Safari/iPhone físico não inspecionado.

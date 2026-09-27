@@ -10,4 +10,6 @@ Adição posterior: manter o vídeo inicial em loop contínuo, com repetição n
 
 Refinamento de interface em 27/09: suavizar a abertura e o fechamento do menu móvel, a troca de filtros e páginas do acervo; exibir progresso da rolagem em verde neon e magenta; intensificar o parallax apenas no mobile; apresentar “Studio em São Paulo” no topo da primeira dobra. Preservar o design e as mídias aprovadas, sem criar dependências novas.
 
+Refinamento posterior da primeira dobra: editar somente a Ana ilustrada, destacando a mecha branca/loira vista nas duas fotos novas e cobrindo com manga preta o braço tatuado que estava exposto. Cidade, gato, letreiros, posição, layout, fotos reais e demais capítulos seguem aprovados.
+
 Fonte de verdade: último screenshot e instruções da conversa; fotos/vídeo reais e informações fornecidas; [direção registrada](../docs/DIRECTION.md). Gate e decisões em [DISCOVERY_STATE.md](DISCOVERY_STATE.md).
