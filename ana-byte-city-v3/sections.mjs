@@ -20,7 +20,7 @@ export function createSections({works,img,icon,eyebrow,artButton,wa,gallery}) {
   function archive(b=''){
     return `<section class="chapter archive archive-expanded archive-transposed" id="trabalhos" aria-labelledby="archive-title">
       <div class="portfolio-hero archive-heading">
-        <div class="portfolio-portrait"><img src="${b}assets/artist/15-ana-working.jpg" alt="Ana Byte trabalhando em uma tatuagem" width="863" height="1145" loading="lazy"></div>
+        <div class="portfolio-portrait archive-portrait"><img src="${b}assets/artist/16-studio.jpg" alt="Ana Byte fotografando seu reflexo no espelho do estúdio" width="921" height="1140" loading="lazy" decoding="async"></div>
         <div>${eyebrow('02','TRABALHOS')}<h2 id="archive-title">ARQUIVO<br><span class="spectrum">VIVO.</span></h2><p class="tracked">Tatuagens como portais.<br>Fragmentos de outros mundos<br>na pele real.</p><button class="text-link archive-replay" type="button" aria-controls="archive-video">Ver em movimento ${icon('arrow')}</button></div>
         <div class="portfolio-quote"><p>Arte autoral.<br>Corpo como<br>território.<br>Imaginação<br>sem fronteiras.</p><span class="signature">Ana Byte</span></div>
       </div>

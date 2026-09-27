@@ -16,13 +16,13 @@ export function createArchive({works, img, icon, artButton, esc, wa}) {
         <aside class="selected-work" aria-label="Vídeo e obra em destaque">
           <div class="selected-image">
             <div class="archive-film">
-              <video id="archive-video" controls playsinline muted preload="none" poster="${b}assets/video/ana-portfolio-poster.jpg" aria-label="Ana Byte tatuando, vídeo de apresentação do seu trabalho"><source src="${b}assets/video/ana-portfolio.mp4" type="video/mp4"></video>
+              <video id="archive-video" controls playsinline muted loop preload="none" poster="${b}assets/video/ana-portfolio-poster.jpg" aria-label="Ana Byte tatuando, vídeo de apresentação do seu trabalho"><source src="${b}assets/video/ana-portfolio.mp4" type="video/mp4"></video>
               <p class="film-error" role="status" hidden>Não foi possível carregar o vídeo. Você pode explorar as obras nesta seção.</p>
             </div>
             <a data-selected-open data-art="${first.id}" href="${b+first.src}" aria-label="Ampliar ${esc(first.title)}">${img(first,b)}<span class="art-plus">${icon('plus')}</span></a>
             <div class="selected-controls"><button class="icon-button selected-prev" aria-label="Obra anterior">${icon('back')}</button><span data-selected-count>01 / ${works.length}</span><button class="icon-button selected-next" aria-label="Próxima obra">${icon('arrow')}</button></div>
           </div>
-          <div class="selected-copy archive-film-copy"><p class="eyebrow">ANA BYTE EM MOVIMENTO</p><h2>O TRAÇO<br>GANHA VIDA.</h2><p>Acompanhe a Ana tatuando. Da ideia à pele, um olhar de perto sobre o trabalho.</p><p class="film-caption">Depois do vídeo, explore as tatuagens, os processos e a arte digital neste mesmo acervo.</p><a class="text-link" href="#archive-filters">Explorar as obras ${icon('down')}</a></div>
+          <div class="selected-copy archive-film-copy"><p class="eyebrow">ANA BYTE EM MOVIMENTO</p><h2>O TRAÇO<br>GANHA VIDA.</h2><p>Acompanhe a Ana tatuando. Da ideia à pele, um olhar de perto sobre o trabalho.</p><p class="film-caption">Explore as tatuagens, os processos e a arte digital neste mesmo acervo.</p><a class="text-link" href="#archive-filters">Explorar as obras ${icon('down')}</a></div>
           <div class="selected-copy selected-art-copy"><p class="eyebrow" data-selected-kind>${esc(first.kind)}</p><h2 data-selected-title>${esc(first.title)}</h2><p data-selected-description>${esc(first.description)}</p><div class="selected-trace"><span></span><h3>O traço</h3><p data-selected-technique>${esc(first.technique)}</p></div><a class="neon-button" data-selected-contact href="${wa}" target="_blank" rel="noopener">Quero criar algo assim ${icon('arrow')}</a></div>
         </aside>
       </div>

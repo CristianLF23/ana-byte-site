@@ -176,3 +176,23 @@ html.effects-paused *,html.effects-paused *:before,html.effects-paused *:after,h
   .portfolio-browser.is-intro .portfolio-list{order:2}
   .portfolio-browser.is-intro .portfolio-count{order:3}
 }
+
+/* A gentle color drift, restricted to existing gradient lettering. No geometry,
+   hue or opacity changes: each title retains its own original gradient. */
+.title-chroma{animation:title-chroma 12s ease-in-out infinite alternate both;animation-play-state:paused}
+.title-chroma.is-title-visible{animation-play-state:running}
+@keyframes title-chroma{
+  from{background-size:135% 100%;background-position:0% 50%}
+  to{background-size:135% 100%;background-position:100% 50%}
+}
+@media(prefers-reduced-motion:reduce){.title-chroma{animation:none!important}}
+
+/* Previously unused real studio portrait, framed independently from the
+   documentary photograph that remains in the artist chapter. */
+.archive-transposed .archive-portrait{aspect-ratio:auto;left:57%;width:60%;height:110%;top:-5%;opacity:1}
+.archive-transposed .archive-portrait img{object-position:50% 16%;scale:1.07;transform-origin:50% 20%}
+@media(max-width:767px){
+  .archive-transposed .archive-portrait{inset:0;width:100%;height:100%;aspect-ratio:auto}
+  .archive-transposed .archive-portrait img{object-position:50% 16%;scale:1.18;transform-origin:25% 20%}
+  .archive-transposed .archive-heading:after{background:linear-gradient(90deg,#04070bad,transparent 85%),linear-gradient(0deg,#04070bfa 0%,#04070b80 42%,transparent 83%)}
+}

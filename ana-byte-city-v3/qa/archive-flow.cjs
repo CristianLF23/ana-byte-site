@@ -17,8 +17,8 @@ const out=path.join(__dirname,process.argv[2]||'round-archive-film-1');fs.mkdirS
    await page.screenshot({path:path.join(out,`archive-header-${width}.png`)});
    await video.evaluate(v=>v.scrollIntoView({block:'center',behavior:'instant'}));
    await page.waitForFunction(()=>{const v=document.querySelector('#archive-video');return !v.paused&&v.currentTime>.5},{timeout:15000});
-   const state=await video.evaluate(v=>({duration:v.duration,inline:v.playsInline,muted:v.muted,controls:v.controls,width:v.videoWidth,height:v.videoHeight}));
-   assert.ok(state.duration>20);assert.equal(state.inline,true);assert.equal(state.muted,true);assert.equal(state.controls,true);
+   const state=await video.evaluate(v=>({duration:v.duration,inline:v.playsInline,muted:v.muted,loop:v.loop,controls:v.controls,width:v.videoWidth,height:v.videoHeight}));
+   assert.ok(state.duration>20);assert.equal(state.inline,true);assert.equal(state.muted,true);assert.equal(state.loop,true);assert.equal(state.controls,true);
    assert.equal(await page.locator('dialog[open]').count(),0);
    await page.screenshot({path:path.join(out,`archive-film-${width}.png`)});
    await page.evaluate(()=>scrollTo({top:0,behavior:'instant'}));await page.waitForTimeout(300);assert.equal(await video.evaluate(v=>v.paused),true);
@@ -28,10 +28,15 @@ const out=path.join(__dirname,process.argv[2]||'round-archive-film-1');fs.mkdirS
    await video.evaluate(v=>v.scrollIntoView({block:'center',behavior:'instant'}));await page.waitForTimeout(300);assert.equal(await video.evaluate(v=>v.paused),true,'manual pause must survive scrolling');
    await video.evaluate(v=>v.play());
    const before=await page.locator('.selected-image').boundingBox();
-   await video.evaluate(v=>{v.currentTime=v.duration-.15});
-   await page.waitForFunction(()=>!document.querySelector('.portfolio-browser').classList.contains('is-film'));
-   const after=await page.locator('.selected-image').boundingBox();assert.ok(Math.abs(before.height-after.height)<2,'no jump when the film becomes a photo');
-   assert.equal(await page.locator('[data-selected-open]').isVisible(),true);assert.equal(await page.locator('dialog[open]').count(),0);
+   await video.evaluate(v=>{v.__loopPauses=0;v.addEventListener('pause',()=>v.__loopPauses++)});
+   for(let cycle=0;cycle<2;cycle++){
+    await video.evaluate(v=>{v.currentTime=v.duration-.2});
+    await page.waitForFunction(()=>{const v=document.querySelector('#archive-video');return !v.paused&&v.currentTime>.05&&v.currentTime<2});
+    assert.equal(await video.evaluate(v=>v.__loopPauses),0,'loop must not pause the video');
+    assert.equal(await page.locator('.portfolio-browser').evaluate(e=>e.classList.contains('is-film')),true);
+   }
+   const after=await page.locator('.selected-image').boundingBox();assert.ok(Math.abs(before.height-after.height)<2,'no jump between video loops');
+   assert.equal(await page.locator('[data-selected-open]').isVisible(),false);assert.equal(await page.locator('dialog[open]').count(),0);
    const pathname=new URL(page.url()).pathname;await page.evaluate(()=>window.__archiveDocument='same');
    for(const filter of ['tattoo','process','digital','all']){
     await page.locator(`[data-filter=${filter}]`).click();
@@ -42,7 +47,7 @@ const out=path.join(__dirname,process.argv[2]||'round-archive-film-1');fs.mkdirS
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
    await page.locator('.archive-replay').click();await page.waitForFunction(()=>!document.querySelector('#archive-video').paused);
    assert.equal(new URL(page.url()).pathname,pathname);assert.equal(await page.locator('dialog[open]').count(),0);
-   report.push({width,video:state,inlineFilters:true,manualPause:true,stableTransition:true});
+   report.push({width,video:state,inlineFilters:true,manualPause:true,uninterruptedLoops:2,stableFrame:true});
    await page.close();
   }
   const page=await browser.newPage({viewport:{width:390,height:844},reducedMotion:'reduce'});

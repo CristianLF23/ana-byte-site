@@ -40,7 +40,7 @@ These are the only source files that visibly contain a drawing or digital study 
 | V3 path | Source | Dimensions | Use |
 | --- | --- | ---: | --- |
 | `assets/artist/15-ana-working.jpg` | `15-ana-working.jpg` | 863 x 1145 | Ana working, primary artist portrait |
-| `assets/artist/16-studio.jpg` | `16-studio.jpg` | 921 x 1140 | Studio environment |
+| `assets/artist/16-studio.jpg` | `16-studio.jpg` | 921 x 1140 | Ana's mirror portrait in the studio; Arquivo Vivo header from 27/09, previously unused in the rendered V3 |
 | `assets/artist/23-ana-studio.jpg` | `23-ana-studio.jpg` | 1284 x 1593 | Ana in studio |
 
 ## Logo and contact source notes

@@ -110,3 +110,15 @@ Validação local: 16/16 verificações gerais aprovadas. `qa/archive-flow.cjs` 
 Arquivos: `archive.mjs`, `sections.mjs`, `build.mjs`, `assets/v3.js`, `assets/fidelity.css`, poster real, páginas geradas e verificadores. Evidências locais: `qa/round-archive-film-1/`, `qa/round-archive-film-2/` e `qa/round-archive-flow-final/`. O roteiro direcionado também aceita `ANA_QA_URL` para conferir a publicação. Limite: Chromium no Windows, sem iPhone físico.
 
 Produção conferida após a publicação: roteiro direcionado aprovado em 1440 e 390 px, incluindo filtros no mesmo documento, vídeo inline, pausa manual, transição estável, redirecionamento legado e fallbacks de reprodução. Conferência adicional com 12 capturas, dez assets publicados iguais aos locais e zero erros. Evidências em `qa/round-archive-published/` e `qa/production/report.json`. O verificador aguarda apenas imagens dentro da área capturada, com limite de tempo, para respeitar o carregamento progressivo das imagens fora da tela.
+
+## 27/09 · Degradês em movimento, retrato exclusivo e vídeo em loop
+
+- Títulos que já possuíam degradê recebem deslocamento suave de cor, com 12 segundos por sentido. Os gradientes, fontes, textos, quebras e dimensões são preservados. Títulos de cor sólida continuam estáticos.
+- Animação restrita à superfície das letras e pausada fora da tela, em painéis ocultos, ao pausar efeitos e quando a aba está oculta. Movimento reduzido restaura o degradê estático original. Sem biblioteca nova ou medição contínua de layout.
+- O Arquivo Vivo usa `16-studio.jpg`, foto real da Ana no espelho, que estava no acervo mas não aparecia nas páginas da V3. Somente o recorte CSS e a sobreposição de leitura foram ajustados; a fotografia permanece intacta. Os retratos da seção Sobre continuam os anteriores.
+- Por instrução adicional, o vídeo de 25 segundos repete continuamente com loop nativo. Removida a troca automática para a primeira fotografia. A seleção manual de obras e filtros continua na seção; o texto de apoio acompanha esse fluxo.
+- Comparação inicial em 1440/390 px. Duas rodadas visuais nos nove breakpoints, de 375 a 1920 px, sem overflow nem imagem ausente. Na segunda rodada a nova foto ganhou enquadramento mais próximo e sobreposição mobile menos escura.
+- Verificados em 1440/390 px: movimento real do preenchimento sem mudança das dimensões do texto, gradiente original inalterado, pausa e retomada manual, suspensão fora da tela e movimento reduzido. Nenhum erro de execução. Evidências em `qa/round-title-photo/`.
+- `qa/archive-flow.cjs` atualizado e aprovado: duas voltas do vídeo sem eventos de pausa e sem alteração da moldura em desktop/mobile; filtros no mesmo documento, pausa manual, redirecionamento legado, movimento reduzido, autoplay bloqueado e falha de mídia também aprovados. Evidências em `qa/round-title-photo-loop/`.
+
+Arquivos principais: `archive.mjs`, `sections.mjs`, `assets/fidelity.css`, `assets/v3.js`, `index.html` e `sobre/index.html`; inventário, contexto, direção, auditoria e verificação do vídeo atualizados. Limite: Chromium no Windows, sem iPhone físico.

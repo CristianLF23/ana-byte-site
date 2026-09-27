@@ -152,10 +152,6 @@
       filmUserPaused=false;filmAutoplayBlocked=false;
       if(document.hidden||!archive.classList.contains('is-film'))pauseFilm();
     });
-    archiveVideo.addEventListener('ended',()=>{
-      selectWork(visibleWorks()[0]?.id||catalog[0].id);
-      window.ScrollTrigger?.refresh();
-    });
     archiveVideo.addEventListener('error',()=>{$('.film-error').hidden=false;filmAutoplayBlocked=true},true);
     new IntersectionObserver(entries=>{filmInView=entries[0].intersectionRatio>=.5;syncFilm()},{threshold:[0,.5,1]}).observe(archiveVideo);
     document.addEventListener('visibilitychange',syncFilm);
@@ -183,6 +179,17 @@
   const lightsObserver=new IntersectionObserver(entries=>entries.forEach(entry=>entry.target.classList.toggle('is-in-view',entry.isIntersecting)),{rootMargin:'40px'});
   litPanels.forEach(panel=>lightsObserver.observe(panel));
   document.addEventListener('visibilitychange',()=>document.documentElement.classList.toggle('page-hidden',document.hidden));
+
+  // Only the existing text gradients drift. Batch style reads before adding
+  // classes, and stop painting titles outside the viewport or hidden panels.
+  const gradientTitles=$$('h1,h2,h3,.spectrum').filter(title=>{
+    const style=getComputedStyle(title);
+    return style.backgroundClip==='text'&&style.backgroundImage.includes('gradient(');
+  });
+  const titleObserver=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>entry.target.classList.toggle('is-title-visible',entry.isIntersecting));
+  });
+  gradientTitles.forEach(title=>{title.classList.add('title-chroma');titleObserver.observe(title)});
 
   // The complete scene travels together so billboard text stays on its painted plane.
   // Cropped documentary photos move inside their own windows; no scroll interception.
