@@ -272,3 +272,15 @@ html.effects-paused *,html.effects-paused *:before,html.effects-paused *:after,h
 @media(hover:hover) and (pointer:fine){.archive .art-card:hover::before,.archive .art-card:focus-visible::before{opacity:1}.archive .art-card:hover img{transform:scale(1.045)}}
 @media(hover:none){.archive .art-card:active{border-color:var(--card-neon);box-shadow:0 0 18px color-mix(in srgb,var(--card-neon) 35%,transparent);transform:scale(.985)}}
 @media(prefers-reduced-motion:reduce){.archive .art-card::before{display:none}.archive .art-card:active{transform:none}}
+
+/* The V1 neon artwork frames the process invitation, with its cat above the copy. */
+.process-intro{isolation:isolate;overflow:hidden;padding:255px 20px 22px;background:#03070c;border:1px solid #4d315077}
+.process-intro::before,.process-intro::after{content:'';position:absolute;inset:0;pointer-events:none}
+.process-intro::before{z-index:0}
+.process-intro::after{z-index:1}
+.process-intro>*{position:relative;z-index:2}
+.process-intro::before{background:url('backgrounds/process-neon-v1.jpg') center top/100% auto no-repeat;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 70px,#000 280px,transparent 620px);mask-image:linear-gradient(to bottom,transparent 0,#000 70px,#000 280px,transparent 620px)}
+.process-intro::after{background:linear-gradient(to right,#03070caa 0,transparent 10%,transparent 90%,#03070caa 100%),linear-gradient(to bottom,#03070c05 0,#03070c33 200px,#03070ce8 390px,#03070c 570px)}
+.process-intro .process-progress{height:80px;margin-top:25px}
+@media(min-width:768px) and (max-width:1023px){.process-intro{padding:220px 26px 28px}.process-intro::before{background-size:500px auto;background-position:right top}.process-intro::after{background:linear-gradient(to right,transparent 80%,#03070cbb 100%),linear-gradient(90deg,#03070c 28%,#03070c65 80%),linear-gradient(0deg,#03070c 0%,transparent 85%)}.process-intro .process-progress{height:2px}}
+@media(max-width:767px){.process-intro{margin:-42px -23px 0;padding:clamp(340px,88vw,390px) 23px 32px;border-inline:0}.process-intro::before{-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 70px,#000 250px,transparent 660px);mask-image:linear-gradient(to bottom,transparent 0,#000 70px,#000 250px,transparent 660px)}.process-intro::after{background:linear-gradient(to right,#03070c77 0,transparent 7%,transparent 93%,#03070c77 100%),linear-gradient(to bottom,#03070c52 0,#03070c5c 130px,#03070ca6 235px,#03070ce8 345px,#03070c 510px)}.process-intro .process-progress{height:2px;margin:26px 0 0}}
