@@ -207,3 +207,38 @@ html.effects-paused *,html.effects-paused *:before,html.effects-paused *:after,h
 @media(max-width:374px){.rail-location{left:59%;font-size:8px}}
 @media(max-width:767px){body[data-page=inicio] .rail:not(.is-scrolled) .rail-location{top:33px}}
 @media(prefers-reduced-motion:reduce){.rail-location{transition:none}}
+
+/* Reading copy has its own scale; display titles and compact controls keep theirs. */
+.hero-sub{font-size:clamp(11px,1.08cqw,16px);letter-spacing:.18em}
+.archive-transposed .archive-heading .tracked,.archive-heading-copy .tracked,.portfolio-hero .tracked{font-size:12px;line-height:1.75;letter-spacing:.14em}
+.process-intro>p:not(.tracked):not(.eyebrow),.artist-copy>p:not(.tracked):not(.eyebrow),.artist-bio p,.pillars-intro>p:not(.eyebrow){font-size:14px;line-height:1.8}
+.artist-story-copy>p:not(.eyebrow):not(.story-lead){font-size:16px;line-height:1.8}
+.artist-story-copy .story-lead{font-size:19px;line-height:1.55}
+.story-location p,.pillars p{font-size:12px;line-height:1.75}
+.contact-description,.about-lower .contact-description{font-size:15px;line-height:1.8}
+.selected-copy>p:not(.eyebrow),.selected-trace p,.archive-film-copy .film-caption,.film-dialog>p{font-size:13px;line-height:1.8;letter-spacing:.025em}
+.detail-copy>p:not(.eyebrow){font-size:15px;line-height:1.8}
+.detail-notes p,.artist-note p,.portfolio-quote p{font-size:13px;line-height:1.75;letter-spacing:.08em}
+.project-form label small,.contact-details small,.form-microcopy{font-size:12px;line-height:1.6}
+.project-form textarea,.project-form input,.project-form select,.about-lower .project-form input,.about-lower .project-form textarea,.about-lower .project-form select{font-size:14px}
+.film-error{font-size:14px}
+@media(min-width:768px) and (max-width:1279px){
+  .hero-sub{font-size:11px;letter-spacing:.12em}
+  .process-intro>p:not(.tracked):not(.eyebrow),.artist-copy>p:not(.tracked):not(.eyebrow),.artist-bio p,.pillars-intro>p:not(.eyebrow){font-size:13px}
+  .selected-copy>p:not(.eyebrow),.selected-trace p{font-size:12px}
+  .pillars p{font-size:11px}
+}
+@media(max-width:767px){
+  .hero-sub{font-size:max(11px,3.2cqw);letter-spacing:.13em}
+  .archive-transposed .archive-heading .tracked,.archive-heading-copy .tracked,.portfolio-hero .tracked{font-size:11px;letter-spacing:.12em;line-height:1.7}
+  .artist-copy>p:not(.tracked):not(.eyebrow){font-size:12px;line-height:1.75;letter-spacing:.065em}
+  .process-intro>p:not(.tracked):not(.eyebrow),.artist-bio p,.pillars-intro>p:not(.eyebrow){font-size:14px}
+  .artist-story-copy>p:not(.eyebrow):not(.story-lead){font-size:15px;line-height:1.8}
+  .artist-story-copy .story-lead{font-size:18px}
+  .pillars p{font-size:11px;line-height:1.7}
+  .contact-description,.about-lower .contact-description{font-size:14px}
+  .detail-copy>p:not(.eyebrow){font-size:15px}
+  .detail-notes p{font-size:14px}
+  .project-form label small,.contact-details small,.form-microcopy{font-size:11px}
+  .project-form textarea,.project-form input,.project-form select,.about-lower .project-form input,.about-lower .project-form textarea,.about-lower .project-form select{font-size:16px}
+}
