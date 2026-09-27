@@ -3,6 +3,7 @@ export function createSections({works,img,icon,eyebrow,artButton,wa,gallery}) {
   const mark = (b='') => `<img src="${b}assets/ui/ana-byte-mark.png" width="112" height="111" alt="Ana Byte">`;
   function hero(){return `
     <section class="hero" id="inicio" aria-labelledby="hero-title">
+      <span class="hero-location">Studio em São Paulo</span>
       <div class="hero-depth">
         <picture class="hero-city"><source media="(max-width:767px)" srcset="assets/backgrounds/city-mobile-600.webp 600w, assets/backgrounds/city-mobile.webp 940w" sizes="100vw"><img src="assets/backgrounds/city-desktop.webp" srcset="assets/backgrounds/city-1280.webp 1280w, assets/backgrounds/city-desktop.webp 2017w" sizes="(min-width:1024px) calc(100vw - 120px), 100vw" alt="A cidade ilustrada de Ana Byte: a artista e seu gato frajola observam prédios e letreiros em neon" width="2017" height="780" fetchpriority="high"></picture>
         <canvas class="city-rain" aria-hidden="true"></canvas>

@@ -122,3 +122,14 @@ Produção conferida após a publicação: roteiro direcionado aprovado em 1440 
 - `qa/archive-flow.cjs` atualizado e aprovado: duas voltas do vídeo sem eventos de pausa e sem alteração da moldura em desktop/mobile; filtros no mesmo documento, pausa manual, redirecionamento legado, movimento reduzido, autoplay bloqueado e falha de mídia também aprovados. Evidências em `qa/round-title-photo-loop/`.
 
 Arquivos principais: `archive.mjs`, `sections.mjs`, `assets/fidelity.css`, `assets/v3.js`, `index.html` e `sobre/index.html`; inventário, contexto, direção, auditoria e verificação do vídeo atualizados. Limite: Chromium no Windows, sem iPhone físico.
+
+## 27/09 · Menu, acervo, progresso e profundidade mobile
+
+- “Studio em São Paulo” entrou na primeira dobra. Em 375, 390, 430 e 768 px ocupa o intervalo entre marca e menu sem sobreposição; em desktop aparece como pequena sinalização sobre a cidade.
+- O menu compacto agora abre e fecha com deslocamento curto e opacidade, inclusive nos links e na camada de fundo. Escape, foco no botão, toques rápidos, mudança de breakpoint, pausa de efeitos e movimento reduzido foram verificados.
+- Filtros, ordenação, setas da grade e travessia entre páginas da obra selecionada revelam os cards com entrada curta. A alteração de estado, paginação, seleção e URL continua no mesmo documento.
+- Barra de progresso de leitura fixa no topo, em verde neon/magenta/verde. Verificação em início, meio e fim da página: 0%, 50% e 100% nas seis larguras testadas.
+- Parallax mobile ampliado para a cidade e retratos, mantendo o desktop anterior e desligamento em movimento reduzido/pausa. Em 390 px, a cena da cidade deslocou 32 px ao percorrer pouco mais da metade da primeira dobra.
+- Duas inspeções visuais em 375, 390, 430, 768, 1024 e 1440 px, com capturas de abertura, menu e acervo em `qa/round-motion-navigation/`. Sem overflow horizontal ou erro de execução. `qa/motion-navigation.cjs`, `qa/check.cjs` (16/16) e `qa/archive-flow.cjs` (vídeo em loop, filtros, fallbacks) aprovados.
+
+Arquivos: `build.mjs`, `sections.mjs`, `assets/fidelity.css`, `assets/v3.js`, páginas geradas, roteiro de QA e documentação. A V1 não foi alterada. Limite: checagem visual em Chromium no Windows, sem Safari/iPhone físico.

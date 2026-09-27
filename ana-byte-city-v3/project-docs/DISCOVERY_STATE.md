@@ -33,3 +33,11 @@ Verificação: fluxo de vídeo e filtros em desktop/mobile, navegação por link
 - Recursos: triagem completa do inventário gratuito, UI Skills e orientações de performance consultadas. CSS com observação de visibilidade é suficiente; nenhum novo pacote, geração de imagem, serviço externo ou catálogo de componentes é necessário. Reduzir movimento mantém as cores estáticas; pausa de efeitos e aba oculta interrompem a animação.
 - Gate aprovado: nenhuma lacuna crítica. QA direcionado a fidelidade das cores, estabilidade das letras, pausa, visibilidade, enquadramento e funcionamento do acervo; desktop e mobile.
 - CONFIRMED, adição posterior: vídeo em loop contínuo enquanto visível. Substitui a decisão anterior de trocar automaticamente por uma foto ao terminar. A escolha de uma obra ou filtro continua disponível a qualquer momento.
+
+## 27/09 · Movimento de navegação e orientação
+
+- CONFIRMED: pedido pontual de motion e orientação na V3 existente. Menu móvel, filtros, ordenação e paginação do acervo ganham entradas suaves; links, estados e URL continuam os mesmos.
+- CONFIRMED: barra fixa e fina acompanha a rolagem nativa com as cores verde neon, magenta e verde. “Studio em São Paulo” integra a primeira dobra, ao lado da identidade, sem cobrir Ana, gato ou headline.
+- CONFIRMED: parallax mobile mais perceptível, preservando texto legível e o modo de movimento reduzido. Desktop mantém sua amplitude atual.
+- Recursos: GSAP e ScrollTrigger locais já presentes, HTML/CSS/JS atuais. Nenhum novo pacote, asset gerado, serviço externo ou compra. Gate aprovado, sem item crítico em aberto. Publicação no link da V3 autorizada pela conversa.
+- Validação: abertura, fechamento, Escape e toque rápido no menu; filtros e setas; início, meio e fim do progresso; recortes mobile, tablet e desktop; movimento reduzido; ausência de overflow e erros de execução.

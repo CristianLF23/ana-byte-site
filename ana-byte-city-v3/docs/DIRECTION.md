@@ -51,6 +51,8 @@ O vídeo de 25 segundos usa reprodução inline em loop contínuo, sem som inici
 
 Os títulos com degradê conservam sua própria paleta e recebem um deslocamento lento do preenchimento, sem mover as letras. CSS anima apenas as pequenas superfícies de texto; IntersectionObserver pausa as que estão fora da tela. A pausa geral e a visibilidade da aba também interrompem esse efeito. Movimento reduzido mantém os gradientes originais estáticos. O cabeçalho do Arquivo Vivo usa a fotografia real `16-studio.jpg`, antes não exibida na V3, com enquadramento próprio em desktop/mobile.
 
+O topo da primeira dobra apresenta “Studio em São Paulo”: entre a marca e o menu em telas compactas, e como pequena sinalização sobre a cidade em desktop. A barra de progresso fixa no topo usa verde neon, magenta e verde, atualizada pelo scroll nativo. O menu compacto abre/fecha com deslocamento e opacidade suaves, incluindo os links; categorias, ordenação e setas do acervo revelam as obras selecionadas com movimento curto. O parallax da cidade e dos retratos é mais perceptível somente no mobile. Movimento reduzido e pausa de efeitos tornam essas transições imediatas, sem impedir o uso.
+
 ## Stack e reuso
 
 HTML, CSS e JavaScript estáticos; GSAP e ScrollTrigger locais. Sem dependências de produção instaladas. `build.mjs`, `sections.mjs` e `archive.mjs` geram início, sobre e redirecionamento legado a partir de `data/catalog.js`. Estilo ativo: `assets/fidelity.css`. CSS/JS recebem revisão por conteúdo na URL para evitar combinação de HTML novo com lógica antiga em cache. O arquivo antigo `assets/v3.css` não é carregado.

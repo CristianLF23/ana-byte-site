@@ -7,15 +7,54 @@
   const rail=$('.rail');
   const updateHeader=()=>rail?.classList.toggle('is-scrolled',scrollY>80);
   addEventListener('scroll',updateHeader,{passive:true});updateHeader();
+  const progress=$('.reading-progress'), progressFill=$('.reading-progress-fill');
+  let progressFrame=0;
+  function updateProgress(){
+    progressFrame=0;
+    const distance=Math.max(0,document.documentElement.scrollHeight-innerHeight);
+    const ratio=distance?Math.min(1,Math.max(0,scrollY/distance)):1;
+    if(progressFill)progressFill.style.transform=`scaleX(${ratio})`;
+    progress?.setAttribute('aria-valuenow',String(Math.round(ratio*100)));
+  }
+  function scheduleProgress(){if(!progressFrame)progressFrame=requestAnimationFrame(updateProgress)}
+  addEventListener('scroll',scheduleProgress,{passive:true});addEventListener('resize',scheduleProgress,{passive:true});addEventListener('load',scheduleProgress,{once:true});updateProgress();
   const whatsapp=window.ANA_CONTACT?.whatsappUrl||'https://wa.me/5511919007582';
   const contactFor=w=>whatsapp+'?text='+encodeURIComponent(`Oi, Ana! Conheci a obra “${w.title}” no seu site e quero conversar sobre uma ideia nessa direção.`);
   const menu=$('.menu-toggle'), nav=$('#main-nav'), scrim=$('.menu-scrim');
-  function closeMenu(restore=false){nav.classList.remove('is-open');menu?.setAttribute('aria-expanded','false');menu?.setAttribute('aria-label','Abrir navegação');scrim.hidden=true;if(restore)menu?.focus()}
-  menu?.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')!=='true';menu.setAttribute('aria-expanded',String(open));menu.setAttribute('aria-label',open?'Fechar navegação':'Abrir navegação');nav.classList.toggle('is-open',open);scrim.hidden=!open});
+  const compactMenu=matchMedia('(max-width:1023px)');
+  let menuMotion;
+  function finishMenuClose(){nav.classList.remove('is-open');scrim.hidden=true;window.gsap?.set([nav,scrim,...$$('a,.menu-effects',nav)],{clearProps:'opacity,transform,visibility'})}
+  function closeMenu(restore=false,instant=false){
+    if(!nav)return;
+    const wasOpen=nav.classList.contains('is-open');
+    menu?.setAttribute('aria-expanded','false');menu?.setAttribute('aria-label','Abrir navegação');
+    menuMotion?.kill();nav.inert=compactMenu.matches;
+    if(wasOpen&&!instant&&compactMenu.matches&&!reduced.matches&&!effectsPaused&&window.gsap){
+      menuMotion=gsap.timeline({onComplete:finishMenuClose});
+      menuMotion.to(nav,{opacity:0,y:-12,duration:.23,ease:'power2.in'},0).to(scrim,{opacity:0,duration:.23,ease:'power1.in'},0);
+    }else finishMenuClose();
+    if(!compactMenu.matches)nav.inert=false;
+    if(restore)menu?.focus();
+  }
+  function openMenu(){
+    if(!nav)return;
+    menuMotion?.kill();
+    const firstOpen=!nav.classList.contains('is-open');
+    nav.classList.add('is-open');nav.inert=false;scrim.hidden=false;
+    menu?.setAttribute('aria-expanded','true');menu?.setAttribute('aria-label','Fechar navegação');
+    if(reduced.matches||effectsPaused||!window.gsap)return window.gsap?.set([nav,scrim,...$$('a,.menu-effects',nav)],{clearProps:'opacity,transform,visibility'});
+    if(firstOpen)gsap.set([nav,scrim],{opacity:0});
+    if(firstOpen)gsap.set(nav,{y:-14});
+    menuMotion=gsap.timeline();
+    menuMotion.to(nav,{opacity:1,y:0,duration:.36,ease:'power2.out'},0).to(scrim,{opacity:1,duration:.34,ease:'power1.out'},0);
+    if(firstOpen)menuMotion.fromTo($$('a,.menu-effects',nav),{opacity:0,y:-7},{opacity:1,y:0,duration:.26,stagger:.035,ease:'power2.out',clearProps:'opacity,transform'},.1);
+    else menuMotion.to($$('a,.menu-effects',nav),{opacity:1,y:0,duration:.22,ease:'power2.out',clearProps:'opacity,transform'},0);
+  }
+  menu?.addEventListener('click',()=>menu.getAttribute('aria-expanded')==='true'?closeMenu():openMenu());
   scrim?.addEventListener('click',()=>closeMenu(true));
   nav?.addEventListener('click',e=>{if(e.target.closest('a'))closeMenu()});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&nav.classList.contains('is-open'))closeMenu(true)});
-  matchMedia('(min-width:1024px)').addEventListener('change',e=>{if(e.matches)closeMenu()});
+  compactMenu.addEventListener('change',e=>{if(!e.matches)closeMenu(false,true)});
   function toggleEffects(){
     effectsPaused=!effectsPaused;
     document.documentElement.classList.toggle('effects-paused',effectsPaused);
@@ -101,6 +140,17 @@
     $('.page-prev').disabled=galleryPage===0;$('.page-next').disabled=galleryPage===pages-1;
     $('.portfolio-count').textContent=list.length+' trabalhos nesta seleção';
     syncGalleryUrl();
+    scheduleProgress();
+  }
+  function changeGallery(change,{direction=1,vertical=false}={}){
+    const grid=$('.portfolio-grid');
+    if(!grid)return change();
+    const cards=$$('.portfolio-thumb',grid);
+    if(window.gsap){gsap.killTweensOf(cards);gsap.set(cards,{clearProps:'opacity,transform,visibility'})}
+    change();
+    if(reduced.matches||effectsPaused||!window.gsap)return;
+    const shown=$$('.portfolio-thumb:not([hidden])',grid);
+    gsap.fromTo(shown,{opacity:0,x:vertical?0:direction*16,y:vertical?13:0},{opacity:1,x:0,y:0,duration:.4,stagger:.045,ease:'power2.out',overwrite:true,clearProps:'opacity,transform'});
   }
   function selectWork(id,{keepFilm=false}={}){
     const w=catalog.find(a=>a.id===id);if(!w||!$('.selected-work'))return;selectedId=w.id;
@@ -110,14 +160,14 @@
     $('[data-selected-contact]').href=contactFor(w);
     const active=visibleWorks();$('[data-selected-count]').textContent=String(active.findIndex(a=>a.id===id)+1).padStart(2,'0')+' / '+String(active.length).padStart(2,'0');
     $$('.portfolio-thumb').forEach(a=>{a.classList.toggle('is-selected',a.dataset.art===id);if(a.dataset.art===id)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current')});
-    if(!reduced.matches)image.animate([{opacity:.5,transform:'scale(1.025)'},{opacity:1,transform:'scale(1)'}],{duration:350,easing:'ease-out'});
+    if(!reduced.matches&&!effectsPaused)image.animate([{opacity:.5,transform:'scale(1.025)'},{opacity:1,transform:'scale(1)'}],{duration:350,easing:'ease-out'});
   }
-  function moveSelected(delta){const list=visibleWorks();const i=list.findIndex(w=>w.id===selectedId),next=(i+delta+list.length)%list.length;galleryPage=Math.floor(next/6);renderPage();selectWork(list[next].id)}
+  function moveSelected(delta){const list=visibleWorks();const i=list.findIndex(w=>w.id===selectedId),next=(i+delta+list.length)%list.length;const nextPage=Math.floor(next/6);const update=()=>{galleryPage=nextPage;renderPage();selectWork(list[next].id)};if(nextPage!==galleryPage)changeGallery(update,{direction:delta});else update()}
   $('.selected-prev')?.addEventListener('click',()=>moveSelected(-1));$('.selected-next')?.addEventListener('click',()=>moveSelected(1));
-  $$('.filters button').forEach(button=>{button.addEventListener('click',()=>{leaveIntro();filter=button.dataset.filter;galleryPage=0;$$('.filters button').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));renderPage();if(visibleWorks().length)selectWork(visibleWorks()[0].id);window.ScrollTrigger?.refresh()})});
-  $('#portfolio-sort')?.addEventListener('change',e=>{sort=e.target.value;galleryPage=0;renderPage();selectWork(visibleWorks()[0].id)});
-  $('.page-prev')?.addEventListener('click',()=>{galleryPage--;renderPage();selectWork(visibleWorks()[galleryPage*6].id)});
-  $('.page-next')?.addEventListener('click',()=>{galleryPage++;renderPage();selectWork(visibleWorks()[galleryPage*6].id)});
+  $$('.filters button').forEach(button=>{button.addEventListener('click',()=>{if(button.getAttribute('aria-pressed')==='true'&&!archive?.classList.contains('is-intro'))return;leaveIntro();changeGallery(()=>{filter=button.dataset.filter;galleryPage=0;$$('.filters button').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));renderPage();if(visibleWorks().length)selectWork(visibleWorks()[0].id);window.ScrollTrigger?.refresh()},{vertical:true})})});
+  $('#portfolio-sort')?.addEventListener('change',e=>changeGallery(()=>{sort=e.target.value;galleryPage=0;renderPage();selectWork(visibleWorks()[0].id)},{vertical:true}));
+  $('.page-prev')?.addEventListener('click',()=>changeGallery(()=>{galleryPage--;renderPage();selectWork(visibleWorks()[galleryPage*6].id)},{direction:-1}));
+  $('.page-next')?.addEventListener('click',()=>changeGallery(()=>{galleryPage++;renderPage();selectWork(visibleWorks()[galleryPage*6].id)},{direction:1}));
   if($('.selected-work')){
     const params=new URLSearchParams(location.search),requested=params.get('tipo');
     if(['tattoo','animal','figure','cyber','process','digital'].includes(requested)){filter=requested;$$('.filters button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.filter===filter)))}
@@ -198,16 +248,16 @@
     function setupMotion(){
       motionContext?.revert();if(effectsPaused)return;
       motionContext=gsap.matchMedia();
-      motionContext.add({wide:'(min-width:1024px)',compact:'(max-width:1023px)',reduce:'(prefers-reduced-motion:reduce)'},context=>{
-        const {wide,reduce}=context.conditions;if(reduce)return;
+      motionContext.add({wide:'(min-width:1024px)',small:'(max-width:767px)',reduce:'(prefers-reduced-motion:reduce)'},context=>{
+        const {wide,small,reduce}=context.conditions;if(reduce)return;
         const hero=$('.hero');
         if(hero)gsap.to('.hero-depth',{
-          y:()=>Math.min(hero.offsetHeight*(wide?.115:.042),wide?68:32),
-          scale:wide?1.075:1.03,transformOrigin:'68% 20%',ease:'none',
+          y:()=>Math.min(hero.offsetHeight*(wide?.115:small?.075:.042),wide?68:small?58:32),
+          scale:wide?1.075:small?1.065:1.03,transformOrigin:'68% 20%',ease:'none',
           scrollTrigger:{id:'city-depth',trigger:hero,start:'top top',end:'bottom top',scrub:.65,invalidateOnRefresh:true}
         });
         $$('.artist-photo-frame img,.story-photo-window img,.portfolio-portrait img').forEach((photo,index)=>{
-          const distance=photo.closest('.story-photo-window')?(wide?28:14):(wide?18:9);
+          const distance=photo.closest('.story-photo-window')?(wide?28:small?22:14):(wide?18:small?16:9);
           gsap.fromTo(photo,{y:-distance},{y:distance,ease:'none',scrollTrigger:{id:'photo-depth-'+index,trigger:photo.closest('.artist-composition,.artist-story,.portfolio-hero'),start:'clamp(top bottom)',end:'clamp(bottom top)',scrub:.6,invalidateOnRefresh:true}});
         });
         $$('.artist-city img').forEach(photo=>gsap.fromTo(photo,{y:-14,scale:1.14},{y:14,scale:1.14,ease:'none',scrollTrigger:{trigger:photo.parentElement,start:'top bottom',end:'bottom top',scrub:.8}}));
