@@ -135,3 +135,5 @@ Arquivos principais: `archive.mjs`, `sections.mjs`, `assets/fidelity.css`, `asse
 Arquivos: `build.mjs`, `sections.mjs`, `assets/fidelity.css`, `assets/v3.js`, páginas geradas, roteiro de QA e documentação. A V1 não foi alterada. Limite: checagem visual em Chromium no Windows, sem Safari/iPhone físico.
 
 Refino posterior: “Studio em São Paulo” ocupa agora uma única linha horizontal também no mobile. Conferido em 320, 375, 390, 430 e 768 px: sem quebra, sem colisão com logo/menu e sem overflow horizontal. Capturas em `qa/round-motion-navigation/`.
+
+Alinhamento final: na abertura mobile, a frase usa o mesmo centro vertical do botão de menu. A checagem de posicionamento cobre 320, 375, 390, 430 e 768 px, além da largura e da ausência de quebra.

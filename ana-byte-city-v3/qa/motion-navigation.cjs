@@ -32,6 +32,9 @@ const out=path.join(__dirname,'round-motion-navigation');fs.mkdirSync(out,{recur
     assert.ok(await label.evaluate(el=>el.getBoundingClientRect().height<=parseFloat(getComputedStyle(el).fontSize)*1.6),`studio label wraps at ${width}`);
     assert.ok(positions['.rail-location'].left>=positions['.brand'].right-1,`location overlaps logo at ${width}: ${JSON.stringify(positions)}`);
     assert.ok(positions['.rail-location'].right<=positions['.menu-toggle'].left+1,`location overlaps menu at ${width}`);
+    const labelCenter=(positions['.rail-location'].top+positions['.rail-location'].bottom)/2;
+    const menuCenter=(positions['.menu-toggle'].top+positions['.menu-toggle'].bottom)/2;
+    assert.ok(Math.abs(labelCenter-menuCenter)<2,`studio label is not aligned with menu at ${width}: ${JSON.stringify(positions)}`);
     await page.locator('.menu-toggle').click();
     assert.equal(await page.locator('.menu-toggle').getAttribute('aria-expanded'),'true');
     if(width===390)assert.ok(await page.evaluate(()=>gsap.getTweensOf(document.querySelector('#main-nav')).length>0));
