@@ -177,13 +177,12 @@ html.effects-paused *,html.effects-paused *:before,html.effects-paused *:after,h
   .portfolio-browser.is-intro .portfolio-count{order:3}
 }
 
-/* A gentle color drift, restricted to existing gradient lettering. No geometry,
-   hue or opacity changes: each title retains its own original gradient. */
-.title-chroma{animation:title-chroma 12s ease-in-out infinite alternate both;animation-play-state:paused}
+/* A visible sweep across each title's own gradient, without changing its colors. */
+.title-chroma{animation:title-chroma 5s ease-in-out infinite alternate both;animation-play-state:paused}
 .title-chroma.is-title-visible{animation-play-state:running}
 @keyframes title-chroma{
-  from{background-size:135% 100%;background-position:0% 50%}
-  to{background-size:135% 100%;background-position:100% 50%}
+  from{background-size:200% 100%;background-position:0% 50%}
+  to{background-size:200% 100%;background-position:100% 50%}
 }
 @media(prefers-reduced-motion:reduce){.title-chroma{animation:none!important}}
 
