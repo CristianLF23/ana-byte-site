@@ -6,7 +6,7 @@ const out=path.join(__dirname,'round-motion-navigation');fs.mkdirSync(out,{recur
  const browser=await chromium.launch({headless:true,executablePath:'C:/Users/crist.PC/AppData/Local/ms-playwright/chromium_headless_shell-1243/chrome-headless-shell-win64/chrome-headless-shell.exe'});
  const report=[],errors=[];
  try{
-  for(const width of [375,390,430,768,1024,1440]){
+  for(const width of [320,375,390,430,768,1024,1440]){
    const page=await browser.newPage({viewport:{width,height:900}});
    page.on('pageerror',e=>errors.push(e.message));
    await page.goto(base,{waitUntil:'networkidle'});await page.evaluate(()=>document.fonts.ready);
@@ -15,6 +15,7 @@ const out=path.join(__dirname,'round-motion-navigation');fs.mkdirSync(out,{recur
    assert.equal(await page.locator('.reading-progress').getAttribute('aria-valuenow'),'0');
    const label=width<1024?page.locator('.rail-location'):page.locator('.hero-location');
    assert.equal(await label.isVisible(),true);
+   assert.equal((await label.textContent()).trim(),'Studio em São Paulo');
    let parallaxShift=null;
    if(width===390){
     const measure=()=>page.evaluate(()=>{const m=new DOMMatrix(getComputedStyle(document.querySelector('.hero-depth')).transform);return {y:m.m42,scale:m.a}});
@@ -28,6 +29,7 @@ const out=path.join(__dirname,'round-motion-navigation');fs.mkdirSync(out,{recur
    }
    if(width<1024){
     const positions=await page.evaluate(()=>Object.fromEntries(['.brand','.rail-location','.menu-toggle'].map(key=>{const r=document.querySelector(key).getBoundingClientRect();return[key,{left:r.left,right:r.right,top:r.top,bottom:r.bottom}]})));
+    assert.ok(await label.evaluate(el=>el.getBoundingClientRect().height<=parseFloat(getComputedStyle(el).fontSize)*1.6),`studio label wraps at ${width}`);
     assert.ok(positions['.rail-location'].left>=positions['.brand'].right-1,`location overlaps logo at ${width}: ${JSON.stringify(positions)}`);
     assert.ok(positions['.rail-location'].right<=positions['.menu-toggle'].left+1,`location overlaps menu at ${width}`);
     await page.locator('.menu-toggle').click();

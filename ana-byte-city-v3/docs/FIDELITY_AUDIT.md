@@ -133,3 +133,5 @@ Arquivos principais: `archive.mjs`, `sections.mjs`, `assets/fidelity.css`, `asse
 - Duas inspeções visuais em 375, 390, 430, 768, 1024 e 1440 px, com capturas de abertura, menu e acervo em `qa/round-motion-navigation/`. Sem overflow horizontal ou erro de execução. `qa/motion-navigation.cjs`, `qa/check.cjs` (16/16) e `qa/archive-flow.cjs` (vídeo em loop, filtros, fallbacks) aprovados.
 
 Arquivos: `build.mjs`, `sections.mjs`, `assets/fidelity.css`, `assets/v3.js`, páginas geradas, roteiro de QA e documentação. A V1 não foi alterada. Limite: checagem visual em Chromium no Windows, sem Safari/iPhone físico.
+
+Refino posterior: “Studio em São Paulo” ocupa agora uma única linha horizontal também no mobile. Conferido em 320, 375, 390, 430 e 768 px: sem quebra, sem colisão com logo/menu e sem overflow horizontal. Capturas em `qa/round-motion-navigation/`.
