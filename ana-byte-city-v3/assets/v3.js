@@ -241,6 +241,25 @@
           scale:wide?1.075:small?1.065:1.03,transformOrigin:'68% 20%',ease:'none',
           scrollTrigger:{id:'city-depth',trigger:hero,start:'top top',end:'bottom top',scrub:.65,invalidateOnRefresh:true}
         });
+        // A chapter arrives with a short upward impulse, then settles into its reading position.
+        $$('.motion-title-frame').forEach((frame,index)=>{
+          const title=$('h2',frame);if(!title)return;
+          const distance=wide?112:small?44:72;
+          const launch=gsap.timeline({scrollTrigger:{id:'chapter-launch-'+index,trigger:frame,start:small?'top 94%':'top 91%',end:small?'top 61%':'top 43%',scrub:small?.28:.52,invalidateOnRefresh:true}})
+            .fromTo(title,{y:distance,scale:.94,opacity:0,clipPath:'inset(100% 0 0 0)'},{y:-9,scale:1.012,opacity:1,clipPath:'inset(-5% -3% -6% -3%)',duration:.8,ease:'power2.out'})
+            .to(title,{y:0,scale:1,duration:.2,ease:'power1.inOut'});
+          const support=frame.nextElementSibling;
+          if(support?.classList.contains('tracked')&&getComputedStyle(support).display!=='none')launch.fromTo(support,{y:small?17:30,opacity:.25},{y:0,opacity:1,duration:.42,ease:'power1.out'},.4);
+        });
+        // The photographic windows open at a different depth from their titles.
+        const portraitReveals=[
+          {selector:'.archive-portrait',trigger:'.archive-heading',from:'inset(13% 16% 19% 4%)',to:'inset(0 3% 1% 0)'},
+          {selector:'.artist-story-portrait',trigger:'.artist-story',from:'inset(15% 10% 12% 10%)',to:'inset(0 0 0 0)'}
+        ];
+        portraitReveals.forEach(({selector,trigger,from,to},index)=>{
+          const frame=$(selector);if(!frame)return;
+          gsap.fromTo(frame,{y:wide?78:small?35:56,scale:wide?.94:.97,clipPath:from},{y:0,scale:1,clipPath:to,ease:'none',scrollTrigger:{id:'photo-aperture-'+index,trigger,start:'top 94%',end:small?'top 43%':'top 30%',scrub:small?.35:.65,invalidateOnRefresh:true}});
+        });
         $$('.artist-photo-frame img,.story-photo-window img,.portfolio-portrait img').forEach((photo,index)=>{
           const distance=photo.closest('.story-photo-window')?(wide?28:small?22:14):(wide?18:small?16:9);
           gsap.fromTo(photo,{y:-distance},{y:distance,ease:'none',scrollTrigger:{id:'photo-depth-'+index,trigger:photo.closest('.artist-composition,.artist-story,.portfolio-hero'),start:'clamp(top bottom)',end:'clamp(bottom top)',scrub:.6,invalidateOnRefresh:true}});
@@ -256,6 +275,8 @@
           if(progress){const axis=wide?'scaleY':'scaleX';gsap.fromTo(progress,{[axis]:0},{[axis]:1,ease:'none',scrollTrigger:{id:'process-progress-'+sectionIndex,trigger:section,start:'top 75%',end:'bottom 35%',scrub:.55}})}
           cards.forEach((card,index)=>{
             const photo=$('.process-image img',card),curtain=$('.process-curtain',card);
+            const imageWindow=$('a',card);
+            if(imageWindow)gsap.fromTo(imageWindow,{y:wide?76:small?38:54,scale:wide?.94:.97,opacity:.42},{y:0,scale:1,opacity:1,ease:'none',scrollTrigger:{id:`process-window-${sectionIndex}-${index}`,trigger:card,start:'top 94%',end:'top 48%',scrub:small?.3:.55,invalidateOnRefresh:true}});
             if(photo)gsap.fromTo(photo,{scale:1.09,y:18},{scale:1,y:-12,ease:'none',scrollTrigger:{id:`process-photo-${sectionIndex}-${index}`,trigger:card,start:'top 90%',end:'bottom 20%',scrub:.65}});
             if(curtain)gsap.fromTo(curtain,{xPercent:0},{xPercent:105,ease:'none',scrollTrigger:{id:`process-reveal-${sectionIndex}-${index}`,trigger:card,start:'top 88%',end:'top 42%',scrub:.45}});
             ScrollTrigger.create({id:`process-active-${sectionIndex}-${index}`,trigger:card,start:'top 67%',end:'bottom 30%',toggleClass:{targets:card,className:'is-process-active'}});

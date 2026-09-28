@@ -243,6 +243,7 @@ html.effects-paused *,html.effects-paused *:before,html.effects-paused *:after,h
 }
 
 /* Real drawing-to-skin comparisons, revealed in the rhythm of native scroll. */
+.motion-title-frame{display:flow-root;min-width:0}
 .process{grid-template-columns:minmax(220px,.72fr) minmax(0,1.55fr);gap:clamp(28px,5vw,100px);align-items:start;padding-block:clamp(55px,7vw,105px)}
 .process-intro{position:sticky;top:clamp(36px,8vh,100px)}
 .process-progress{display:block;width:2px;height:clamp(110px,20vh,230px);margin-top:36px;background:#70ffc52b;overflow:hidden}
