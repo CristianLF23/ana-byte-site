@@ -16,7 +16,7 @@ export function createArchive({works, img, icon, artButton, esc, wa}) {
         <aside class="selected-work" aria-label="Vídeo e obra em destaque">
           <div class="selected-image">
             <div class="archive-film">
-              <video id="archive-video" autoplay playsinline muted loop preload="auto" disablepictureinpicture aria-label="Ana Byte tatuando, vídeo de apresentação do seu trabalho"><source src="${b}assets/video/ana-portfolio.mp4" type="video/mp4"></video>
+              <video id="archive-video" playsinline muted loop preload="auto" disablepictureinpicture aria-label="Ana Byte tatuando, vídeo de apresentação do seu trabalho"><source src="${b}assets/video/ana-portfolio.mp4" type="video/mp4"></video>
               <p class="film-error" role="status" hidden>Não foi possível carregar o vídeo. Você pode explorar as obras nesta seção.</p>
             </div>
             <a data-selected-open data-art="${first.id}" href="${b+first.src}" aria-label="Ampliar ${esc(first.title)}">${img(first,b)}<span class="art-plus">${icon('plus')}</span></a>

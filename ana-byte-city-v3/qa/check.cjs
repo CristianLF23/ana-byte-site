@@ -153,7 +153,7 @@ const visibleIds=page=>page.locator('.portfolio-thumb:visible').evaluateAll(els=
   await check('Vídeo entra direto, sem capa ou controles, e pausa longe da seção',async()=>{
     const {page,close}=await pageAt();
     try{
-      assert.equal(await page.locator('video').evaluate(v=>v.autoplay&&v.preload==='auto'&&!v.controls&&!v.poster&&v.muted&&v.loop&&v.playsInline),true);
+      assert.equal(await page.locator('video').evaluate(v=>!v.autoplay&&v.preload==='auto'&&!v.controls&&!v.poster&&v.muted&&v.loop&&v.playsInline),true);
       await page.waitForFunction(()=>document.querySelector('#archive-video').readyState>=2);
       await page.locator('#archive-video').evaluate(v=>v.scrollIntoView({block:'center',behavior:'instant'}));
       await page.waitForFunction(()=>{const v=document.querySelector('#archive-video');return !v.paused&&v.currentTime>.05});

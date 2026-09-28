@@ -11,9 +11,19 @@ const out=path.join(__dirname,process.argv[2]||'round-archive-film-1');fs.mkdirS
    page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.status()>=400)errors.push(`${r.status()} ${r.url()}`)});
    await page.goto(base,{waitUntil:'load'});await page.evaluate(()=>document.fonts.ready);
    const video=page.locator('#archive-video');
-   assert.equal(await video.evaluate(v=>v.autoplay&&v.preload==='auto'&&!v.controls&&!v.poster),true);
+   assert.equal(await video.evaluate(v=>!v.autoplay&&v.preload==='auto'&&!v.controls&&!v.poster),true);
    await page.waitForFunction(()=>document.querySelector('#archive-video').readyState>=2);
    assert.equal(await page.locator('#trabalhos .portfolio-portrait img').count(),1);
+   const foldTop=await page.locator('#trabalhos').evaluate(el=>el.getBoundingClientRect().top);
+   if(foldTop>900){
+    await page.locator('#trabalhos').evaluate(el=>scrollTo({top:el.getBoundingClientRect().top+scrollY-innerHeight-8,behavior:'instant'}));
+    await page.waitForFunction(()=>document.querySelector('#archive-video').paused);
+    const beforeEntry=await video.evaluate(v=>v.currentTime);
+    await page.waitForTimeout(300);
+    assert.equal(await video.evaluate(v=>v.paused&&Math.abs(v.currentTime-beforeEntry)<.05),true,'video must wait until Archive Vivo enters the viewport');
+    await page.locator('#trabalhos').evaluate(el=>scrollTo({top:el.getBoundingClientRect().top+scrollY-innerHeight+20,behavior:'instant'}));
+   }
+   await page.waitForFunction(()=>!document.querySelector('#archive-video').paused,{timeout:15000});
    await page.locator('#trabalhos').evaluate(el=>scrollTo({top:el.offsetTop-(innerWidth<1024?82:0),behavior:'instant'}));await page.waitForTimeout(800);
    await page.screenshot({path:path.join(out,`archive-header-${width}.png`)});
    await video.evaluate(v=>v.scrollIntoView({block:'center',behavior:'instant'}));
@@ -38,6 +48,16 @@ const out=path.join(__dirname,process.argv[2]||'round-archive-film-1');fs.mkdirS
    for(const filter of ['tattoo','process','digital','all']){
     await page.locator(`[data-filter=${filter}]`).click();
     assert.equal(new URL(page.url()).pathname,pathname);assert.equal(await page.evaluate(()=>window.__archiveDocument),'same');assert.equal(await page.locator('dialog[open]').count(),0);
+    assert.equal(await page.locator('.portfolio-browser').evaluate(e=>e.classList.contains('is-film')),true,'filter must preserve the video panel');
+    assert.equal(await video.isVisible(),true,'video must remain visible after changing tabs');
+   }
+   if(width===1440){
+    await page.locator('.archive-film-copy .text-link').click();
+    assert.equal(await video.isVisible(),true,'explore link must preserve the video');
+    await page.locator('.portfolio-thumb:visible').first().click();
+    assert.equal(await video.isVisible(),false,'selecting an artwork switches to its detail');
+    await page.locator('[data-filter=tattoo]').click();
+    assert.equal(await video.isVisible(),true,'changing tabs restores the video after a selected artwork');
    }
    await page.locator('#trabalhos').evaluate(el=>scrollTo({top:el.offsetTop-(innerWidth<1024?82:0),behavior:'instant'}));await page.waitForTimeout(700);
    await page.screenshot({path:path.join(out,`archive-gallery-${width}.png`)});

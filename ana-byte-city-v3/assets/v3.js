@@ -80,19 +80,10 @@
   const dialog=$('.art-dialog');
   let detailIndex=0, returnFocus=null, selectedId=catalog[0]?.id, filter='all', galleryPage=0, sort='curated';
   const archive=$('.portfolio-browser'), archiveVideo=$('#archive-video');
-  let filmNear=false, filmAutoplayBlocked=false, filmStarting=false;
+  let filmNear=false, filmAutoplayBlocked=false, filmStarting=false, manualFilm=false;
+  let syncFilm=()=>{};
   function pauseFilm(){if(archiveVideo&&!archiveVideo.paused)archiveVideo.pause()}
   function showArtwork(){archive?.classList.remove('is-film');pauseFilm();if($('.archive-replay'))$('.archive-replay').hidden=false}
-  function leaveIntro(){
-    if(!archive?.classList.contains('is-intro'))return;
-    const compact=matchMedia('(max-width:767px)').matches;
-    archive.classList.remove('is-intro');showArtwork();
-    if(compact)requestAnimationFrame(()=>{
-      const toolbar=$('.portfolio-toolbar');
-      scrollTo({top:toolbar.getBoundingClientRect().top+scrollY-90,behavior:'instant'});
-      window.ScrollTrigger?.refresh();
-    });
-  }
   function setDetail(index){
     detailIndex=(index+catalog.length)%catalog.length;
     const w=catalog[detailIndex];if(!w)return;
@@ -164,19 +155,18 @@
   }
   function moveSelected(delta){const list=visibleWorks();const i=list.findIndex(w=>w.id===selectedId),next=(i+delta+list.length)%list.length;const nextPage=Math.floor(next/6);const update=()=>{galleryPage=nextPage;renderPage();selectWork(list[next].id)};if(nextPage!==galleryPage)changeGallery(update,{direction:delta});else update()}
   $('.selected-prev')?.addEventListener('click',()=>moveSelected(-1));$('.selected-next')?.addEventListener('click',()=>moveSelected(1));
-  $$('.filters button').forEach(button=>{button.addEventListener('click',()=>{if(button.getAttribute('aria-pressed')==='true'&&!archive?.classList.contains('is-intro'))return;leaveIntro();changeGallery(()=>{filter=button.dataset.filter;galleryPage=0;$$('.filters button').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));renderPage();if(visibleWorks().length)selectWork(visibleWorks()[0].id);window.ScrollTrigger?.refresh()},{vertical:true})})});
-  $('#portfolio-sort')?.addEventListener('change',e=>changeGallery(()=>{sort=e.target.value;galleryPage=0;renderPage();selectWork(visibleWorks()[0].id)},{vertical:true}));
-  $('.page-prev')?.addEventListener('click',()=>changeGallery(()=>{galleryPage--;renderPage();selectWork(visibleWorks()[galleryPage*6].id)},{direction:-1}));
-  $('.page-next')?.addEventListener('click',()=>changeGallery(()=>{galleryPage++;renderPage();selectWork(visibleWorks()[galleryPage*6].id)},{direction:1}));
+  function updateSelectionWithoutHidingFilm(id){selectWork(id,{keepFilm:true});syncFilm()}
+  $$('.filters button').forEach(button=>{button.addEventListener('click',()=>{if(button.getAttribute('aria-pressed')==='true')return;archive?.classList.add('is-film','is-intro');changeGallery(()=>{filter=button.dataset.filter;galleryPage=0;$$('.filters button').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));renderPage();if(visibleWorks().length)updateSelectionWithoutHidingFilm(visibleWorks()[0].id);window.ScrollTrigger?.refresh()},{vertical:true})})});
+  $('#portfolio-sort')?.addEventListener('change',e=>changeGallery(()=>{sort=e.target.value;galleryPage=0;renderPage();updateSelectionWithoutHidingFilm(visibleWorks()[0].id)},{vertical:true}));
+  $('.page-prev')?.addEventListener('click',()=>changeGallery(()=>{galleryPage--;renderPage();updateSelectionWithoutHidingFilm(visibleWorks()[galleryPage*6].id)},{direction:-1}));
+  $('.page-next')?.addEventListener('click',()=>changeGallery(()=>{galleryPage++;renderPage();updateSelectionWithoutHidingFilm(visibleWorks()[galleryPage*6].id)},{direction:1}));
   if($('.selected-work')){
     const params=new URLSearchParams(location.search),requested=params.get('tipo');
     if(['tattoo','animal','figure','cyber','process','digital'].includes(requested)){filter=requested;$$('.filters button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.filter===filter)))}
     if(params.get('ordem')==='title'){sort='title';$('#portfolio-sort').value=sort}
     const requestedPage=Number(params.get('pagina'));
     if(Number.isInteger(requestedPage)&&requestedPage>0)galleryPage=requestedPage-1;
-    const initialFilm=!requested&&!requestedPage&&!location.hash.startsWith('#obra=');
-    if(!initialFilm)archive.classList.remove('is-intro');
-    renderPage();selectWork(visibleWorks()[galleryPage*6]?.id||catalog[0].id,{keepFilm:initialFilm});
+    renderPage();selectWork(visibleWorks()[galleryPage*6]?.id||catalog[0].id,{keepFilm:true});
   }
   function showLinkedArtwork(){
     if(!location.hash.startsWith('#obra='))return;
@@ -188,31 +178,30 @@
 
   // First media in the actual archive. The browser stays on the same document.
   if(archiveVideo){
-    function syncFilm(){
-      if(!filmNear||document.hidden||!archive.classList.contains('is-film')||dialog?.open||reduced.matches||effectsPaused){pauseFilm();return}
+    syncFilm=function(){
+      if(!filmNear||document.hidden||!archive.classList.contains('is-film')||dialog?.open||((reduced.matches||effectsPaused)&&!manualFilm)){pauseFilm();return}
       if(filmAutoplayBlocked||filmStarting||!archiveVideo.paused)return;
       filmStarting=true;
       archiveVideo.play().catch(error=>{if(error.name!=='AbortError')filmAutoplayBlocked=true}).finally(()=>{filmStarting=false});
     }
     archiveVideo.addEventListener('play',()=>{
-      if(document.hidden||!archive.classList.contains('is-film')||reduced.matches||effectsPaused)pauseFilm();
+      if(!filmNear||document.hidden||!archive.classList.contains('is-film')||((reduced.matches||effectsPaused)&&!manualFilm))pauseFilm();
     });
     archiveVideo.addEventListener('error',()=>{$('.film-error').hidden=false;filmAutoplayBlocked=true},true);
     archiveVideo.addEventListener('canplay',syncFilm);
-    new IntersectionObserver(entries=>{filmNear=entries[0].isIntersecting;syncFilm()},{rootMargin:'700px 0px'}).observe(archiveVideo);
+    new IntersectionObserver(entries=>{filmNear=entries[0].isIntersecting;if(!filmNear)manualFilm=false;syncFilm()},{rootMargin:'0px',threshold:0}).observe($('#trabalhos'));
     document.addEventListener('visibilitychange',syncFilm);
     document.addEventListener('ana:effects-change',()=>{if(effectsPaused)pauseFilm();else syncFilm()});
     reduced.addEventListener('change',()=>{if(reduced.matches)pauseFilm();else syncFilm()});
     dialog?.addEventListener('close',syncFilm);
     new MutationObserver(()=>{if(dialog.open)pauseFilm()}).observe(dialog,{attributes:true,attributeFilter:['open']});
     $('.archive-replay')?.addEventListener('click',()=>{
-      archive.classList.add('is-film','is-intro');filmAutoplayBlocked=false;
+      archive.classList.add('is-film','is-intro');filmAutoplayBlocked=false;manualFilm=true;
       archiveVideo.currentTime=0;
       archiveVideo.scrollIntoView({block:'center',behavior:reduced.matches?'instant':'smooth'});
       archiveVideo.play().catch(()=>{filmAutoplayBlocked=true});
       window.ScrollTrigger?.refresh();
     });
-    $('.archive-film-copy .text-link')?.addEventListener('click',()=>leaveIntro());
   }
 
   // Contact drafts are handed to WhatsApp only after explicit form submission.
