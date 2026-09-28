@@ -11,7 +11,7 @@ node build.mjs
 node server.mjs
 ```
 
-Abrir `http://127.0.0.1:4183/`. Páginas: `/`, `/portfolio/` e `/sobre/`.
+Abrir `http://127.0.0.1:4183/`. A experiência está em uma única página. Os endereços antigos `/portfolio/` e `/sobre/` encaminham às seções correspondentes.
 
 ## Editar
 

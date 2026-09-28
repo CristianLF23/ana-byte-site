@@ -243,6 +243,30 @@ const visibleIds=page=>page.locator('.portfolio-thumb:visible').evaluateAll(els=
     }
     return {widths:[1440,390],inlineFilters:3};
   });
+  await check('Sobre fica na página principal, sem botões para outra aba',async()=>{
+    const {page,close}=await pageAt();
+    try{
+      assert.equal(await page.locator('[data-nav="sobre"]').getAttribute('href'),'#sobre');
+      assert.equal(await page.locator('#sobre .artist-photo img, #sobre .artist-story-portrait img').count(),2);
+      assert.equal(await page.locator('#sobre a, #sobre button').count(),0);
+      assert.equal(await page.locator('#sobre .artist-facts>div').count(),3);
+      assert.equal(await page.locator('#sobre .artist-story-copy').evaluate(el=>getComputedStyle(el.querySelector('p:not(.eyebrow)')).textTransform),'none');
+      await page.goto(new URL('sobre/',base).href,{waitUntil:'networkidle'});
+      assert.equal(new URL(page.url()).hash,'#sobre');
+      assert.equal(await page.locator('#sobre').count(),1);
+      return {route:page.url(),portraits:2,aboutButtons:0};
+    }finally{await close()}
+  });
+  await check('Frases de apoio mantêm caixa normal e legibilidade no celular',async()=>{
+    const {page,close}=await pageAt('',{viewport:{width:390,height:844}});
+    try{
+      const copy=await page.locator('main .tracked, .hero-sub, .portfolio-quote p, .artist-copy>p:not(.tracked):not(.eyebrow)').evaluateAll(elements=>elements.filter(el=>el.checkVisibility()).map(el=>({text:el.textContent.trim(),case:getComputedStyle(el).textTransform,size:parseFloat(getComputedStyle(el).fontSize)})));
+      assert.ok(copy.length>=5);
+      assert.ok(copy.every(item=>item.case==='none'));
+      assert.ok(copy.filter(item=>item.text.length>25).every(item=>item.size>=12));
+      return {checked:copy.length,minSize:Math.min(...copy.filter(item=>item.text.length>25).map(item=>item.size))};
+    }finally{await close()}
+  });
   await check('Mesma logo no rodapé, segunda foto real e tamanho em texto livre',async()=>{
     const proof=[];
     for(const route of ['','portfolio/','sobre/']){
@@ -252,7 +276,7 @@ const visibleIds=page=>page.locator('.portfolio-thumb:visible').evaluateAll(els=
         assert.equal(await page.locator('.footer-brand img').evaluate(img=>img.src),logo);
         if(route!=='portfolio/'){
           assert.equal(await page.locator('.artist-story-portrait img').count(),1);
-          assert.ok((await page.locator('.artist-story-copy').textContent()).includes('cinco anos'));
+          assert.ok((await page.locator('.artist-story-copy').textContent()).includes('5 anos'));
           const field=page.locator('[name=tamanho]');assert.equal(await field.getAttribute('type'),'text');
           for(const value of ['12 cm','12,5 x 8 cm','Aproximadamente 18 centímetros','Ainda quero decidir']){await field.fill(value);assert.equal(await field.evaluate(el=>el.checkValidity()),true)}
         }

@@ -284,3 +284,17 @@ html.effects-paused *,html.effects-paused *:before,html.effects-paused *:after,h
 .process-intro .process-progress{height:80px;margin-top:25px}
 @media(min-width:768px) and (max-width:1023px){.process-intro{padding:220px 26px 28px}.process-intro::before{background-size:500px auto;background-position:right top}.process-intro::after{background:linear-gradient(to right,transparent 80%,#03070cbb 100%),linear-gradient(90deg,#03070c 28%,#03070c65 80%),linear-gradient(0deg,#03070c 0%,transparent 85%)}.process-intro .process-progress{height:2px}}
 @media(max-width:767px){.process-intro{margin:-42px -23px 0;padding:clamp(340px,88vw,390px) 23px 32px;border-inline:0}.process-intro::before{-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 70px,#000 250px,transparent 660px);mask-image:linear-gradient(to bottom,transparent 0,#000 70px,#000 250px,transparent 660px)}.process-intro::after{background:linear-gradient(to right,#03070c77 0,transparent 7%,transparent 93%,#03070c77 100%),linear-gradient(to bottom,#03070c52 0,#03070c5c 130px,#03070ca6 235px,#03070ce8 345px,#03070c 510px)}.process-intro .process-progress{height:2px;margin:26px 0 0}}
+
+/* Narrative copy uses sentence case; capitals remain for section titles and short UI labels. */
+.tracked,.hero-sub,.portfolio-quote p,.artist-note p,.artist-copy>p:not(.tracked):not(.eyebrow){text-transform:none;letter-spacing:.055em}
+#trabalhos .tracked,#processo .tracked,#sobre .tracked,#contato .tracked{font-size:13px;line-height:1.65}
+
+/* The about chapter tells Ana's story through two real portraits and three concise facts. */
+.artist-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:27px 0 24px}
+.artist-facts>div{min-width:0;padding:14px 10px 15px 15px;border-left:2px solid var(--mint);background:linear-gradient(115deg,#0b222a,#071019 68%,#080a11);box-shadow:inset 0 1px 0 #70ffc52e}
+.artist-facts>div:nth-child(2){border-color:var(--pink);background:linear-gradient(115deg,#291020,#110b17 70%,#080a11)}
+.artist-facts>div:nth-child(3){border-color:var(--cyan)}
+.artist-facts strong{display:block;font:600 clamp(13px,1.35vw,20px)/1.2 var(--display);color:#eafaff;letter-spacing:-.03em}
+.artist-facts span{display:block;margin-top:7px;color:#a8c6cb;font-size:10px;line-height:1.35}
+.artist-story-copy>p:not(.eyebrow):not(.story-lead){margin-top:0}
+@media(max-width:767px){.artist-facts{gap:6px;margin:21px 0}.artist-facts>div{padding:11px 6px 13px 9px}.artist-facts strong{font-size:12px;line-height:1.3}.artist-facts span{font-size:9px;line-height:1.35;margin-top:5px}}

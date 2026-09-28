@@ -260,6 +260,8 @@
           const distance=photo.closest('.story-photo-window')?(wide?28:small?22:14):(wide?18:small?16:9);
           gsap.fromTo(photo,{y:-distance},{y:distance,ease:'none',scrollTrigger:{id:'photo-depth-'+index,trigger:photo.closest('.artist-composition,.artist-story,.portfolio-hero'),start:'clamp(top bottom)',end:'clamp(bottom top)',scrub:.6,invalidateOnRefresh:true}});
         });
+        const artistFacts=$$('.artist-facts>div');
+        if(artistFacts.length)gsap.fromTo(artistFacts,{clipPath:'inset(0 100% 0 0)'},{clipPath:'inset(0 0% 0 0)',stagger:.1,ease:'none',scrollTrigger:{id:'artist-facts-reveal',trigger:'.artist-facts',start:'top 90%',end:'top 48%',scrub:.55}});
         $$('.artist-city img').forEach(photo=>gsap.fromTo(photo,{y:-14,scale:1.14},{y:14,scale:1.14,ease:'none',scrollTrigger:{trigger:photo.parentElement,start:'top bottom',end:'bottom top',scrub:.8}}));
         const processSections=$$('.process');
         processSections.forEach((section,sectionIndex)=>{
