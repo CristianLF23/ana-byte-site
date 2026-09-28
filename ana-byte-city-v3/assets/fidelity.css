@@ -299,3 +299,12 @@ html.effects-paused *,html.effects-paused *:before,html.effects-paused *:after,h
 .artist-facts span{display:block;margin-top:7px;color:#a8c6cb;font-size:10px;line-height:1.35}
 .artist-story-copy>p:not(.eyebrow):not(.story-lead){margin-top:0}
 @media(max-width:767px){.artist-facts{gap:6px;margin:21px 0}.artist-facts>div{padding:11px 6px 13px 9px}.artist-facts strong{font-size:12px;line-height:1.3}.artist-facts span{font-size:9px;line-height:1.35;margin-top:5px}}
+
+/* Country-based language selection resolves before the first visible frame. */
+html.locale-pending body::before{content:'';position:fixed;inset:0;z-index:1000;background:#05070b url('ui/ana-byte-mark.png') center/92px auto no-repeat}
+.lang-switch{display:flex;align-items:center;gap:5px;padding:4px 16px 4px 22px;color:#708c9b;font-size:10px;letter-spacing:.13em}
+.lang-switch button{min-width:29px;min-height:32px;padding:4px;color:#a5c0c9;font-size:10px;font-weight:700;letter-spacing:.1em}
+.lang-switch button[aria-pressed="true"]{color:var(--cyan);text-shadow:0 0 10px #62e5ed87}
+.lang-switch button:hover{color:var(--pink)}
+@media(max-width:1023px){.lang-switch{margin:3px 0 0;padding:9px 16px 3px;border-top:1px solid #36515d}.lang-switch button{font-size:12px;min-width:37px;min-height:39px}}
+@media(min-width:768px){html[lang="en"] .billboard h1{width:100%;transform:scaleX(.95)}}

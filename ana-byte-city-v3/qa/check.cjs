@@ -19,10 +19,12 @@ async function check(name, fn) {
 }
 async function pageAt(route='', opts={}) {
   const context=await browser.newContext({viewport:{width:1440,height:900},...opts});
+  await context.route('https://ipwho.is/**',request=>request.fulfill({status:200,contentType:'application/json',body:'{"success":true,"country_code":"BR"}'}));
   const page=await context.newPage();
   page.on('pageerror',e=>errors.push(e.message));
   page.on('response',r=>{if(r.status()>=400)errors.push(`${r.status()} ${r.url()}`)});
   await page.goto(new URL(route,base).href,{waitUntil:'load'});
+  await page.evaluate(()=>window.ANA_LOCALE_READY);
   return {page,close:()=>context.close()};
 }
 const visibleIds=page=>page.locator('.portfolio-thumb:visible').evaluateAll(els=>els.map(el=>el.dataset.art));
@@ -146,7 +148,7 @@ const visibleIds=page=>page.locator('.portfolio-thumb:visible').evaluateAll(els=
       const message=url.searchParams.get('text');
       for(const text of ['Teste de validação','Um corvo com circuitos','Antebraço','12,5 x 8 cm','(11) 99999 0000'])assert.ok(message.includes(text),text);
       assert.equal(await form.locator('.form-status a').getAttribute('href'),opened[0]);
-      assert.equal(await page.evaluate(()=>Object.keys(localStorage).length),0);
+      assert.equal(await page.evaluate(()=>Object.values(localStorage).some(value=>value.includes('Teste de validação')||value.includes('Um corvo com circuitos'))),false);
       return {externalCalls:0,draftFields:5,stored:false};
     }finally{await close()}
   });

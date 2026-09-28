@@ -1,7 +1,9 @@
-(() => {
+Promise.resolve(window.ANA_LOCALE_READY).then(() => {
   'use strict';
   const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
-  const catalog=window.ANA_CATALOG||[], base=document.body.dataset.base||'';
+  const english=window.ANA_LOCALE==='en',t=window.ANA_T||((text)=>text);
+  const catalog=(window.ANA_CATALOG||[]).map(work=>english?{...work,...window.ANA_WORK_TRANSLATIONS?.[work.id],kind:work.kind}:work), base=document.body.dataset.base||'';
+  const kindLabel=work=>t(work.kind);
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
   let effectsPaused=false;
   const rail=$('.rail');
@@ -19,7 +21,7 @@
   function scheduleProgress(){if(!progressFrame)progressFrame=requestAnimationFrame(updateProgress)}
   addEventListener('scroll',scheduleProgress,{passive:true});addEventListener('resize',scheduleProgress,{passive:true});addEventListener('load',scheduleProgress,{once:true});updateProgress();
   const whatsapp=window.ANA_CONTACT?.whatsappUrl||'https://wa.me/5511919007582';
-  const contactFor=w=>whatsapp+'?text='+encodeURIComponent(`Oi, Ana! Conheci a obra “${w.title}” no seu site e quero conversar sobre uma ideia nessa direção.`);
+  const contactFor=w=>whatsapp+'?text='+encodeURIComponent(english?`Hi Ana! I saw “${w.title}” on your site and would love to discuss an idea in this direction.`:`Oi, Ana! Conheci a obra “${w.title}” no seu site e quero conversar sobre uma ideia nessa direção.`);
   const menu=$('.menu-toggle'), nav=$('#main-nav'), scrim=$('.menu-scrim');
   const compactMenu=matchMedia('(max-width:1023px)');
   let menuMotion;
@@ -27,7 +29,7 @@
   function closeMenu(restore=false,instant=false){
     if(!nav)return;
     const wasOpen=nav.classList.contains('is-open');
-    menu?.setAttribute('aria-expanded','false');menu?.setAttribute('aria-label','Abrir navegação');
+    menu?.setAttribute('aria-expanded','false');menu?.setAttribute('aria-label',t('Abrir navegação'));
     menuMotion?.kill();nav.inert=compactMenu.matches;
     if(wasOpen&&!instant&&compactMenu.matches&&!reduced.matches&&!effectsPaused&&window.gsap){
       menuMotion=gsap.timeline({onComplete:finishMenuClose});
@@ -41,7 +43,7 @@
     menuMotion?.kill();
     const firstOpen=!nav.classList.contains('is-open');
     nav.classList.add('is-open');nav.inert=false;scrim.hidden=false;
-    menu?.setAttribute('aria-expanded','true');menu?.setAttribute('aria-label','Fechar navegação');
+    menu?.setAttribute('aria-expanded','true');menu?.setAttribute('aria-label',t('Fechar navegação'));
     if(reduced.matches||effectsPaused||!window.gsap)return window.gsap?.set([nav,scrim,...$$('a,.menu-effects',nav)],{clearProps:'opacity,transform,visibility'});
     if(firstOpen)gsap.set([nav,scrim],{opacity:0});
     if(firstOpen)gsap.set(nav,{y:-14});
@@ -61,9 +63,9 @@
     $$('.menu-effects,.motion-switch,.ambience-toggle').forEach(button=>{
       button.setAttribute('aria-pressed',String(effectsPaused));
       if(button.classList.contains('ambience-toggle')){
-        button.setAttribute('aria-label',effectsPaused?'Ativar efeitos de movimento':'Pausar efeitos de movimento');
-        button.innerHTML='<span></span> '+(effectsPaused?'Atmosfera pausada':'Atmosfera ativa');
-      }else button.textContent=effectsPaused?'Ativar efeitos':'Pausar efeitos';
+        button.setAttribute('aria-label',t(effectsPaused?'Ativar efeitos de movimento':'Pausar efeitos de movimento'));
+        button.innerHTML='<span></span> '+t(effectsPaused?'Atmosfera pausada':'Atmosfera ativa');
+      }else button.textContent=t(effectsPaused?'Ativar efeitos':'Pausar efeitos');
     });
     document.dispatchEvent(new Event('ana:effects-change'));
   }
@@ -88,7 +90,7 @@
     detailIndex=(index+catalog.length)%catalog.length;
     const w=catalog[detailIndex];if(!w)return;
     const image=$('[data-detail-image]');image.src=base+w.src;image.alt=w.alt;image.style.objectPosition=w.desktopPosition;
-    for(const key of ['title','kind','description','technique','difference'])$(`[data-detail-${key}]`).textContent=w[key];
+    for(const key of ['title','kind','description','technique','difference'])$(`[data-detail-${key}]`).textContent=key==='kind'?kindLabel(w):w[key];
     $('[data-detail-counter]').textContent=String(detailIndex+1).padStart(2,'0')+' / '+catalog.length;
     $('[data-detail-contact]').href=contactFor(w);
     $('.share-status').textContent='';
@@ -111,9 +113,9 @@
     else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first?.focus()}
   });
   document.addEventListener('click',e=>{const a=e.target.closest('[data-art]');if(!a||e.ctrlKey||e.metaKey||e.shiftKey||e.altKey)return;e.preventDefault();if(a.classList.contains('portfolio-thumb')&&matchMedia('(min-width:768px)').matches){selectWork(a.dataset.art);return}openArt(a.dataset.art,a)});
-  $('.share-work')?.addEventListener('click',async()=>{const w=catalog[detailIndex];const url=new URL(base+'index.html',location.href);url.hash='obra='+w.id;const status=$('.share-status');try{if(navigator.share){await navigator.share({title:w.title+' · Ana Byte',url:url.href})}else{await navigator.clipboard.writeText(url.href);status.textContent='Link da obra copiado.'}}catch(e){if(e.name!=='AbortError'){status.replaceChildren(document.createTextNode('Link da obra: '));const a=document.createElement('a');a.href=url.href;a.textContent=url.href;status.append(a)}}});
+  $('.share-work')?.addEventListener('click',async()=>{const w=catalog[detailIndex];const url=new URL(base+'index.html',location.href);url.hash='obra='+w.id;const status=$('.share-status');try{if(navigator.share){await navigator.share({title:w.title+' · Ana Byte',url:url.href})}else{await navigator.clipboard.writeText(url.href);status.textContent=t('Link da obra copiado.')}}catch(e){if(e.name!=='AbortError'){status.replaceChildren(document.createTextNode(t('Link da obra: ')));const a=document.createElement('a');a.href=url.href;a.textContent=url.href;status.append(a)}}});
 
-  function visibleWorks(){return catalog.filter(w=>filter==='all'||(filter==='process'?w.kind==='Processo real':filter==='tattoo'?w.kind==='Tatuagem autoral':w.category===filter)).sort(sort==='title'?(a,b)=>a.title.localeCompare(b.title,'pt-BR'):(a,b)=>a.order-b.order)}
+  function visibleWorks(){return catalog.filter(w=>filter==='all'||(filter==='process'?w.kind==='Processo real':filter==='tattoo'?w.kind==='Tatuagem autoral':w.category===filter)).sort(sort==='title'?(a,b)=>a.title.localeCompare(b.title,english?'en':'pt-BR'):(a,b)=>a.order-b.order)}
   function syncGalleryUrl(){
     const url=new URL(location.href);
     for(const [key,value] of [['tipo',filter==='all'?'':filter],['ordem',sort==='curated'?'':sort],['pagina',galleryPage?String(galleryPage+1):'']]){
@@ -129,7 +131,7 @@
     list.forEach(w=>grid.append($(`[data-art="${w.id}"]`,grid)));
     $('.portfolio-pagination').hidden=false;$('[data-page-count]').textContent=String(galleryPage+1).padStart(2,'0')+' / '+String(pages).padStart(2,'0');
     $('.page-prev').disabled=galleryPage===0;$('.page-next').disabled=galleryPage===pages-1;
-    $('.portfolio-count').textContent=list.length+' trabalhos nesta seleção';
+    $('.portfolio-count').textContent=t(list.length+' trabalhos nesta seleção');
     syncGalleryUrl();
     scheduleProgress();
   }
@@ -146,8 +148,8 @@
   function selectWork(id,{keepFilm=false}={}){
     const w=catalog.find(a=>a.id===id);if(!w||!$('.selected-work'))return;selectedId=w.id;
     if(!keepFilm)showArtwork();
-    const selected=$('[data-selected-open]'),image=$('img',selected);selected.href=base+w.src;selected.dataset.art=w.id;selected.setAttribute('aria-label','Ampliar '+w.title);image.src=base+w.src;image.alt=w.alt;image.width=w.width;image.height=w.height;image.style.objectPosition=w.desktopPosition;
-    for(const key of ['title','kind','description','technique'])$(`[data-selected-${key}]`).textContent=w[key];
+    const selected=$('[data-selected-open]'),image=$('img',selected);selected.href=base+w.src;selected.dataset.art=w.id;selected.setAttribute('aria-label',t('Ampliar ')+w.title);image.src=base+w.src;image.alt=w.alt;image.width=w.width;image.height=w.height;image.style.objectPosition=w.desktopPosition;
+    for(const key of ['title','kind','description','technique'])$(`[data-selected-${key}]`).textContent=key==='kind'?kindLabel(w):w[key];
     $('[data-selected-contact]').href=contactFor(w);
     const active=visibleWorks();$('[data-selected-count]').textContent=String(active.findIndex(a=>a.id===id)+1).padStart(2,'0')+' / '+String(active.length).padStart(2,'0');
     $$('.portfolio-thumb').forEach(a=>{a.classList.toggle('is-selected',a.dataset.art===id);if(a.dataset.art===id)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current')});
@@ -205,7 +207,7 @@
   }
 
   // Contact drafts are handed to WhatsApp only after explicit form submission.
-  $$('.project-form').forEach(form=>form.addEventListener('submit',e=>{e.preventDefault();if(!form.reportValidity())return;const data=new FormData(form);const text=`Oi, Ana! Quero conversar sobre uma tatuagem.\n\nMeu nome: ${String(data.get('nome')).trim()}\nMinha ideia: ${String(data.get('ideia')).trim()}\nRegião do corpo: ${data.get('regiao')}\nTamanho aproximado: ${data.get('tamanho')}${String(data.get('telefone')||'').trim()?'\nMeu WhatsApp: '+String(data.get('telefone')).trim():''}`;const link=whatsapp+'?text='+encodeURIComponent(text);const popup=window.open(link,'_blank','noopener,noreferrer');const status=$('.form-status',form);status.replaceChildren(document.createTextNode('Sua ideia está pronta para revisar no WhatsApp. '));const a=document.createElement('a');a.href=link;a.target='_blank';a.rel='noopener';a.textContent='Abrir conversa';status.append(a)}));
+  $$('.project-form').forEach(form=>form.addEventListener('submit',e=>{e.preventDefault();if(!form.reportValidity())return;const data=new FormData(form);const name=String(data.get('nome')).trim(),idea=String(data.get('ideia')).trim(),region=data.get('regiao'),size=data.get('tamanho'),phone=String(data.get('telefone')||'').trim();const text=english?`Hi Ana! I’d like to talk about a tattoo.\n\nMy name: ${name}\nMy idea: ${idea}\nBody placement: ${region}\nApproximate size: ${size}${phone?'\nMy WhatsApp: '+phone:''}`:`Oi, Ana! Quero conversar sobre uma tatuagem.\n\nMeu nome: ${name}\nMinha ideia: ${idea}\nRegião do corpo: ${region}\nTamanho aproximado: ${size}${phone?'\nMeu WhatsApp: '+phone:''}`;const link=whatsapp+'?text='+encodeURIComponent(text);window.open(link,'_blank','noopener,noreferrer');const status=$('.form-status',form);status.replaceChildren(document.createTextNode(t('Sua ideia está pronta para revisar no WhatsApp. ')));const a=document.createElement('a');a.href=link;a.target='_blank';a.rel='noopener';a.textContent=t('Abrir conversa');status.append(a)}));
   const floating=$('.floating-whatsapp');if(floating){let atForm=false,atHero=false;const syncFloating=()=>{floating.classList.toggle('over-form',atForm);floating.classList.toggle('at-hero',atHero);floating.tabIndex=atForm||atHero?-1:0};new IntersectionObserver(entries=>{atForm=entries.some(e=>e.isIntersecting);syncFloating()},{threshold:.12}).observe($('.project-form')||$('.footer'));if($('.hero'))new IntersectionObserver(entries=>{atHero=entries[0].isIntersecting;syncFloating()},{threshold:.3}).observe($('.hero'))}
 
   // Small lights live on the panel edges, outside the actual tattoo photographs.
@@ -305,4 +307,4 @@
     resize();new ResizeObserver(()=>{resize();sync()}).observe(canvas);new IntersectionObserver(entries=>{inView=entries[0].isIntersecting;sync()}).observe($('.hero'));document.addEventListener('visibilitychange',sync);reduced.addEventListener('change',sync);
     document.addEventListener('ana:effects-change',sync);sync();
   }
-})();
+});

@@ -9,6 +9,7 @@ const out=path.join(__dirname,process.argv[2]||'chapter-motion-qa');fs.mkdirSync
   try{
     for(const [width,height] of [[1440,900],[390,844]]){
       const page=await browser.newPage({viewport:{width,height}});
+      await page.route('https://ipwho.is/**',route=>route.fulfill({status:200,contentType:'application/json',body:'{"success":true,"country_code":"BR"}'}));
       page.on('pageerror',error=>errors.push(error.message));
       page.on('response',response=>{if(response.status()>=400)errors.push(`${response.status()} ${response.url()}`)});
       await page.goto(base,{waitUntil:'load'});await page.evaluate(()=>document.fonts.ready);
@@ -56,6 +57,7 @@ const out=path.join(__dirname,process.argv[2]||'chapter-motion-qa');fs.mkdirSync
       await page.close();
 
       const deepLink=await browser.newPage({viewport:{width,height}});
+      await deepLink.route('https://ipwho.is/**',route=>route.fulfill({status:200,contentType:'application/json',body:'{"success":true,"country_code":"BR"}'}));
       await deepLink.goto(new URL('index.html#processo',base).href,{waitUntil:'load'});
       await deepLink.waitForTimeout(900);
       assert.ok(await deepLink.locator('#process-title').evaluate(element=>Number(getComputedStyle(element).opacity)>.9),`direct process link must reveal its title at ${width}px`);
@@ -63,6 +65,7 @@ const out=path.join(__dirname,process.argv[2]||'chapter-motion-qa');fs.mkdirSync
     }
 
     const reduced=await browser.newPage({viewport:{width:390,height:844},reducedMotion:'reduce'});
+    await reduced.route('https://ipwho.is/**',route=>route.fulfill({status:200,contentType:'application/json',body:'{"success":true,"country_code":"BR"}'}));
     await reduced.goto(base,{waitUntil:'load'});
     assert.equal(await reduced.evaluate(()=>ScrollTrigger.getAll().length),0);
     assert.equal(await reduced.locator('#process-title').evaluate(element=>getComputedStyle(element).opacity),'1');
