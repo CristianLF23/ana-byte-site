@@ -7,13 +7,13 @@ Dar à rolagem vertical uma progressão cinematográfica sem capturar a roda do 
 ## Sequência
 
 1. Os títulos de Arquivo Vivo, Processo, Sobre e Contato surgem de baixo com um impulso curto, ultrapassam levemente sua posição e assentam. O avanço é reversível com o scroll.
-2. A foto do cabeçalho do acervo e o segundo retrato real da Ana se abrem por recorte enquanto se aproximam. O texto chega em outro ritmo.
+2. A foto do cabeçalho do acervo se abre por recorte enquanto se aproxima. O segundo retrato real da Ana permanece estático para dar pausa à narrativa visual.
 3. Nos três trabalhos de processo, a janela com a imagem sobe de dentro do frame. A cortina e o progresso existentes continuam a revelar o desenho e a tatuagem.
 
 ## Limites e validação
 
 - GSAP e ScrollTrigger locais, sem dependências ou assets novos.
-- Animar poucos planos, preferindo transform e opacity; usar clip-path apenas nos dois retratos e nos títulos.
+- Animar poucos planos, preferindo transform e opacity; usar clip-path apenas no retrato do acervo e nos títulos.
 - Distâncias menores no celular, sem pin adicional. Rolagem e links continuam nativos.
 - Em movimento reduzido, sem JavaScript ou com os efeitos pausados, todo o conteúdo permanece visível e estático.
 - Verificar entrada, reversão, troca de tamanho, navegação por âncora, filtros do acervo e ausência de overflow em desktop e mobile.

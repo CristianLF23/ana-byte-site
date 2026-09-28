@@ -252,16 +252,10 @@
           if(support?.classList.contains('tracked')&&getComputedStyle(support).display!=='none')launch.fromTo(support,{y:small?17:30,opacity:.25},{y:0,opacity:1,duration:.42,ease:'power1.out'},.4);
         });
         // The photographic windows open at a different depth from their titles.
-        const portraitReveals=[
-          {selector:'.archive-portrait',trigger:'.archive-heading',from:'inset(13% 16% 19% 4%)',to:'inset(0 3% 1% 0)'},
-          {selector:'.artist-story-portrait',trigger:'.artist-story',from:'inset(15% 10% 12% 10%)',to:'inset(0 0 0 0)'}
-        ];
-        portraitReveals.forEach(({selector,trigger,from,to},index)=>{
-          const frame=$(selector);if(!frame)return;
-          gsap.fromTo(frame,{y:wide?78:small?35:56,scale:wide?.94:.97,clipPath:from},{y:0,scale:1,clipPath:to,ease:'none',scrollTrigger:{id:'photo-aperture-'+index,trigger,start:'top 94%',end:small?'top 43%':'top 30%',scrub:small?.35:.65,invalidateOnRefresh:true}});
-        });
-        $$('.artist-photo-frame img,.story-photo-window img,.portfolio-portrait img').forEach((photo,index)=>{
-          const distance=photo.closest('.story-photo-window')?(wide?28:small?22:14):(wide?18:small?16:9);
+        const archivePortrait=$('.archive-portrait');
+        if(archivePortrait)gsap.fromTo(archivePortrait,{y:wide?78:small?35:56,scale:wide?.94:.97,clipPath:'inset(13% 16% 19% 4%)'},{y:0,scale:1,clipPath:'inset(0 3% 1% 0)',ease:'none',scrollTrigger:{id:'photo-aperture-archive',trigger:'.archive-heading',start:'top 94%',end:small?'top 43%':'top 30%',scrub:small?.35:.65,invalidateOnRefresh:true}});
+        $$('.artist-photo-frame img,.portfolio-portrait img').forEach((photo,index)=>{
+          const distance=wide?18:small?16:9;
           gsap.fromTo(photo,{y:-distance},{y:distance,ease:'none',scrollTrigger:{id:'photo-depth-'+index,trigger:photo.closest('.artist-composition,.artist-story,.portfolio-hero'),start:'clamp(top bottom)',end:'clamp(bottom top)',scrub:.6,invalidateOnRefresh:true}});
         });
         const artistFacts=$$('.artist-facts>div');

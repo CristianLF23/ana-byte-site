@@ -34,19 +34,25 @@ const out=path.join(__dirname,process.argv[2]||'chapter-motion-qa');fs.mkdirSync
       await proof.evaluate(element=>scrollTo({top:element.getBoundingClientRect().top+scrollY-innerHeight*.42,behavior:'instant'}));await page.waitForTimeout(850);
       const imageAfter=await window.evaluate(element=>Number(gsap.getProperty(element,'y')));
       assert.ok(imageBefore>imageAfter+15,`process image must travel within its frame at ${width}px`);
-      const story=page.locator('.artist-story'),portrait=page.locator('.artist-story-portrait');
+      const story=page.locator('.artist-story'),portrait=page.locator('.artist-story-portrait'),storyPhoto=page.locator('.story-photo-window img');
       await story.evaluate(element=>scrollTo({top:element.getBoundingClientRect().top+scrollY-innerHeight*.98,behavior:'instant'}));await page.waitForTimeout(850);
-      const portraitBefore=await portrait.evaluate(element=>({y:Number(gsap.getProperty(element,'y')),clip:getComputedStyle(element).clipPath}));
+      const portraitBefore=await portrait.evaluate(element=>({transform:getComputedStyle(element).transform,clip:getComputedStyle(element).clipPath}));
+      const storyPhotoBefore=await storyPhoto.evaluate(element=>getComputedStyle(element).transform);
       await story.evaluate(element=>scrollTo({top:element.getBoundingClientRect().top+scrollY-innerHeight*.3,behavior:'instant'}));await page.waitForTimeout(850);
-      const portraitAfter=await portrait.evaluate(element=>({y:Number(gsap.getProperty(element,'y')),clip:getComputedStyle(element).clipPath}));
-      assert.ok(portraitBefore.y>portraitAfter.y+15,`artist portrait must arrive from below at ${width}px`);
-      assert.notEqual(portraitBefore.clip,portraitAfter.clip,'artist portrait aperture must open');
+      const portraitAfter=await portrait.evaluate(element=>({transform:getComputedStyle(element).transform,clip:getComputedStyle(element).clipPath}));
+      const storyPhotoAfter=await storyPhoto.evaluate(element=>getComputedStyle(element).transform);
+      assert.deepEqual(portraitBefore,portraitAfter,`second artist portrait must stay still at ${width}px`);
+      assert.equal(storyPhotoBefore,storyPhotoAfter,`second artist photo must not parallax at ${width}px`);
+      if(width<768){
+        const gap=await page.evaluate(()=>document.querySelector('.artist-story-portrait').getBoundingClientRect().top-document.querySelector('.artist-composition').getBoundingClientRect().bottom);
+        assert.ok(gap<=22,`artist portraits should sit closer together on mobile: ${gap}px`);
+      }
       await page.screenshot({path:path.join(out,`artist-${width}.png`)});
       await page.evaluate(()=>document.querySelector('.motion-switch').click());
       assert.equal(await page.evaluate(()=>ScrollTrigger.getAll().length),0,'pause effects must remove scroll motion');
       assert.equal(await page.locator('#process-title').evaluate(element=>getComputedStyle(element).opacity),'1');
       assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false);
-      report.push({width,title:{before,settled,reversed},image:{before:imageBefore,after:imageAfter},portrait:{before:portraitBefore.y,after:portraitAfter.y},paused:true});
+      report.push({width,title:{before,settled,reversed},image:{before:imageBefore,after:imageAfter},secondArtistPhoto:'static',paused:true});
       await page.close();
 
       const deepLink=await browser.newPage({viewport:{width,height}});
