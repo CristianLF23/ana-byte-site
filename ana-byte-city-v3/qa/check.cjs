@@ -22,7 +22,7 @@ async function pageAt(route='', opts={}) {
   const page=await context.newPage();
   page.on('pageerror',e=>errors.push(e.message));
   page.on('response',r=>{if(r.status()>=400)errors.push(`${r.status()} ${r.url()}`)});
-  await page.goto(new URL(route,base).href,{waitUntil:'networkidle'});
+  await page.goto(new URL(route,base).href,{waitUntil:'load'});
   return {page,close:()=>context.close()};
 }
 const visibleIds=page=>page.locator('.portfolio-thumb:visible').evaluateAll(els=>els.map(el=>el.dataset.art));
@@ -52,7 +52,7 @@ const visibleIds=page=>page.locator('.portfolio-thumb:visible').evaluateAll(els=
       assert.equal(await page.locator('.page-next').isDisabled(),true);
       await page.locator('.page-prev').click();
       assert.equal(new URL(page.url()).searchParams.get('pagina'),'3');
-      await page.reload({waitUntil:'networkidle'});
+      await page.reload({waitUntil:'load'});
       assert.deepEqual(await visibleIds(page),catalog.slice(12,18).map(w=>w.id));
       return {counts,total:seen.length};
     }finally{await close()}
@@ -71,8 +71,8 @@ const visibleIds=page=>page.locator('.portfolio-thumb:visible').evaluateAll(els=
       await page.selectOption('#portfolio-sort','title');
       const names=catalog.filter(w=>w.category==='digital').sort((a,b)=>a.title.localeCompare(b.title,'pt-BR')).map(w=>w.id);
       assert.deepEqual(await visibleIds(page),names);
-      await page.reload({waitUntil:'networkidle'});assert.deepEqual(await visibleIds(page),names);
-      await page.goto(new URL('portfolio/?tipo=process',base).href,{waitUntil:'networkidle'});
+      await page.reload({waitUntil:'load'});assert.deepEqual(await visibleIds(page),names);
+      await page.goto(new URL('portfolio/?tipo=process',base).href,{waitUntil:'load'});
       assert.equal((await visibleIds(page)).length,6);
       return counts;
     }finally{await close()}
@@ -107,7 +107,7 @@ const visibleIds=page=>page.locator('.portfolio-thumb:visible').evaluateAll(els=
       for(let i=0;i<15;i++){await page.keyboard.press('Tab');assert.equal(await page.evaluate(()=>!!document.activeElement.closest('.art-dialog')),true)}
       await page.keyboard.press('Escape');
       assert.equal(await card.evaluate(el=>el===document.activeElement),true);
-      await page.goto(new URL('portfolio/#obra=o-voo-da-noite',base).href,{waitUntil:'networkidle'});
+      await page.goto(new URL('portfolio/#obra=o-voo-da-noite',base).href,{waitUntil:'load'});
       assert.equal(await page.locator('[data-detail-title]').textContent(),'O voo da noite');
       return {tabChecks:15,directLink:true};
     }finally{await close()}
@@ -150,16 +150,17 @@ const visibleIds=page=>page.locator('.portfolio-thumb:visible').evaluateAll(els=
       return {externalCalls:0,draftFields:5,stored:false};
     }finally{await close()}
   });
-  await check('Vídeo inline inicia na seção e pausa fora da tela',async()=>{
+  await check('Vídeo entra direto, sem capa ou controles, e pausa longe da seção',async()=>{
     const {page,close}=await pageAt();
     try{
-      assert.equal(await page.locator('video').evaluate(v=>v.paused&&!v.autoplay&&v.preload==='none'),true);
+      assert.equal(await page.locator('video').evaluate(v=>v.autoplay&&v.preload==='auto'&&!v.controls&&!v.poster&&v.muted&&v.loop&&v.playsInline),true);
+      await page.waitForFunction(()=>document.querySelector('#archive-video').readyState>=2);
       await page.locator('#archive-video').evaluate(v=>v.scrollIntoView({block:'center',behavior:'instant'}));
-      await page.waitForFunction(()=>document.querySelector('video').readyState>=2);
-      const video=await page.locator('video').evaluate(v=>({controls:v.controls,duration:v.duration,paused:v.paused}));
-      assert.equal(video.controls,true);assert.ok(video.duration>1);assert.equal(video.paused,false);
+      await page.waitForFunction(()=>{const v=document.querySelector('#archive-video');return !v.paused&&v.currentTime>.05});
+      const video=await page.locator('video').evaluate(v=>({controls:v.controls,duration:v.duration,paused:v.paused,readyState:v.readyState}));
+      assert.equal(video.controls,false);assert.ok(video.duration>1);assert.equal(video.paused,false);
       assert.equal(await page.locator('dialog[open]').count(),0);
-      await page.evaluate(()=>scrollTo({top:0,behavior:'instant'}));
+      await page.evaluate(()=>scrollTo({top:document.documentElement.scrollHeight,behavior:'instant'}));
       await page.waitForFunction(()=>document.querySelector('video').paused);
       assert.equal(await page.locator('video').evaluate(v=>v.paused),true);
       return video;
@@ -221,8 +222,8 @@ const visibleIds=page=>page.locator('.portfolio-thumb:visible').evaluateAll(els=
         const resources=performance.getEntriesByType('resource');
         const frames=[];await new Promise(resolve=>{let last=performance.now();const tick=now=>{frames.push(now-last);last=now;if(frames.length>=120)resolve();else requestAnimationFrame(tick)};requestAnimationFrame(tick)});
         frames.sort((a,b)=>a-b);
-        return {initialBytes:resources.reduce((n,r)=>n+r.transferSize,0),requests:resources.length,videoRequests:resources.filter(r=>r.name.endsWith('.mp4')).length,frameMedianMs:Number(frames[60].toFixed(2)),frameP95Ms:Number(frames[114].toFixed(2)),lazyImages:document.querySelectorAll('img[loading=lazy]').length};
-      });assert.equal(stats.videoRequests,0);assert.ok(stats.lazyImages>8);return stats;
+        return {initialBytes:resources.reduce((n,r)=>n+r.transferSize,0),requests:resources.length,videoReadyState:document.querySelector('#archive-video').readyState,frameMedianMs:Number(frames[60].toFixed(2)),frameP95Ms:Number(frames[114].toFixed(2)),lazyImages:document.querySelectorAll('img[loading=lazy]').length};
+      });assert.ok(stats.videoReadyState>=2);assert.ok(stats.lazyImages>8);return stats;
     }finally{await close()}
   });
   await check('Acervo ampliado padrão na home e filtros sem mudança de página',async()=>{
@@ -251,7 +252,7 @@ const visibleIds=page=>page.locator('.portfolio-thumb:visible').evaluateAll(els=
       assert.equal(await page.locator('#sobre a, #sobre button').count(),0);
       assert.equal(await page.locator('#sobre .artist-facts>div').count(),3);
       assert.equal(await page.locator('#sobre .artist-story-copy').evaluate(el=>getComputedStyle(el.querySelector('p:not(.eyebrow)')).textTransform),'none');
-      await page.goto(new URL('sobre/',base).href,{waitUntil:'networkidle'});
+      await page.goto(new URL('sobre/',base).href,{waitUntil:'load'});
       assert.equal(new URL(page.url()).hash,'#sobre');
       assert.equal(await page.locator('#sobre').count(),1);
       return {route:page.url(),portraits:2,aboutButtons:0};

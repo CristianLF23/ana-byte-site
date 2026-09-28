@@ -148,7 +148,7 @@ html.effects-paused *,html.effects-paused *:before,html.effects-paused *:after,h
 .archive-transposed .archive-heading .tracked{font-size:10px;letter-spacing:.2em}
 .archive-transposed .portfolio-browser{padding:0 var(--space) 24px;background:url('ui/architecture.svg') center/100% 100% no-repeat;border-top:1px solid #74294f}
 .archive-film{position:relative;height:clamp(370px,38vw,620px);background:#03070b;overflow:hidden}
-.archive-film video{display:block;width:100%;height:100%;object-fit:cover;scroll-margin-top:90px}
+.archive-film video{display:block;width:100%;height:100%;object-fit:cover;scroll-margin-top:90px;pointer-events:none}
 .film-error{position:absolute;inset:auto 12px 52px;padding:14px;background:#050b12ee;color:var(--text);font-size:12px;line-height:1.7}
 .portfolio-browser.is-film [data-selected-open],.portfolio-browser.is-film .selected-controls,.portfolio-browser.is-film .selected-art-copy{display:none}
 .portfolio-browser:not(.is-film) .archive-film,.portfolio-browser:not(.is-film) .archive-film-copy{display:none}

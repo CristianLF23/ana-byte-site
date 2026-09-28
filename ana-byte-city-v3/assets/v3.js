@@ -80,8 +80,8 @@
   const dialog=$('.art-dialog');
   let detailIndex=0, returnFocus=null, selectedId=catalog[0]?.id, filter='all', galleryPage=0, sort='curated';
   const archive=$('.portfolio-browser'), archiveVideo=$('#archive-video');
-  let filmInView=false, filmUserPaused=false, filmManagedPause=false, filmAutoplayBlocked=false, filmStarting=false;
-  function pauseFilm(){if(archiveVideo&&!archiveVideo.paused){filmManagedPause=true;archiveVideo.pause()}}
+  let filmNear=false, filmAutoplayBlocked=false, filmStarting=false;
+  function pauseFilm(){if(archiveVideo&&!archiveVideo.paused)archiveVideo.pause()}
   function showArtwork(){archive?.classList.remove('is-film');pauseFilm();if($('.archive-replay'))$('.archive-replay').hidden=false}
   function leaveIntro(){
     if(!archive?.classList.contains('is-intro'))return;
@@ -189,28 +189,24 @@
   // First media in the actual archive. The browser stays on the same document.
   if(archiveVideo){
     function syncFilm(){
-      if(!filmInView||document.hidden||!archive.classList.contains('is-film')||dialog?.open){pauseFilm();return}
-      if(reduced.matches||effectsPaused||filmUserPaused||filmAutoplayBlocked||filmStarting||!archiveVideo.paused)return;
+      if(!filmNear||document.hidden||!archive.classList.contains('is-film')||dialog?.open||reduced.matches||effectsPaused){pauseFilm();return}
+      if(filmAutoplayBlocked||filmStarting||!archiveVideo.paused)return;
       filmStarting=true;
       archiveVideo.play().catch(error=>{if(error.name!=='AbortError')filmAutoplayBlocked=true}).finally(()=>{filmStarting=false});
     }
-    archiveVideo.addEventListener('pause',()=>{
-      if(!filmManagedPause&&!archiveVideo.ended)filmUserPaused=true;
-      filmManagedPause=false;
-    });
     archiveVideo.addEventListener('play',()=>{
-      filmUserPaused=false;filmAutoplayBlocked=false;
-      if(document.hidden||!archive.classList.contains('is-film'))pauseFilm();
+      if(document.hidden||!archive.classList.contains('is-film')||reduced.matches||effectsPaused)pauseFilm();
     });
     archiveVideo.addEventListener('error',()=>{$('.film-error').hidden=false;filmAutoplayBlocked=true},true);
-    new IntersectionObserver(entries=>{filmInView=entries[0].intersectionRatio>=.5;syncFilm()},{threshold:[0,.5,1]}).observe(archiveVideo);
+    archiveVideo.addEventListener('canplay',syncFilm);
+    new IntersectionObserver(entries=>{filmNear=entries[0].isIntersecting;syncFilm()},{rootMargin:'700px 0px'}).observe(archiveVideo);
     document.addEventListener('visibilitychange',syncFilm);
     document.addEventListener('ana:effects-change',()=>{if(effectsPaused)pauseFilm();else syncFilm()});
     reduced.addEventListener('change',()=>{if(reduced.matches)pauseFilm();else syncFilm()});
     dialog?.addEventListener('close',syncFilm);
     new MutationObserver(()=>{if(dialog.open)pauseFilm()}).observe(dialog,{attributes:true,attributeFilter:['open']});
     $('.archive-replay')?.addEventListener('click',()=>{
-      archive.classList.add('is-film','is-intro');filmUserPaused=false;filmAutoplayBlocked=false;
+      archive.classList.add('is-film','is-intro');filmAutoplayBlocked=false;
       archiveVideo.currentTime=0;
       archiveVideo.scrollIntoView({block:'center',behavior:reduced.matches?'instant':'smooth'});
       archiveVideo.play().catch(()=>{filmAutoplayBlocked=true});

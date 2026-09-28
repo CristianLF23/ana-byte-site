@@ -145,3 +145,9 @@ Alinhamento final: na abertura mobile, a frase usa o mesmo centro vertical do bo
 - Diferença média de pixels nas regiões sem edição, após exportação WebP: mobile 1,25–1,98/255; desktop 1,00–2,11/255. A diferença residual decorre da recodificação WebP. Formato e proporção originais foram preservados (940 × 2156 e 2017 × 780), com variantes 600/1280 px. Os arquivos principais ficaram menores que os fundos anteriores.
 - Capturas de 390 e 1440 px inspecionadas lado a lado; inspeção responsiva de 320 a 1440 px sem overflow ou erro de execução. `qa/motion-navigation.cjs` e `qa/check.cjs` (16/16) aprovados. A personagem continua atrás das camadas de interface e a máscara de primeiro plano permanece alinhada porque ambas usam o mesmo asset novo.
 - Fonte, prompt, técnica e assets em [CHARACTER_EDIT.md](CHARACTER_EDIT.md). Limite: Chromium no Windows; Safari/iPhone físico não inspecionado.
+
+## 27/09 · Entrada direta do vídeo no Arquivo Vivo
+
+A configuração atual substitui as notas históricas acima sobre poster, controles nativos, pausa manual e vídeo sem carregamento na abertura. O vídeo usa carregamento antecipado, autoplay mudo inline e loop. Não há poster ou controles no quadro; o gerenciamento por proximidade prepara a reprodução antes de a pessoa chegar à seção e pausa somente quando ela se afasta, oculta a aba, abre uma obra ou pausa os efeitos. Em movimento reduzido, o início automático permanece desligado; “Ver em movimento” oferece reprodução explícita.
+
+Verificação local: `qa/check.cjs` e `qa/archive-flow.cjs` em 390 e 1440 px, incluindo retomada, duas voltas do loop sem salto de layout, vídeo indisponível e controles ausentes. Capturas do vídeo em `qa/video-entry-390.png` e `qa/video-entry-1440.png`. O teste foi feito em Chromium no Windows; a confirmação em Safari/iPhone físico ainda depende de um aparelho.

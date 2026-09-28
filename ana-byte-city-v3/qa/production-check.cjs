@@ -31,8 +31,8 @@ async function readyViewport(page){
       page.on('pageerror',e=>report.errors.push(e.message));
       page.on('response',r=>{if(r.status()>=400)report.errors.push(r.status()+' '+r.url())});
       for(const [route,label] of [['','home'],['portfolio/','portfolio'],['sobre/','about']]){
-        const response=await page.goto(new URL(route,base).href,{waitUntil:'networkidle'});assert.equal(response.status(),200);
-        if(label==='portfolio')await page.waitForURL(url=>!url.pathname.includes('/portfolio/'),{waitUntil:'networkidle'});
+        const response=await page.goto(new URL(route,base).href,{waitUntil:'load'});assert.equal(response.status(),200);
+        if(label==='portfolio')await page.waitForURL(url=>!url.pathname.includes('/portfolio/'),{waitUntil:'load'});
         await readyViewport(page);
         const metrics=await page.evaluate(()=>({title:document.title,width:innerWidth,scrollWidth:document.documentElement.scrollWidth,badImages:[...document.images].filter(i=>{const r=i.getBoundingClientRect();return i.getAttribute('src')&&i.checkVisibility()&&r.bottom>0&&r.top<innerHeight&&r.right>0&&r.left<innerWidth&&(!i.complete||!i.naturalWidth)}).map(i=>i.src),heading:document.querySelector('h1')?.textContent}));
         assert.ok(metrics.scrollWidth<=width+1);assert.deepEqual(metrics.badImages,[]);

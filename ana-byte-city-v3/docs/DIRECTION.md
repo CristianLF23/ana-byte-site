@@ -37,9 +37,9 @@ Orbitron variável, peso 700 a 850, é a família ativa de títulos. No letreiro
 - Portfólio único: `#trabalhos` na home. `portfolio/` é somente compatibilidade para endereços antigos, redirecionando à mesma seção com filtros e links de obras preservados. Menu e compartilhamento usam a home.
 - Primeira mídia do acervo: vídeo real da Ana tatuando dentro da janela de destaque desktop; no mobile ele vem antes dos filtros e miniaturas. Reproduz em loop contínuo enquanto visível, até a pessoa selecionar uma obra ou filtro. Escolher um filtro no mobile libera a grade na composição do screenshot.
 - Processo: três comparações reais entre desenho e pele, sem inventar etapas ausentes.
-- Sobre: fotografia real da Ana tatuando, mais um retrato real no estúdio e conteúdo sobre os cinco anos de atuação informados, base em São Paulo, viagens, influências e produção de arte digital. A página dedicada desenvolve esses pontos e conserva os pilares com tatuagens reais.
+- Sobre: duas fotografias reais da Ana e uma apresentação breve dentro da página principal. O menu rola até essa seção; o endereço antigo `sobre/` redireciona para ela. Não há botões internos para outra página.
 - Contato: cinco campos, duas colunas desktop e uma no mobile. Tamanho é texto livre em centímetros, incluindo estimativas como “12,5 x 8 cm”. A pessoa revisa o rascunho no WhatsApp; o site não guarda dados nem envia mensagens sozinho.
-- Rodapé: usa o mesmo arquivo de lettering do topo nas três páginas, com caminhos relativos corretos.
+- Rodapé: usa o mesmo arquivo de lettering do topo na página principal.
 
 ## Movimento e desempenho
 
@@ -47,7 +47,7 @@ Rolagem nativa. Sem bloqueio de roda do mouse, cenas por botão ou loader obriga
 
 A chuva para fora da viewport e quando a aba perde visibilidade. As luzes dos painéis também pausam fora de vista. `prefers-reduced-motion` remove chuva, parallax, tilt e scroll animado. Os controles de efeitos do menu/rodapé sincronizam pausa de luzes, chuva, parallax e início automático do vídeo.
 
-O vídeo de 25 segundos usa reprodução inline em loop contínuo, sem som inicialmente, quando pelo menos metade do quadro entra na viewport. Por pedido de 27/09, ao terminar volta ao início sem trocar automaticamente por uma fotografia. Pausa fora da tela, em aba oculta ou ao abrir um detalhe. A pausa manual é preservada ao rolar. Em movimento reduzido ou bloqueio de autoplay, permanece o poster real com controles nativos. “Ver em movimento” toca/reinicia o vídeo na própria seção; não abre modal. Falha de vídeo não impede a exploração das obras. Políticas técnicas: [MDN](https://developer.mozilla.org/en-US/docs/Web/Media/Guides/Autoplay) e [WebKit](https://webkit.org/blog/6784/new-video-policies-for-ios/).
+O vídeo de 25 segundos é carregado antecipadamente e reproduz em loop, sem som, antes de entrar na viewport. Não usa capa nem controles nativos: o primeiro quadro visível já é do próprio vídeo. A reprodução pausa quando a seção fica distante, em aba oculta ou ao abrir um detalhe, e retoma ao voltar. Movimento reduzido desliga o início automático; a ação “Ver em movimento” permite reprodução por escolha, inclusive quando o autoplay for bloqueado. Falha de vídeo não impede a exploração das obras. Políticas técnicas: [MDN](https://developer.mozilla.org/en-US/docs/Web/Media/Guides/Autoplay) e [WebKit](https://webkit.org/blog/6784/new-video-policies-for-ios/).
 
 Os títulos com degradê conservam sua própria paleta e recebem um deslocamento lento do preenchimento, sem mover as letras. CSS anima apenas as pequenas superfícies de texto; IntersectionObserver pausa as que estão fora da tela. A pausa geral e a visibilidade da aba também interrompem esse efeito. Movimento reduzido mantém os gradientes originais estáticos. O cabeçalho do Arquivo Vivo usa a fotografia real `16-studio.jpg`, antes não exibida na V3, com enquadramento próprio em desktop/mobile.
 
