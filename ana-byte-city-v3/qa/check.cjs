@@ -18,7 +18,9 @@ async function check(name, fn) {
   catch (e) { results.push({name,pass:false,error:e.message}); console.error('FAIL '+name+': '+e.message); }
 }
 async function pageAt(route='', opts={}) {
-  const context=await browser.newContext({viewport:{width:1440,height:900},...opts});
+  const {exerciseIntro=false,...contextOptions}=opts;
+  const context=await browser.newContext({viewport:{width:1440,height:900},...contextOptions});
+  if(!exerciseIntro&&contextOptions.javaScriptEnabled!==false)await context.addInitScript(()=>sessionStorage.setItem('ana-byte-v3-entry-seen','1'));
   await context.route('https://ipwho.is/**',request=>request.fulfill({status:200,contentType:'application/json',body:'{"success":true,"country_code":"BR"}'}));
   const page=await context.newPage();
   page.on('pageerror',e=>errors.push(e.message));
@@ -31,6 +33,28 @@ const visibleIds=page=>page.locator('.portfolio-thumb:visible').evaluateAll(els=
 
 (async()=>{
   browser=await chromium.launch({headless:true,executablePath:exe});
+  await check('Entrada breve exibe a marca, libera ações e não se repete na sessão',async()=>{
+    const {page,close}=await pageAt('',{exerciseIntro:true,viewport:{width:390,height:844}});
+    try{
+      assert.equal(await page.locator('.entry-intro').isVisible(),true);
+      assert.equal(await page.locator('.entry-intro img').getAttribute('src'),'assets/ui/ana-byte-mark.png');
+      await page.waitForFunction(()=>!document.querySelector('.entry-intro'),{timeout:3500});
+      const secondButton=await page.locator('.hero-actions a:last-child').boundingBox();
+      assert.ok(secondButton.y+secondButton.height<760);
+      const location=await page.locator('.rail-location').boundingBox();
+      const artistLabel=await page.locator('.brand small').boundingBox();
+      assert.ok(location.y>=artistLabel.y+artistLabel.height);
+      await page.reload({waitUntil:'load'});
+      assert.equal(await page.locator('.entry-intro').isVisible(),false);
+      for(const viewport of [{width:320,height:568},{width:375,height:667}]){
+        await page.setViewportSize(viewport);
+        const action=await page.locator('.hero-actions a:last-child').boundingBox();
+        assert.ok(action.y+action.height<=viewport.height,`Ação fora da tela em ${viewport.width}x${viewport.height}`);
+        await page.waitForFunction(()=>getComputedStyle(document.querySelector('.floating-whatsapp')).opacity==='0');
+      }
+      return {secondButtonBottom:Math.round(secondButton.y+secondButton.height),repeat:false};
+    }finally{await close()}
+  });
   await check('22 arquivos reais preservados byte a byte',async()=>{
     const files=[...catalog.map(w=>w.src),...source.window.ANA_ARTIST.photos.map(w=>w.src)];
     for(const file of files){

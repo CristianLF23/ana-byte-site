@@ -66,3 +66,12 @@ Verificação: fluxo de vídeo e filtros em desktop/mobile, navegação por link
 - CONFIRMED: usar uma foto dela tatuando e dois retratos pessoais já enviados. O segundo retrato da seção continua como está; o novo plano fotográfico fica estático, sem parallax.
 - Ready-to-Start Gate: aprovado. Imagens, identidade, seção alvo e limites responsivos definidos; não há lacuna crítica. Correção visual localizada, sem novo conceito ou dependência.
 - Validação: comparar 390, 768, 1024, 1440 e 1920 px; verificar rosto, leitura do título, largura da seção e ausência de overflow.
+
+## 29/09 · Primeira dobra mobile e entrada breve
+
+- CONFIRMED: elevar moderadamente o bloco de título, subtítulo e ações na primeira dobra mobile para que ambos os botões fiquem claramente visíveis ao entrar. Preservar a posição e a leitura da Ana e do gato na cidade.
+- CONFIRMED: posicionar “Studio em São Paulo” imediatamente abaixo de “Tattoo Artist” na marca da abertura mobile. O cabeçalho compacto após rolagem e o desktop mantêm seu comportamento.
+- CONFIRMED: mostrar na primeira entrada da home uma abertura curta, próxima de dois segundos, com a logo oficial e uma barra fina; ao concluir, revelar cidade, navegação e conteúdo por opacidade. Reutilizar apenas o princípio da V1, sem copiar sua composição ou reconstruir a logo.
+- Ready-to-Start Gate: aprovado. O objetivo de conversão, conteúdo, assets, limites de escopo, direção aprovada e hospedagem são conhecidos; nenhuma lacuna crítica.
+- Recursos: HTML, CSS e JavaScript locais. O roteador gratuito dispensou catálogos, 3D, imagens geradas, serviços externos e dependências; trata-se de ajuste localizado, sem pesquisa de nova direção visual.
+- Validação: medir botões em 375, 390 e 430 px, observar abertura e fade em navegador, evitar repetição na mesma sessão e respeitar links diretos, ausência de JavaScript e movimento reduzido.

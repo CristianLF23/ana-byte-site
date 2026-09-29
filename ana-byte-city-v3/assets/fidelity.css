@@ -362,3 +362,37 @@ html.locale-pending body::before{content:'';position:fixed;inset:0;z-index:1000;
   .archive-artwall{width:650px;max-width:none}
   .archive-transposed .archive-heading:after{background:linear-gradient(90deg,#03060be0 0%,#03060ba3 55%,#03060b7d 100%),linear-gradient(0deg,#03060bf8 0%,#03060bc4 24%,#03060b50 75%,#03060b4f 100%)}
 }
+
+/* The opening keeps the city and cat visible while bringing both actions higher. */
+@media(max-width:767px){
+  .billboard{top:calc(53.6% - 14px)}
+  .hero-sub{margin-top:2.1cqw}
+  .hero-actions{margin-top:3cqw;gap:2.2cqw}
+  .microtags{margin-top:3cqw}
+  body[data-page=inicio] .rail:not(.is-scrolled) .rail-location{top:calc(22.7vw + 14px);left:6.5vw;transform:none;width:max-content;text-align:left;font-size:clamp(8px,2vw,9px);letter-spacing:.12em}
+}
+@media(max-width:767px) and (max-height:720px){
+  .billboard{top:calc(53.6% - 23px)}
+  .billboard h1{font-size:8.2cqw;line-height:1}
+  .hero-sub{margin-top:.8cqw}
+  .hero-actions{margin-top:1cqw;gap:1cqw}
+  .hero-actions .neon-button{height:10cqw;min-height:38px;font-size:10px}
+  .hero-actions .neon-button.cyan{font-size:10px;letter-spacing:.09em}
+  .microtags{margin-top:2cqw}
+}
+
+/* One quiet first-visit cue, using the approved mark rather than lettering. */
+.entry-intro{display:none;position:fixed;inset:0;z-index:1003;place-items:center;isolation:isolate;overflow:hidden;background:radial-gradient(ellipse at 50% 45%,#24101e 0%,#090a12 42%,#03060b 100%);opacity:1;transition:opacity .38s ease;pointer-events:auto}
+.entry-intro:before{content:'';position:absolute;inset:clamp(12px,3vw,28px);border:1px solid #62e5ed34;pointer-events:none}
+.entry-intro:after{content:'';position:absolute;left:50%;top:50%;width:min(68vw,320px);height:min(68vw,320px);transform:translate(-50%,-50%);border:1px solid #ff299629;border-radius:50%;box-shadow:0 0 75px #ff299614;pointer-events:none}
+.entry-intro-inner{position:relative;z-index:1;display:grid;justify-items:center;width:min(240px,70vw)}
+.entry-intro-inner img{display:block;width:clamp(94px,27vw,122px);height:auto;filter:drop-shadow(0 0 17px #ff299665)}
+.entry-intro-track{display:block;width:min(170px,50vw);height:2px;margin-top:38px;background:#36515d80;overflow:hidden;box-shadow:0 0 8px #62e5ed24}
+.entry-intro-track i{display:block;width:100%;height:100%;background:linear-gradient(90deg,#62e5ed,#ff2996 55%,#70ffc5);box-shadow:0 0 12px #ff2996;transform:scaleX(0);transform-origin:left;animation:entry-progress 1.75s linear forwards}
+@keyframes entry-progress{to{transform:scaleX(1)}}
+html.entry-pending,html.entry-leaving{overflow:hidden}
+html.entry-pending .entry-intro,html.entry-leaving .entry-intro{display:grid}
+html.entry-pending .rail,html.entry-pending .hero{opacity:0}
+html.entry-leaving .entry-intro{opacity:0;pointer-events:none}
+html.entry-leaving .rail,html.entry-leaving .hero{opacity:1;transition:opacity .66s ease-out}
+@media(prefers-reduced-motion:reduce){.entry-intro{display:none!important}.entry-intro-track i{animation:none}html.entry-pending .rail,html.entry-pending .hero{opacity:1}html.entry-leaving .rail,html.entry-leaving .hero{transition:none}}
