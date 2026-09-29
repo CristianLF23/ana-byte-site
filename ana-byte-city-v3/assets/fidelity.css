@@ -344,6 +344,20 @@ html.locale-pending body::before{content:'';position:fixed;inset:0;z-index:1000;
   .archive-transposed .archive-heading{height:360px}
   .archive-artwall{width:110%}
 }
+
+/* Desktop-only artist triptych: three real views of Ana, held in one still plane. */
+.artist-portrait-wall{display:none}
+@media(min-width:1024px){
+  .artist-composition{isolation:isolate}
+  .artist-composition:after{background:linear-gradient(90deg,#04070b 0%,#04070bf6 20%,#04070bd1 33%,#04070b42 56%,#04070b4d 100%),linear-gradient(0deg,#05070bdc,transparent 35%)}
+  .artist-photo{width:76%;right:0}
+  .artist-photo-frame{display:none}
+  .artist-portrait-wall{position:absolute;inset:0;display:grid;grid-template-columns:1.04fr 1fr .9fr;overflow:hidden;pointer-events:none}
+  .artist-portrait-wall span{display:block;min-width:0;background-size:cover;background-repeat:no-repeat;border-left:1px solid #5de7eb42;box-shadow:inset 12px 0 22px #03060b5c,inset -12px 0 22px #03060b57;filter:saturate(.9)}
+  .artist-portrait-wall span:nth-child(1){background-image:url('artist/ana-working-desktop-crop.jpg');background-position:50% 30%}
+  .artist-portrait-wall span:nth-child(2){background-image:url('artist/ana-portrait-clear.jpg');background-position:42% 47%;filter:saturate(.72) brightness(.78)}
+  .artist-portrait-wall span:nth-child(3){background-image:url('artist/ana-portrait-neon.jpg');background-position:47% 31%;filter:saturate(1.05) brightness(1.07)}
+}
 @media(max-width:767px){
   .archive-artwall{width:650px;max-width:none}
   .archive-transposed .archive-heading:after{background:linear-gradient(90deg,#03060be0 0%,#03060ba3 55%,#03060b7d 100%),linear-gradient(0deg,#03060bf8 0%,#03060bc4 24%,#03060b50 75%,#03060b4f 100%)}

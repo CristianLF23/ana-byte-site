@@ -58,3 +58,11 @@ Verificação: fluxo de vídeo e filtros em desktop/mobile, navegação por link
 - Ready-to-Start Gate: aprovado. Fotos reais, objetivo, público, CTA, layout alvo e hospedagem já estão definidos; nenhuma lacuna crítica.
 - Recursos: referências [ERA Residence](https://www.era-residence.com/) e [Codrops Grid Item Animation Layout](https://tympanus.net/codrops/2015/04/15/grid-item-animation-layout/) consultadas apenas para princípios de ritmo e escala editorial. HTML, CSS, GSAP local e fotografias fornecidas bastam; nenhum catálogo, serviço pago ou dependência nova.
 - Validação: duas rodadas de screenshots mobile, tablet e desktop; recortes e ausência de overflow; teste de fundo estático, galeria, vídeo, navegação, tradução e movimento reduzido.
+
+## 29/09 · Retratos em Arte em Trânsito
+
+- CONFIRMED: reunir várias fotografias reais da própria Ana em faixas lado a lado na primeira composição de Sobre a Artista, seguindo o princípio do mosaico do Arquivo Vivo.
+- CONFIRMED: a alteração é exclusiva do desktop. O retrato único e o enquadramento aprovados em mobile e tablet permanecem.
+- CONFIRMED: usar uma foto dela tatuando e dois retratos pessoais já enviados. O segundo retrato da seção continua como está; o novo plano fotográfico fica estático, sem parallax.
+- Ready-to-Start Gate: aprovado. Imagens, identidade, seção alvo e limites responsivos definidos; não há lacuna crítica. Correção visual localizada, sem novo conceito ou dependência.
+- Validação: comparar 390, 768, 1024, 1440 e 1920 px; verificar rosto, leitura do título, largura da seção e ausência de overflow.

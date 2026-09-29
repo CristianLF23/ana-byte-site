@@ -39,7 +39,7 @@ export function createSections({works,img,icon,eyebrow,artButton,wa,gallery}) {
   }
   function artist(b=''){return `<section class="chapter artist" id="sobre" aria-labelledby="artist-title">
       <div class="artist-composition">
-        <figure class="artist-photo"><div class="artist-photo-frame"><img src="${b}assets/artist/15-ana-working.jpg" alt="Ana Byte tatuando em seu estúdio" width="863" height="1145" loading="lazy"></div></figure>
+        <figure class="artist-photo"><div class="artist-photo-frame"><img src="${b}assets/artist/15-ana-working.jpg" alt="Ana Byte tatuando em seu estúdio" width="863" height="1145" loading="lazy"></div><div class="artist-portrait-wall" aria-hidden="true"><span></span><span></span><span></span></div></figure>
         <div class="artist-copy">${eyebrow('04','SOBRE A ARTISTA')}<div class="motion-title-frame"><h2 id="artist-title"><span class="artist-desktop-title">ARTE EM<br>TRÂNSITO.</span><span class="artist-mobile-title">SOBRE A<br>ARTISTA.</span></h2></div><p class="tracked">Arte. Tecnologia. Pele real.</p><p>Ana Byte transforma referências pessoais em tatuagens autorais. Seu traço aproxima natureza, tecnologia e imaginação.</p></div>
       </div>
       <div class="artist-story">
