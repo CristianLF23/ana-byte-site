@@ -308,3 +308,43 @@ html.locale-pending body::before{content:'';position:fixed;inset:0;z-index:1000;
 .lang-switch button:hover{color:var(--pink)}
 @media(max-width:1023px){.lang-switch{margin:3px 0 0;padding:9px 16px 3px;border-top:1px solid #36515d}.lang-switch button{font-size:12px;min-width:37px;min-height:39px}}
 @media(min-width:768px){html[lang="en"] .billboard h1{width:100%;transform:scaleX(.95)}}
+
+/* Archive opening: real tattoos form one still photographic plane. Each crop
+   keeps the ink central while the continuous dark veil carries the copy. */
+.archive-transposed .archive-heading{isolation:isolate;background:#03060b}
+.archive-artwall{position:absolute;z-index:-3;top:0;bottom:0;left:50%;width:min(100%,1900px);transform:translateX(-50%);display:grid;grid-template-columns:repeat(5,minmax(0,1fr));overflow:hidden;pointer-events:none}
+.archive-artwall-panel{min-width:0;overflow:hidden;border-right:1px solid #79e8e724}
+.archive-artwall-panel:last-child{border-right:0}
+.archive-artwall-panel img{display:block;width:100%;height:100%;max-width:none;object-fit:cover;filter:saturate(.93) brightness(.83)}
+.archive-artwall-panel:nth-child(1) img{object-position:50% 47%}
+.archive-artwall-panel:nth-child(2) img{object-position:49% 49%}
+.archive-artwall-panel:nth-child(3) img{object-position:51% 43%}
+.archive-artwall-panel:nth-child(4) img{object-position:39% 43%}
+.archive-artwall-panel:nth-child(5) img{object-position:51% 48%}
+.archive-transposed .archive-heading:after{background:linear-gradient(90deg,#03060bf8 0%,#03060be3 16%,#03060b8c 32%,#03060b34 54%,#03060b69 76%,#03060bdf 100%),linear-gradient(0deg,#03060bc9 0%,transparent 37%,#03060b62 100%)}
+.archive-heading>div:not(.archive-artwall){position:relative;z-index:1}
+@media(min-width:1024px){
+  .archive-transposed .archive-heading{height:clamp(360px,26vw,475px);padding-inline:clamp(28px,3vw,64px)}
+  .archive-transposed .archive-heading h2{font-size:clamp(44px,4.25vw,82px)}
+  .archive-transposed .archive-heading .tracked{font-size:clamp(12px,.86vw,15px);line-height:1.7}
+  .archive-transposed .archive-heading .text-link{font-size:clamp(10px,.72vw,13px)}
+  .archive-transposed .portfolio-quote{width:clamp(190px,14vw,260px);padding:clamp(20px,2vw,30px);backdrop-filter:blur(7px);background:#03070bc9}
+  .archive-transposed .portfolio-quote p{font-size:clamp(12px,.75vw,15px)}
+  .archive-transposed .portfolio-browser{padding-inline:clamp(24px,3vw,60px)}
+  .archive-transposed .portfolio-toolbar,.archive-transposed .portfolio-layout,.archive-transposed .portfolio-count{max-width:1850px;margin-inline:auto}
+  .process,.artist,.contact{max-width:1880px;margin-inline:auto}
+}
+@media(min-width:1920px){
+  .process-intro>p:not(.tracked):not(.eyebrow),.artist-copy>p:not(.tracked):not(.eyebrow),.contact-description{font-size:17px}
+  .selected-copy>p:not(.eyebrow),.process-proof figcaption p{font-size:15px}
+  .archive-transposed .filters button,.archive-transposed .sort-label select{font-size:12px}
+  .portfolio-count{font-size:12px}
+}
+@media(min-width:768px) and (max-width:1023px){
+  .archive-transposed .archive-heading{height:360px}
+  .archive-artwall{width:110%}
+}
+@media(max-width:767px){
+  .archive-artwall{width:650px;max-width:none}
+  .archive-transposed .archive-heading:after{background:linear-gradient(90deg,#03060be0 0%,#03060ba3 55%,#03060b7d 100%),linear-gradient(0deg,#03060bf8 0%,#03060bc4 24%,#03060b50 75%,#03060b4f 100%)}
+}

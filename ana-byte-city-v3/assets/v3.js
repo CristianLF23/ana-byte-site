@@ -228,8 +228,8 @@ Promise.resolve(window.ANA_LOCALE_READY).then(() => {
   });
   gradientTitles.forEach(title=>{title.classList.add('title-chroma');titleObserver.observe(title)});
 
-  // The complete scene travels together so billboard text stays on its painted plane.
-  // Cropped documentary photos move inside their own windows; no scroll interception.
+  // Photographic backgrounds stay fixed in their sections; chapter typography
+  // and foreground process details still respond to native scrolling.
   if(window.gsap&&window.ScrollTrigger){
     gsap.registerPlugin(ScrollTrigger);let motionContext;
     function setupMotion(){
@@ -237,12 +237,6 @@ Promise.resolve(window.ANA_LOCALE_READY).then(() => {
       motionContext=gsap.matchMedia();
       motionContext.add({wide:'(min-width:1024px)',medium:'(min-width:768px) and (max-width:1023px)',small:'(max-width:767px)',reduce:'(prefers-reduced-motion:reduce)'},context=>{
         const {wide,small,reduce}=context.conditions;if(reduce)return;
-        const hero=$('.hero');
-        if(hero)gsap.to('.hero-depth',{
-          y:()=>Math.min(hero.offsetHeight*(wide?.115:small?.075:.042),wide?68:small?58:32),
-          scale:wide?1.075:small?1.065:1.03,transformOrigin:'68% 20%',ease:'none',
-          scrollTrigger:{id:'city-depth',trigger:hero,start:'top top',end:'bottom top',scrub:.65,invalidateOnRefresh:true}
-        });
         // A chapter arrives with a short upward impulse, then settles into its reading position.
         $$('.motion-title-frame').forEach((frame,index)=>{
           const title=$('h2',frame);if(!title)return;
@@ -253,16 +247,8 @@ Promise.resolve(window.ANA_LOCALE_READY).then(() => {
           const support=frame.nextElementSibling;
           if(support?.classList.contains('tracked')&&getComputedStyle(support).display!=='none')launch.fromTo(support,{y:small?17:30,opacity:.25},{y:0,opacity:1,duration:.42,ease:'power1.out'},.4);
         });
-        // The photographic windows open at a different depth from their titles.
-        const archivePortrait=$('.archive-portrait');
-        if(archivePortrait)gsap.fromTo(archivePortrait,{y:wide?78:small?35:56,scale:wide?.94:.97,clipPath:'inset(13% 16% 19% 4%)'},{y:0,scale:1,clipPath:'inset(0 3% 1% 0)',ease:'none',scrollTrigger:{id:'photo-aperture-archive',trigger:'.archive-heading',start:'top 94%',end:small?'top 43%':'top 30%',scrub:small?.35:.65,invalidateOnRefresh:true}});
-        $$('.artist-photo-frame img,.portfolio-portrait img').forEach((photo,index)=>{
-          const distance=wide?18:small?16:9;
-          gsap.fromTo(photo,{y:-distance},{y:distance,ease:'none',scrollTrigger:{id:'photo-depth-'+index,trigger:photo.closest('.artist-composition,.artist-story,.portfolio-hero'),start:'clamp(top bottom)',end:'clamp(bottom top)',scrub:.6,invalidateOnRefresh:true}});
-        });
         const artistFacts=$$('.artist-facts>div');
         if(artistFacts.length)gsap.fromTo(artistFacts,{clipPath:'inset(0 100% 0 0)'},{clipPath:'inset(0 0% 0 0)',stagger:.1,ease:'none',scrollTrigger:{id:'artist-facts-reveal',trigger:'.artist-facts',start:'top 90%',end:'top 48%',scrub:.55}});
-        $$('.artist-city img').forEach(photo=>gsap.fromTo(photo,{y:-14,scale:1.14},{y:14,scale:1.14,ease:'none',scrollTrigger:{trigger:photo.parentElement,start:'top bottom',end:'bottom top',scrub:.8}}));
         const processSections=$$('.process');
         processSections.forEach((section,sectionIndex)=>{
           section.classList.add('has-process-motion');

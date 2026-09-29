@@ -288,14 +288,14 @@ const visibleIds=page=>page.locator('.portfolio-thumb:visible').evaluateAll(els=
     }
     return {pages:proof,freeText:true};
   });
-  await check('Parallax real com rolagem e pausa reversível em todas as páginas',async()=>{
+  await check('Fundos estáticos e pausa reversível em todas as páginas',async()=>{
     const proof=[];
     for(const width of [1440,390]){
       const {page,close}=await pageAt('',{viewport:{width,height:900}});
       try{
         const before=await page.locator('.hero-depth').evaluate(el=>el.style.transform);
         await page.evaluate(()=>scrollTo({top:250,behavior:'instant'}));await page.waitForTimeout(950);
-        const after=await page.locator('.hero-depth').evaluate(el=>el.style.transform);assert.notEqual(after,before);
+        const after=await page.locator('.hero-depth').evaluate(el=>el.style.transform);assert.equal(after,before);
         await page.locator('.motion-switch').click();
         assert.equal(await page.evaluate(()=>ScrollTrigger.getAll().length),0);
         assert.equal(await page.locator('.light-rail i').first().evaluate(el=>getComputedStyle(el).animationPlayState),'paused');

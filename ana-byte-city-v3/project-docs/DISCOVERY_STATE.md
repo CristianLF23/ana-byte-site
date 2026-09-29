@@ -49,3 +49,12 @@ Verificação: fluxo de vídeo e filtros em desktop/mobile, navegação por link
 - Classificação: correção localizada de asset visual existente, sem nova direção estética, oferta, CTA, página ou integração. Gate aprovado; nenhuma lacuna crítica. A edição com ferramenta integrada de imagem foi autorizada pelo pedido, sem ferramenta externa paga ou dependência de produção.
 - Recursos: `imagegen` integrado para a edição raster; composição determinística apenas dentro da silhueta da personagem para resguardar o fundo original; variantes WebP para carregamento responsivo. Catálogos de componentes, 3D e novas referências online não acrescentam a esta correção isolada.
 - Validação: comparação das regiões externas à pessoa, inspeção visual da hero em mobile e desktop, integridade dos quatro tamanhos, carregamento real no navegador e regressões de navegação.
+
+## 29/09 · Arquivo Vivo e responsividade desktop
+
+- CONFIRMED: substituir a foto escura do espelho no cabeçalho do Arquivo Vivo por obras reais lado a lado, sob uma máscara preta contínua. Cada recorte prioriza a tatuagem; a nova foto do gato esfinge entra como obra visual nessa composição. Os retratos pessoais enviados não entram no fundo do acervo.
+- CONFIRMED: remover o parallax das fotos usadas como fundo, inclusive da primeira cidade, do retrato da seção Sobre e da pequena cena ambiental. Permanecem as revelações de títulos, o vídeo e os movimentos das obras em primeiro plano.
+- CONFIRMED: inspecionar desktop de 1024 a 2560 px e corrigir a expansão excessiva das áreas de leitura em telas muito largas. A direção visual, CTA, categorias e 19 obras catalogadas permanecem.
+- Ready-to-Start Gate: aprovado. Fotos reais, objetivo, público, CTA, layout alvo e hospedagem já estão definidos; nenhuma lacuna crítica.
+- Recursos: referências [ERA Residence](https://www.era-residence.com/) e [Codrops Grid Item Animation Layout](https://tympanus.net/codrops/2015/04/15/grid-item-animation-layout/) consultadas apenas para princípios de ritmo e escala editorial. HTML, CSS, GSAP local e fotografias fornecidas bastam; nenhum catálogo, serviço pago ou dependência nova.
+- Validação: duas rodadas de screenshots mobile, tablet e desktop; recortes e ausência de overflow; teste de fundo estático, galeria, vídeo, navegação, tradução e movimento reduzido.

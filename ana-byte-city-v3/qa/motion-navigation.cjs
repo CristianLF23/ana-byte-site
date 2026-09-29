@@ -24,7 +24,7 @@ const out=path.join(__dirname,'round-motion-navigation');fs.mkdirSync(out,{recur
     await page.waitForTimeout(850);
     const after=await measure();
     parallaxShift=Math.round(after.y-before.y);
-    assert.ok(parallaxShift>23,`mobile city depth did not move enough: ${JSON.stringify({before,after})}`);
+    assert.equal(parallaxShift,0,`mobile background must stay still: ${JSON.stringify({before,after})}`);
     await page.evaluate(()=>scrollTo({top:0,behavior:'instant'}));await page.waitForTimeout(850);
    }
    if(width<1024){

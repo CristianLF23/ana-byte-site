@@ -20,7 +20,13 @@ export function createSections({works,img,icon,eyebrow,artButton,wa,gallery}) {
   function archive(b=''){
     return `<section class="chapter archive archive-expanded archive-transposed" id="trabalhos" aria-labelledby="archive-title">
       <div class="portfolio-hero archive-heading">
-        <div class="portfolio-portrait archive-portrait"><img src="${b}assets/artist/16-studio.jpg" alt="Ana Byte fotografando seu reflexo no espelho do estúdio" width="921" height="1140" loading="lazy" decoding="async"></div>
+        <div class="archive-artwall" aria-hidden="true">
+          <span class="archive-artwall-panel"><img src="${b}assets/tattoos/04-cyber-warrior.jpg" alt="" width="331" height="495" loading="lazy" decoding="async"></span>
+          <span class="archive-artwall-panel"><img src="${b}assets/tattoos/20-dual-souls.jpg" alt="" width="1114" height="1280" loading="lazy" decoding="async"></span>
+          <span class="archive-artwall-panel"><img src="${b}assets/tattoos/sphynx-green.webp" alt="" width="900" height="1200" loading="lazy" decoding="async"></span>
+          <span class="archive-artwall-panel"><img src="${b}assets/tattoos/21-cyber-instinct.jpg" alt="" width="1051" height="1280" loading="lazy" decoding="async"></span>
+          <span class="archive-artwall-panel"><img src="${b}assets/tattoos/19-neon-portrait.jpg" alt="" width="1118" height="1280" loading="lazy" decoding="async"></span>
+        </div>
         <div>${eyebrow('02','TRABALHOS')}<div class="motion-title-frame"><h2 id="archive-title">ARQUIVO<br><span class="spectrum">VIVO.</span></h2></div><p class="tracked">Tatuagens como portais.<br>Fragmentos de outros mundos<br>na pele real.</p><button class="text-link archive-replay" type="button" aria-controls="archive-video">Ver em movimento ${icon('arrow')}</button></div>
         <div class="portfolio-quote"><p>Arte autoral.<br>Corpo como<br>território.<br>Imaginação<br>sem fronteiras.</p><span class="signature">Ana Byte</span></div>
       </div>
