@@ -181,8 +181,14 @@ const visibleIds=page=>page.locator('.portfolio-thumb:visible').evaluateAll(els=
     try{
       assert.equal(await page.locator('video').evaluate(v=>!v.autoplay&&v.preload==='auto'&&!v.controls&&!v.poster&&v.muted&&v.loop&&v.playsInline),true);
       await page.waitForFunction(()=>document.querySelector('#archive-video').readyState>=2);
+      await page.locator('#archive-video').evaluate(v=>{
+        const play=v.play.bind(v);let rejectOnce=true;
+        v.play=()=>{if(rejectOnce){rejectOnce=false;return Promise.reject(new DOMException('Autoplay temporarily denied','NotAllowedError'))}return play()};
+      });
       await page.locator('#archive-video').evaluate(v=>v.scrollIntoView({block:'center',behavior:'instant'}));
       await page.waitForFunction(()=>{const v=document.querySelector('#archive-video');return !v.paused&&v.currentTime>.05});
+      await page.locator('#archive-video').evaluate(v=>v.pause());
+      await page.waitForFunction(()=>!document.querySelector('#archive-video').paused);
       const video=await page.locator('video').evaluate(v=>({controls:v.controls,duration:v.duration,paused:v.paused,readyState:v.readyState}));
       assert.equal(video.controls,false);assert.ok(video.duration>1);assert.equal(video.paused,false);
       assert.equal(await page.locator('dialog[open]').count(),0);
